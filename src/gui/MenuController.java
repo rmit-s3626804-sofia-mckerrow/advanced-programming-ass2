@@ -6,19 +6,30 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class MenuController implements Initializable{
+	
+	public MenuModel menuModel = new MenuModel();
+	
+	@FXML
+	private Label isConnected;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
+		if (menuModel.isDbConnected()) {
+			isConnected.setText("Connected");
+		}
+		else {
+			isConnected.setText("Not connected");
+		}		
 	}
 	
 	public void selectGame(ActionEvent event) {
@@ -35,10 +46,6 @@ public class MenuController implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
-	}
-	
-	public void predictWinner() {
-		
 	}
 	
 	public void startGame() {
