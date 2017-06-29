@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="37.0" prefHeight="46.0" prefWidth="312.0" text="Welcome to the Ozlympic Games!">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="selectGame" layoutX="54.0" layoutY="96.0" mnemonicParsing="false" onAction="#selectGame" prefHeight="46.0" prefWidth="392.0" text="Select a game to run">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="startGame" layoutX="54.0" layoutY="227.0" mnemonicParsing="false" onAction="#startGame" prefHeight="46.0" prefWidth="392.0" text="Start the game">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="predictWinner" layoutX="54.0" layoutY="159.0" mnemonicParsing="false" onAction="#predictWinner" prefHeight="46.0" prefWidth="392.0" text="Predict the winner of the game">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="displayResults" layoutX="54.0" layoutY="288.0" mnemonicParsing="false" onAction="#displayResults" prefHeight="46.0" prefWidth="392.0" text="Display the final results of all games">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="displayPoints" layoutX="54.0" layoutY="352.0" mnemonicParsing="false" onAction="#displayPoints" prefHeight="46.0" prefWidth="392.0" text="Display the points of all games">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="exit" layoutX="54.0" layoutY="416.0" mnemonicParsing="false" onAction="#exit" prefHeight="46.0" prefWidth="392.0" text="Exit">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
