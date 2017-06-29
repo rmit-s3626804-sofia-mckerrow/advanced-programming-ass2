@@ -1,0 +1,60 @@
+a001, Ruba Messer, Swimmer, 18, NSW
+a002, Cecilia Tillensr, Swimmer, 21, NSW
+a003, Marinella Eriksen, Swimmer, 20, QLD
+a004, Lucas Greenfield, Swimmer, 19, VIC
+a005, Emily Swadling , Swimmer, 21, VIC
+a006, Bailey Corbin, Swimmer, 22, TAS
+a007, Abigail Hannell, Swimmer, 18, WA
+a008, Emma Gurner, Swimmer, 22, SA
+a009, James Singleton, Swimmer, 20, NSW
+a010, Michael Perez, Swimmer, 24, ACT
+a011, Bao Kao, Runner, 18, NSW
+a012, Thierry Desaulniers, Runner, 20, NSW
+a013, Zane Gatty, Runner, 21, QLD
+a014, Oliver Stewart , Runner, 19, QLD
+a015, Eliza Mullaly, Runner, 23, VIC
+a016, Lara Goyder, Runner, 18, TAS
+a017, Hayden McBeath, Runner, 19, VIC
+a018, Yu Lo, Runner, 25, WA
+a019, Fai Teng, Runner, 21, SA
+a020, Mee Pai, Runner, 26, NT
+a021, William Campbel, Cyclist, 18, NSW
+a022, Luigi Fanucci, Cyclist, 27, NSW
+a023, Emilie Laursen , Cyclist, 20, QLD
+a024, Kristina Howard, Cyclist, 21, VIC
+a025, Qadir Nazari, Cyclist, 23, VIC
+a026, Noelle Chatigny, Cyclist, 18, ACT
+a027, Obianuju Chialuka, Cyclist, 20, TAS
+a028, Adam Treviato, Cyclist, 28, QLD
+a029, Zoe Menchaca, Cyclist, 18, NSW
+a030, Phillip Mathews, Cyclist, 19, TAS
+a031, Kristin Hessler, SuperAthlete, 21, NSW
+a032, Edward Layton, SuperAthlete, 21, NSW
+a033, Shirley Weinberg, SuperAthlete, 20, QLD
+a034, Olejuru Nwankwo, SuperAthlete, 19, VIC
+a035, Franciska Cuppen, SuperAthlete, 20, VIC
+a036, Isabel Dennis, SuperAthlete, 18, QLD
+a037, Connor Knight, SuperAthlete, 22, WA
+a038, Renard Sobczak , SuperAthlete, 22, SA
+a039, Tobias Jansson , SuperAthlete, 24, ACT
+a040, Aziz Haik, SuperAthlete, 23, TAS
+o001, Patrick Green, Official, 36, QLD
+o002, Neil Andrews, Official, 29, VIC
+o003, Sasha Ross, Official, 44, NSW
+o004, Emma Cobb, Official, 51, QLD
+o005, Zackery Elliston, Official, 35, WA
+o006, Larissa De Angelis, Official, 42, SA
+o007, Dwayne Tyler, Official, 28, NSW
+o008, Ivan Leon, Official, 33, VIC
+o009, Alicia Skinner, Official, 38, SA
+o010, Arthur Huang, Official, 43, TAS
+o011, Mei Chen, Official, 49, NT
+o012, Yuri Mizuki, Official, 27, NSW
+o013, Victor McDonald, Official, 25, VIC
+o014, Sangita Munjal, Official, 44, ACT
+o015, Ella Reiss, Official, 35, QLD
+o016, Steve Freeman, Official, 39, WA
+o017, Nicola Trucco, Official, 28, SA
+o018, Xuan Yi, Official, 26, VIC
+o019, Phillip Zikas, Official, 31, NSW
+o020, Yuan Jie, Official, 46, WA
