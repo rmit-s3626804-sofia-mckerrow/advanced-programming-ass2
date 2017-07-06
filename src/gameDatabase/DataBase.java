@@ -43,7 +43,7 @@ public class DataBase {
 	private static boolean hasResData = false;
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
 	private ArrayList<Official> officials = new ArrayList<Official>(); 		// temporary array list to read in officials
-	private ArrayList<Game> games = new ArrayList<Game>();					// arraylist of games
+	private ArrayList<Game> games = new ArrayList<Game>();					// array list of games
 	
 	public ArrayList<Athlete> getAthletes() {
 		return athletes;

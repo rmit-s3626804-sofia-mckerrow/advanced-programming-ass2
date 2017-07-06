@@ -25,10 +25,10 @@ public class MenuController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if (menuModel.isDbConnected()) {
-			isConnected.setText("Connected");
+			isConnected.setText("Database is connected");
 		}
 		else {
-			isConnected.setText("Not connected");
+			isConnected.setText("Database is not connected");
 		}		
 	}
 	
@@ -38,7 +38,7 @@ public class MenuController implements Initializable{
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root;
-			root = loader.load(getClass().getResource("/gui/StartGame.fxml").openStream());
+			root = loader.load(getClass().getResource("/gui/SelectGame.fxml").openStream());
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
