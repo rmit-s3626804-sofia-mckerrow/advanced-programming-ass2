@@ -1,6 +1,12 @@
 package gui;
 
+import java.sql.Statement;
+
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import gameDatabase.SQLiteConnection;
@@ -26,6 +32,13 @@ public class MenuModel {
 			return false;
 		}
 
+	}
+	
+	public void initialiseDatabase() throws SQLException {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String query = "SELECT * FROM participants where username = ? and password = ?";
+		
 	}
 
 }

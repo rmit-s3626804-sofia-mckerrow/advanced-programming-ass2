@@ -28,7 +28,6 @@ public abstract class Game {
 	private String date;
 	private boolean isOn = false;
 
-	// Constructor for Game class
 	public Game(String raceID) {
 		this.raceID = raceID;
 	}
@@ -147,7 +146,11 @@ public abstract class Game {
 			}
 		}
 		raceAthletes = thisRaceAthletes;
-		
+	}
+	
+	public void displayAthletesForSelection() {
+		// display athletes in list for user to add to race
+		ArrayList<Athlete> thisRaceAthletes = new ArrayList<Athlete>();
 	}
 	
 	public void competeAthletes(){ 					

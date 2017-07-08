@@ -2,8 +2,10 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import gameDatabase.DataBase;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +19,8 @@ import javafx.stage.Stage;
 
 public class MenuController implements Initializable{
 	
-	public MenuModel menuModel = new MenuModel();
+	private MenuModel menuModel = new MenuModel();
+	private DataBase thisDB = new DataBase();
 	
 	@FXML
 	private Label isConnected;
@@ -26,6 +29,8 @@ public class MenuController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if (menuModel.isDbConnected()) {
 			isConnected.setText("Database is connected");
+			thisDB.initialiseAthletesList();
+			thisDB.initialiseOfficialsList();
 		}
 		else {
 			isConnected.setText("Database is not connected");

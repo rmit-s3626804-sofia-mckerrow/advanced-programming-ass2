@@ -39,6 +39,7 @@ import gameComponents.Swimmer;
 public class DataBase {
 	
 	private static Connection con;
+	private static Connection connection;
 	private static boolean hasPartData = false;
 	private static boolean hasResData = false;
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
@@ -109,15 +110,6 @@ public class DataBase {
 				
 			}
 		}
-//		Set<Athlete> ath = new HashSet<Athlete>();
-//		for (Athlete check : athletes) ath.add(check); 		// add each athlete to hashset - duplicates naturally ignored
-//		athletes.clear();									// clear athletes
-//		for (Athlete checked : ath) athletes.add(checked);	// re add checked list back to athletes
-//		
-//		Set<Official> off = new HashSet<Official>();
-//		for (Official check : officials) off.add(check); 		// add each athlete to hashset - duplicates naturally ignored
-//		officials.clear();										// clear athletes
-//		for (Official checked : off) officials.add(checked);	// re add checked list back to athletes
 		fileIn.close();
 	}
 	
@@ -304,6 +296,46 @@ public class DataBase {
 						+ "gameID varchar(8)," + "officialID varchar(4),"
 						+ "date varchar(20));");
 			}
+		}
+	}
+	
+	public void initialiseAthletesList() {
+		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'a%'";
+		
+		try {
+			connection = SQLiteConnection.connector();
+			PreparedStatement prep = connection.prepareStatement(query);
+			ResultSet resultSet = prep.executeQuery();
+			
+			Athlete thisAthlete = null;
+			while (resultSet.next()) {
+				// System.out.println(resultSet.getString("id") + "\t" + resultSet.getString("name"));
+				thisAthlete = new Athlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				athletes.add(thisAthlete);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public void initialiseOfficialsList() {
+		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'o%'";
+		
+		try {
+			connection = SQLiteConnection.connector();
+			PreparedStatement prep = connection.prepareStatement(query);
+			ResultSet resultSet = prep.executeQuery();
+			
+			Official thisOfficial = null;
+			while (resultSet.next()) {
+				thisOfficial = new Official(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				officials.add(thisOfficial);
+				for (int i = 0; i < officials.size(); i++) {
+					System.out.println(officials.get(i).getID() + officials.get(i).getName());
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 	
