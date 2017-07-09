@@ -33,12 +33,5 @@ public class MenuModel {
 		}
 
 	}
-	
-	public void initialiseDatabase() throws SQLException {
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		String query = "SELECT * FROM participants where username = ? and password = ?";
-		
-	}
 
 }

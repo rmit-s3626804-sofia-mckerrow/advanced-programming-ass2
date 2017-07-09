@@ -279,7 +279,7 @@ public class Driver {
 	public void readData() {
 		// read participants file
 		try {
-			thisDB.readParticipantsCheckRegex();
+			thisDB.readParticipantsFromFile();
 		} catch (FileNotFoundException e) {
 			System.out.println("Participants.txt not found"); 			//test
 			e.printStackTrace();										//test
