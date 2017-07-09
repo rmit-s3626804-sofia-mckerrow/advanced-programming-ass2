@@ -56,7 +56,7 @@ public class SelectGameController implements Initializable{
 	public void selectSwimming() {
 		raceType = "swim";
 		myGame = thisDB.addRace(raceType);
-		addGameStatus.setText("Running race has been added");
+		addGameStatus.setText("Swimming race has been added");
 		raceID.setText("Race ID: " + myGame.getRaceID());
 		next.setVisible(true);
 	}
@@ -67,7 +67,7 @@ public class SelectGameController implements Initializable{
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root;
-			root = loader.load(getClass().getResource("/gui/SelectAtheletes.fxml").openStream());
+			root = loader.load(getClass().getResource("/gui/SelectAthletes.fxml").openStream());
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

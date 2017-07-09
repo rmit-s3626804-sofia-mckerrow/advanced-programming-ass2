@@ -29,8 +29,8 @@ public class MenuController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if (menuModel.isDbConnected()) {
 			isConnected.setText("Database is connected");
-			thisDB.initialiseAthletesList();
-			thisDB.initialiseOfficialsList();
+			thisDB.initialiseAthletesList(); // initialise arraylist of Athletes from database
+			thisDB.initialiseOfficialsList(); // initialise arraylist of Officials from database
 		}
 		else {
 			isConnected.setText("Database is not connected");

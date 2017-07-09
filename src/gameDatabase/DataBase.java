@@ -289,6 +289,7 @@ public class DataBase {
 		}	
 	}
 	
+	// initialise arraylist of Athletes from database
 	public void initialiseAthletesList() {
 		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'a%'";
 		
@@ -309,8 +310,10 @@ public class DataBase {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		
 	}
 	
+	// initialise arraylist of Officials from database
 	public void initialiseOfficialsList() {
 		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'o%'";
 		
@@ -320,9 +323,8 @@ public class DataBase {
 			
 			Official thisOfficial = null;
 			while (resultSet.next()) {
-				sortParticipantsIntoType(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				//thisOfficial = new Official(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				//officials.add(thisOfficial);
+				thisOfficial = new Official(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				officials.add(thisOfficial);
 			}
 			for (int i = 0; i < officials.size(); i++) {
 				System.out.println(officials.get(i).getID() + " " + officials.get(i).getName());

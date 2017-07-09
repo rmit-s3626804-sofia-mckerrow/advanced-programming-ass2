@@ -17,7 +17,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="swimming" layoutX="85.0" layoutY="213.0" mnemonicParsing="false" onAction="#selectRunning" prefHeight="46.0" prefWidth="230.0" text="Swimming race">
+      <Button fx:id="swimming" layoutX="85.0" layoutY="213.0" mnemonicParsing="false" onAction="#selectSwimming" prefHeight="46.0" prefWidth="230.0" text="Swimming race">
          <font>
             <Font size="18.0" />
          </font>
