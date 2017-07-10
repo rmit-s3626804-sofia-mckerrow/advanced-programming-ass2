@@ -24,18 +24,24 @@ public class SelectAthletesController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		addAthletesToList(thisDB);
+		// addAthletesToList(thisDB);
 		athletesList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 	
 	public void addAthletesToList(DataBase thisDB) {
 		myGame = thisDB.getLastGame();
-		ArrayList<Athlete> thisRaceAthletes = thisDB.getAthletes();
 		
-		for(int i = 0; i < thisRaceAthletes.size(); i++){
-			Athlete thisAthlete = thisRaceAthletes.get(i);
+		ArrayList<Athlete> athletes = thisDB.initialiseAthletesList();
+		ArrayList<Athlete> athletesToSelectList = new ArrayList<Athlete>();
+		
+		for(int i = 0; i < athletes.size(); i++){
+			Athlete thisAthlete = athletes.get(i);
 			if (thisAthlete.canRaceInGame(myGame))
+				athletesToSelectList.add(thisAthlete);
 				athletesList.getItems().add(thisAthlete.getName());
+		}
+		for (int i = 0; i < athletesToSelectList.size(); i++) {
+			System.out.println(athletesToSelectList.get(i).getID() + " " + athletesToSelectList.get(i).getName() + athletesToSelectList.get(i).getType());
 		}
 		
 		ObservableList<String> names;

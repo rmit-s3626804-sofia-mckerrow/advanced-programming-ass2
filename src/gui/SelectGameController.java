@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import gameComponents.Game;
 import gameDatabase.DataBase;
+import gui.SelectAthletesController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,12 +63,14 @@ public class SelectGameController implements Initializable{
 	}
 
 	public void nextButtonClick(ActionEvent event) {
+		// myGame = thisDB.getLastGame();
 		try {
 			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
-			Pane root;
-			root = loader.load(getClass().getResource("/gui/SelectAthletes.fxml").openStream());
+			Pane root = loader.load(getClass().getResource("/gui/SelectAthletes.fxml").openStream());
+			SelectAthletesController saController = (SelectAthletesController)loader.getController();
+			saController.addAthletesToList(thisDB);
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

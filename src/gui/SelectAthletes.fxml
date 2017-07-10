@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="540.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="gui.SelectAthletesController">
+<AnchorPane prefHeight="500.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SelectAthletesController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="24.0" prefHeight="50.0" prefWidth="381.0" text="Select between 4 and 8 athletes for the race">
          <font>

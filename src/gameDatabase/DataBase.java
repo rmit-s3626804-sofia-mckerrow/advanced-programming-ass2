@@ -290,7 +290,7 @@ public class DataBase {
 	}
 	
 	// initialise arraylist of Athletes from database
-	public void initialiseAthletesList() {
+	public ArrayList<Athlete> initialiseAthletesList() {
 		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'a%'";
 		
 		try {
@@ -301,20 +301,25 @@ public class DataBase {
 			while (resultSet.next()) {
 				// System.out.println(resultSet.getString("id") + "\t" + resultSet.getString("name"));
 				// thisAthlete = new Athlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				sortParticipantsIntoType(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				//athletes.add(thisAthlete);
+				if (resultSet.getString("type").equals("Swimmer")) thisAthlete = new Swimmer(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				if (resultSet.getString("type").equals("Runner")) thisAthlete = new Runner(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				if (resultSet.getString("type").equals("Cyclist")) thisAthlete = new Cyclist(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				if (resultSet.getString("type").equals("SuperAthlete")) thisAthlete = new SuperAthlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				athletes.add(thisAthlete);
+				//sortParticipantsIntoType(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
 			}
-			for (int i = 0; i < athletes.size(); i++) {
+			/*for (int i = 0; i < athletes.size(); i++) {
 				System.out.println(athletes.get(i).getID() + " " + athletes.get(i).getName());
-			}
+			}*/
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		return athletes;
 		
 	}
 	
 	// initialise arraylist of Officials from database
-	public void initialiseOfficialsList() {
+	public ArrayList<Official> initialiseOfficialsList() {
 		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'o%'";
 		
 		try {
@@ -326,12 +331,13 @@ public class DataBase {
 				thisOfficial = new Official(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
 				officials.add(thisOfficial);
 			}
-			for (int i = 0; i < officials.size(); i++) {
+			/*for (int i = 0; i < officials.size(); i++) {
 				System.out.println(officials.get(i).getID() + " " + officials.get(i).getName());
-			}
+			}*/
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+		return officials;
 	}
 	
 	// deletes all results
