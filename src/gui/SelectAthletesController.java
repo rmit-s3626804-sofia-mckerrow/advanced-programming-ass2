@@ -4,15 +4,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import customExceptions.GameFullException;
 import gameComponents.Athlete;
 import gameComponents.Game;
 import gameDatabase.DataBase;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.util.Callback;
 
 public class SelectAthletesController implements Initializable {
 	
@@ -20,7 +25,7 @@ public class SelectAthletesController implements Initializable {
 	Game myGame;
 	
 	@FXML
-	public ListView<String> athletesList;
+	public ListView<Athlete> athletesList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -38,25 +43,45 @@ public class SelectAthletesController implements Initializable {
 			Athlete thisAthlete = athletes.get(i);
 			if (thisAthlete.canRaceInGame(myGame))
 				athletesToSelectList.add(thisAthlete);
-				athletesList.getItems().add(thisAthlete.getName());
 		}
 		for (int i = 0; i < athletesToSelectList.size(); i++) {
-			System.out.println(athletesToSelectList.get(i).getID() + " " + athletesToSelectList.get(i).getName() + athletesToSelectList.get(i).getType());
+			System.out.println(athletesToSelectList.get(i).getID() + " " + athletesToSelectList.get(i).getName() + " " + athletesToSelectList.get(i).getType());
 		}
+		ObservableList<Athlete> names = FXCollections.observableArrayList(athletesToSelectList);
+		athletesList.setItems(names);
 		
-		ObservableList<String> names;
-		names = athletesList.getSelectionModel().getSelectedItems(); // get the selected names
+		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
+			
+			@Override
+			public ListCell<Athlete> call(ListView<Athlete> param) {
+				
+				ListCell<Athlete> cell = new ListCell<Athlete>(){
+					
+					@Override
+					public void updateItem(Athlete a, boolean empty) {
+						super.updateItem(a, empty);
+						if (a != null) {
+							setText(a.getName());
+						}
+					}
+				};
+				
+				return cell;
+				
+			}
+		});
 		
-		for (String name : names) {
-			System.out.println(name);
-		}
 	}
 	
 	public void selectAthletes() {
 		
-	}
+	} 
 	
 	public void addAthleteToRace() throws GameFullException {
+		
+	}
+	
+	public void removeAthleteFromRace() {
 		
 	}
 
