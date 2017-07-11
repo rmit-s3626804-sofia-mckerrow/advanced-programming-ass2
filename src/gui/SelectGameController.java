@@ -38,7 +38,7 @@ public class SelectGameController implements Initializable{
 		// TODO Auto-generated method stub
 	}
 		
-	public void selectCycling() {
+	public void selectCycling(ActionEvent event) {
 		raceType = "cycle";
 		myGame = thisDB.addRace(raceType);
 		addGameStatus.setText("Cycling race has been added");
@@ -46,7 +46,7 @@ public class SelectGameController implements Initializable{
 		next.setVisible(true);
 	}
 
-	public void selectRunning() {
+	public void selectRunning(ActionEvent event) {
 		raceType = "run";
 		myGame = thisDB.addRace(raceType);
 		addGameStatus.setText("Running race has been added");
@@ -54,7 +54,7 @@ public class SelectGameController implements Initializable{
 		next.setVisible(true);
 	}
 
-	public void selectSwimming() {
+	public void selectSwimming(ActionEvent event) {
 		raceType = "swim";
 		myGame = thisDB.addRace(raceType);
 		addGameStatus.setText("Swimming race has been added");
