@@ -117,18 +117,76 @@ public class SelectAthletesController implements Initializable {
 			}
 		});
 		
+		athletesToSelectList.remove(raceAthlete); // remove the selected athlete from the list of athletes to select from
 		int selectedItem = athletesList.getSelectionModel().getSelectedIndex();
-		athletesListNames.remove(selectedItem); // remove the selected athlete from the list of athletes to select from
+		athletesListNames.remove(selectedItem); // remove the selected athlete from the displayed list of athletes to select from
 	}
 	
 	// remove the selected athlete from the race
 	public void removeAthleteFromRace(ActionEvent event) throws TooFewAthleteException, GameFullException {
-		int selectedItem = raceAthletes.getSelectionModel().getSelectedIndex();
-		raceAthletesNames.remove(selectedItem);
+		Athlete raceAthlete = raceAthletes.getSelectionModel().getSelectedItem(); // get the selected athlete
+		thisRaceAthletes.remove(raceAthlete); // remove the selected athletes from the array list of race athletes
+		myGame.setAthletesForRace(thisRaceAthletes);
 		
-		for (int i = 0; i < thisRaceAthletes.size(); i++) {
-			System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
+		// set the array list of race athletes to the raceAthletes listview
+		raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
+		raceAthletes.setItems(raceAthletesNames);
+		
+		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
+			System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
 		}
+		
+		// display the list of race athletes on the raceAthletes listview
+		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
+					
+			@Override
+			public ListCell<Athlete> call(ListView<Athlete> param) {
+						
+				ListCell<Athlete> cell = new ListCell<Athlete>(){
+							
+					@Override
+					public void updateItem(Athlete a, boolean empty) {
+						super.updateItem(a, empty);
+						if (a != null) {
+							setText(a.getName());
+						}
+					}
+				};
+						
+				return cell;
+						
+			}
+		});
+		
+		// add the removed athlete back to the list of athletes to select from
+		athletesToSelectList.add(raceAthlete);
+		
+		// set the array list of athletes to the athletesList listview
+		athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
+		athletesList.setItems(athletesListNames); 
+				
+		// display the list of athletes on the athletesList listview
+		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
+					
+			@Override
+			public ListCell<Athlete> call(ListView<Athlete> param) {
+						
+				ListCell<Athlete> cell = new ListCell<Athlete>(){
+							
+					@Override
+					public void updateItem(Athlete a, boolean empty) {
+						super.updateItem(a, empty);
+						if (a != null) {
+							setText(a.getName());
+						}
+					}
+				};
+						
+				return cell;
+						
+			}
+		});
+		
 	}
 
 }
