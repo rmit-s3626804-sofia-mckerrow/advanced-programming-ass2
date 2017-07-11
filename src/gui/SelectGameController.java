@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import gameComponents.Game;
@@ -23,6 +24,7 @@ public class SelectGameController implements Initializable{
 	DataBase thisDB = new DataBase();
 	Game myGame;
 	private String raceType;
+	private ArrayList<Game> games = new ArrayList<Game>();
 	
 	@FXML
 	private Label addGameStatus;

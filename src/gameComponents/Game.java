@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 import customExceptions.GameFullException;
 import customExceptions.NoRefereeException;
 import customExceptions.TooFewAthleteException;
@@ -148,9 +150,8 @@ public abstract class Game {
 		raceAthletes = thisRaceAthletes;
 	}
 	
-	public void displayAthletesForSelection() {
-		// display athletes in list for user to add to race
-		ArrayList<Athlete> thisRaceAthletes = new ArrayList<Athlete>();
+	public void setAthletesForRace(ArrayList<Athlete> thisRaceAthletes) {
+		raceAthletes = thisRaceAthletes;
 	}
 	
 	public void competeAthletes(){ 					

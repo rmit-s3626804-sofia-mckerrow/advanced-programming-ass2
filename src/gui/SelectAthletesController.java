@@ -23,9 +23,10 @@ public class SelectAthletesController implements Initializable {
 	
 	DataBase thisDB = new DataBase();
 	Game myGame;
-	private ObservableList<Athlete> athletesListNames, raceAthletesNames;
-	private ArrayList<Athlete> athletesToSelectList = new ArrayList<Athlete>();
-	private ArrayList<Athlete> thisRaceAthletes = new ArrayList<Athlete>();
+	private ArrayList<Athlete> athletesToSelectList = new ArrayList<Athlete>(); // array list of athletes for user to select from
+	private ArrayList<Athlete> thisRaceAthletes = new ArrayList<Athlete>(); // array list of athletes selected for race
+	private ObservableList<Athlete> athletesListNames; // observable list of athletes for user to select from
+	private ObservableList<Athlete> raceAthletesNames; // observable list of athletes selected for race
 	
 	@FXML
 	public ListView<Athlete> athletesList, raceAthletes;
@@ -36,20 +37,23 @@ public class SelectAthletesController implements Initializable {
 		athletesList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 	
+	// add athletes to list for user to select athletes for race
 	public void addAthletesToList(DataBase thisDB) {
 		myGame = thisDB.getLastGame();
 		
-		ArrayList<Athlete> athletes = thisDB.initialiseAthletesList();
+		ArrayList<Athlete> athletes = thisDB.initialiseAthletesList(); // get all the athletes in the database
 				
 		for(int i = 0; i < athletes.size(); i++){
 			Athlete thisAthlete = athletes.get(i);
-			if (thisAthlete.canRaceInGame(myGame))
+			if (thisAthlete.canRaceInGame(myGame)) // if athlete can race in the selected game, add them to the array list
 				athletesToSelectList.add(thisAthlete);
 		}
 		
+		// set the array list of athletes to the athletesList listview
 		athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
-		athletesList.setItems(athletesListNames);
+		athletesList.setItems(athletesListNames); 
 		
+		// display the list of athletes on the athletesList listview
 		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
 			
 			@Override
@@ -73,18 +77,25 @@ public class SelectAthletesController implements Initializable {
 		
 	}
 	
+	// add the selected athlete to the race
 	public void addAthleteToRace(ActionEvent event) {
-		Athlete raceAthlete;		
-		raceAthlete = athletesList.getSelectionModel().getSelectedItem();
-		thisRaceAthletes.add(raceAthlete);
+		Athlete raceAthlete = athletesList.getSelectionModel().getSelectedItem(); // get the selected athlete
+		thisRaceAthletes.add(raceAthlete); // add the selected athlete to the array list of athletes for the race
+		myGame.setAthletesForRace(thisRaceAthletes);
 		
-		for (int i = 0; i < thisRaceAthletes.size(); i++) {
-			System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
+		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
+			System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
 		}
 		
+		/*for (int i = 0; i < thisRaceAthletes.size(); i++) {
+			System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
+		}*/
+		
+		// set the array list of race athletes to the raceAthletes listview
 		raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
 		raceAthletes.setItems(raceAthletesNames);
 		
+		// display the list of race athletes on the raceAthletes listview
 		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
 			
 			@Override
@@ -107,12 +118,17 @@ public class SelectAthletesController implements Initializable {
 		});
 		
 		int selectedItem = athletesList.getSelectionModel().getSelectedIndex();
-		athletesListNames.remove(selectedItem);
+		athletesListNames.remove(selectedItem); // remove the selected athlete from the list of athletes to select from
 	}
 	
+	// remove the selected athlete from the race
 	public void removeAthleteFromRace(ActionEvent event) throws TooFewAthleteException, GameFullException {
-		int selectedItem = athletesList.getSelectionModel().getSelectedIndex();
-		athletesListNames.remove(selectedItem);
+		int selectedItem = raceAthletes.getSelectionModel().getSelectedIndex();
+		raceAthletesNames.remove(selectedItem);
+		
+		for (int i = 0; i < thisRaceAthletes.size(); i++) {
+			System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
+		}
 	}
 
 }
