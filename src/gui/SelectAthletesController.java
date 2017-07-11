@@ -91,12 +91,10 @@ public class SelectAthletesController implements Initializable {
 			System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
 		}*/
 		
-		// set the array list of race athletes to the raceAthletes listview
 		raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
-		raceAthletes.setItems(raceAthletesNames);
+		raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
 		
-		// display the list of race athletes on the raceAthletes listview
-		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
+		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() { // display the list of race athletes on the raceAthletes listview
 			
 			@Override
 			public ListCell<Athlete> call(ListView<Athlete> param) {
@@ -110,10 +108,8 @@ public class SelectAthletesController implements Initializable {
 							setText(a.getName());
 						}
 					}
-				};
-				
-				return cell;
-				
+				};			
+				return cell;			
 			}
 		});
 		
@@ -128,16 +124,14 @@ public class SelectAthletesController implements Initializable {
 		thisRaceAthletes.remove(raceAthlete); // remove the selected athletes from the array list of race athletes
 		myGame.setAthletesForRace(thisRaceAthletes);
 		
-		// set the array list of race athletes to the raceAthletes listview
 		raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
-		raceAthletes.setItems(raceAthletesNames);
+		raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
 		
 		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
 			System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
 		}
 		
-		// display the list of race athletes on the raceAthletes listview
-		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
+		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() { // display the list of race athletes on the raceAthletes listview
 					
 			@Override
 			public ListCell<Athlete> call(ListView<Athlete> param) {
@@ -158,15 +152,10 @@ public class SelectAthletesController implements Initializable {
 			}
 		});
 		
-		// add the removed athlete back to the list of athletes to select from
-		athletesToSelectList.add(raceAthlete);
-		
-		// set the array list of athletes to the athletesList listview
+		athletesToSelectList.add(raceAthlete); // add the removed athlete back to the list of athletes to select from
 		athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
-		athletesList.setItems(athletesListNames); 
-				
-		// display the list of athletes on the athletesList listview
-		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
+		athletesList.setItems(athletesListNames); // set the array list of athletes to the athletesList listview				
+		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() { // display the list of athletes on the athletesList listview
 					
 			@Override
 			public ListCell<Athlete> call(ListView<Athlete> param) {
@@ -180,13 +169,10 @@ public class SelectAthletesController implements Initializable {
 							setText(a.getName());
 						}
 					}
-				};
-						
-				return cell;
-						
+				};						
+				return cell;						
 			}
-		});
-		
+		});		
 	}
 
 }
