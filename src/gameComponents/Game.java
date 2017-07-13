@@ -154,6 +154,12 @@ public abstract class Game {
 		raceAthletes = thisRaceAthletes;
 	}
 	
+	public Official setOfficialForRace(Official thisRaceOfficial) {
+		raceOfficial = thisRaceOfficial;
+		
+		return raceOfficial;
+	}
+	
 	public void competeAthletes(){ 					
 		// iterate through the athletes and call their compete() method
 		// check if race has been raced

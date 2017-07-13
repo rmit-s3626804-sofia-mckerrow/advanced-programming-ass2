@@ -163,13 +163,15 @@ public class SelectAthletesController implements Initializable {
 			status.setText("Not enough athletes to start game, need at least 4");
 		}
 		
+		
+		
 		try {
 			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource("/gui/SelectOfficial.fxml").openStream());
-			SelectAthletesController saController = (SelectAthletesController)loader.getController();
-			saController.addAthletesToList(thisDB);
+			SelectOfficialController soController = (SelectOfficialController)loader.getController();
+			soController.addOfficialsToList(thisDB);
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
