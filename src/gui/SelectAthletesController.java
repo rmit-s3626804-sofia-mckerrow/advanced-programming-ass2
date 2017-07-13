@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -13,11 +14,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class SelectAthletesController implements Initializable {
@@ -57,35 +63,15 @@ public class SelectAthletesController implements Initializable {
 		athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
 		athletesList.setItems(athletesListNames);
 		
-		// display the list of athletes on the athletesList listview
-		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
-			
-			@Override
-			public ListCell<Athlete> call(ListView<Athlete> param) {
-				
-				ListCell<Athlete> cell = new ListCell<Athlete>(){
-					
-					@Override
-					public void updateItem(Athlete a, boolean empty) {
-						super.updateItem(a, empty);
-						if (a != null) {
-							setText(a.getName());
-						}
-					}
-				};
-				
-				return cell;
-				
-			}
-		});
-		
+		setCellFactoryForList(athletesList); // display the list of athletes on the athletesList listview		
 	}
 	
 	// add the selected athlete to the race
 	public void addAthleteToRace(ActionEvent event) throws GameFullException {
+		status.setText("");
 		
 		try {
-			myGame.checkIfRaceHasMax(myGame); // check if there are 8 athletes (maximum number) in race
+			myGame.checkIfRaceHasMax(myGame); // check if there are the maximum number of athletes in the game
 			
 			Athlete raceAthlete = athletesList.getSelectionModel().getSelectedItem(); // get the selected athlete
 			
@@ -96,10 +82,6 @@ public class SelectAthletesController implements Initializable {
 				for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
 					System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
 				}
-			
-					/*for (int i = 0; i < thisRaceAthletes.size(); i++) {
-						System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
-					}*/
 			
 				raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
 				raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
@@ -122,6 +104,7 @@ public class SelectAthletesController implements Initializable {
 	
 	// remove the selected athlete from the race
 	public void removeAthleteFromRace(ActionEvent event) throws TooFewAthleteException, GameFullException {
+		status.setText("");
 		Athlete raceAthlete = raceAthletes.getSelectionModel().getSelectedItem(); // get the selected athlete
 		
 		if (raceAthlete != null) { // check if an athlete has been selected
@@ -169,6 +152,31 @@ public class SelectAthletesController implements Initializable {
 				return cell;						
 			}
 		});	
+	}
+	
+	public void nextButtonClick(ActionEvent event) {
+		status.setText("");
+		
+		try {
+			myGame.checkIfRaceHasMin(myGame); // check if there are the minimum number of athletes in the game
+		} catch (TooFewAthleteException e) {
+			status.setText("Not enough athletes to start game, need at least 4");
+		}
+		
+		try {
+			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			Pane root = loader.load(getClass().getResource("/gui/SelectOfficial.fxml").openStream());
+			SelectAthletesController saController = (SelectAthletesController)loader.getController();
+			saController.addAthletesToList(thisDB);
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

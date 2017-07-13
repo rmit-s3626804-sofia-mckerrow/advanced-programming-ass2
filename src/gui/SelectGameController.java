@@ -65,7 +65,6 @@ public class SelectGameController implements Initializable{
 	}
 
 	public void nextButtonClick(ActionEvent event) {
-		// myGame = thisDB.getLastGame();
 		try {
 			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
 			Stage primaryStage = new Stage();
