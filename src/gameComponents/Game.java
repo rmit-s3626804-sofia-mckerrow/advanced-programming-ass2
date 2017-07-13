@@ -185,9 +185,12 @@ public abstract class Game {
 		return raceOfficial;
 	}
 	
+	// check if race has minimum amount of athletes
 	public int getRaceSize(){
-		// for checking if race has minimum amount of athletes
-		int raceSize = raceAthletes.size();
+		int raceSize = 0;
+		if (raceAthletes != null) {
+			raceSize = raceAthletes.size();
+		}
 		return raceSize;
 	}
 	
@@ -199,6 +202,15 @@ public abstract class Game {
 			throw new TooFewAthleteException("Race cancelled, insufficient number of athletes for race");
 		}
 	}
+	
+	// check if race has 8 athletes competing
+		public void checkIfRaceHasMax(Game game) throws GameFullException{ 
+			int max = game.getMaxAthletes();
+			int numberOfAthletesInRace = game.getRaceSize();
+			if (numberOfAthletesInRace == max) {
+				throw new GameFullException("Game is full, cannot add more than 8 athletes");
+			}
+		}
 	
 	// check if race has an official
 	public void checkIfRaceHasOfficial (Game game) throws NoRefereeException {

@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
@@ -30,6 +31,9 @@ public class SelectAthletesController implements Initializable {
 	
 	@FXML
 	public ListView<Athlete> athletesList, raceAthletes;
+	
+	@FXML
+	private Label status;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -51,7 +55,7 @@ public class SelectAthletesController implements Initializable {
 		
 		// set the array list of athletes to the athletesList listview
 		athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
-		athletesList.setItems(athletesListNames); 
+		athletesList.setItems(athletesListNames);
 		
 		// display the list of athletes on the athletesList listview
 		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() {
@@ -78,101 +82,94 @@ public class SelectAthletesController implements Initializable {
 	}
 	
 	// add the selected athlete to the race
-	public void addAthleteToRace(ActionEvent event) {
-		Athlete raceAthlete = athletesList.getSelectionModel().getSelectedItem(); // get the selected athlete
-		thisRaceAthletes.add(raceAthlete); // add the selected athlete to the array list of athletes for the race
-		myGame.setAthletesForRace(thisRaceAthletes);
+	public void addAthleteToRace(ActionEvent event) throws GameFullException {
 		
-		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
-			System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
+		try {
+			myGame.checkIfRaceHasMax(myGame); // check if there are 8 athletes (maximum number) in race
+			
+			Athlete raceAthlete = athletesList.getSelectionModel().getSelectedItem(); // get the selected athlete
+			
+			if (raceAthlete != null) { // check if an athlete has been selected
+				thisRaceAthletes.add(raceAthlete); // add the selected athlete to the array list of athletes for the race
+				myGame.setAthletesForRace(thisRaceAthletes);
+			
+				for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
+					System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
+				}
+			
+					/*for (int i = 0; i < thisRaceAthletes.size(); i++) {
+						System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
+					}*/
+			
+				raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
+				raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
+				
+				setCellFactoryForList(raceAthletes); // display the list of race athletes on the raceAthletes listview
+			
+				athletesToSelectList.remove(raceAthlete); // remove the selected athlete from the list of athletes to select from
+				int selectedItem = athletesList.getSelectionModel().getSelectedIndex();
+				athletesListNames.remove(selectedItem); // remove the selected athlete from the displayed list of athletes to select from
+				
+				setCellFactoryForList(athletesList); // display the list of athletes to select from on the athletesList listview
+				
+			}
+			
+		} catch (GameFullException e) {
+			status.setText("Game is full, cannot add more than 8 athletes");
 		}
 		
-		/*for (int i = 0; i < thisRaceAthletes.size(); i++) {
-			System.out.println(thisRaceAthletes.get(i).getID() + " " + thisRaceAthletes.get(i).getName() + " " + thisRaceAthletes.get(i).getType());
-		}*/
-		
-		raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
-		raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
-		
-		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() { // display the list of race athletes on the raceAthletes listview
-			
-			@Override
-			public ListCell<Athlete> call(ListView<Athlete> param) {
-				
-				ListCell<Athlete> cell = new ListCell<Athlete>(){
-					
-					@Override
-					public void updateItem(Athlete a, boolean empty) {
-						super.updateItem(a, empty);
-						if (a != null) {
-							setText(a.getName());
-						}
-					}
-				};			
-				return cell;			
-			}
-		});
-		
-		athletesToSelectList.remove(raceAthlete); // remove the selected athlete from the list of athletes to select from
-		int selectedItem = athletesList.getSelectionModel().getSelectedIndex();
-		athletesListNames.remove(selectedItem); // remove the selected athlete from the displayed list of athletes to select from
 	}
 	
 	// remove the selected athlete from the race
 	public void removeAthleteFromRace(ActionEvent event) throws TooFewAthleteException, GameFullException {
 		Athlete raceAthlete = raceAthletes.getSelectionModel().getSelectedItem(); // get the selected athlete
-		thisRaceAthletes.remove(raceAthlete); // remove the selected athletes from the array list of race athletes
-		myGame.setAthletesForRace(thisRaceAthletes);
 		
-		raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
-		raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
+		if (raceAthlete != null) { // check if an athlete has been selected
+			thisRaceAthletes.remove(raceAthlete); // remove the selected athletes from the array list of race athletes
+			myGame.setAthletesForRace(thisRaceAthletes);
 		
-		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
-			System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
-		}
+			raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
+			raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
 		
-		raceAthletes.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() { // display the list of race athletes on the raceAthletes listview
-					
-			@Override
-			public ListCell<Athlete> call(ListView<Athlete> param) {
-						
-				ListCell<Athlete> cell = new ListCell<Athlete>(){
-							
-					@Override
-					public void updateItem(Athlete a, boolean empty) {
-						super.updateItem(a, empty);
-						if (a != null) {
-							setText(a.getName());
-						}
-					}
-				};
-						
-				return cell;
-						
+			for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
+				System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
 			}
-		});
+			
+			setCellFactoryForList(raceAthletes);
 		
-		athletesToSelectList.add(raceAthlete); // add the removed athlete back to the list of athletes to select from
-		athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
-		athletesList.setItems(athletesListNames); // set the array list of athletes to the athletesList listview				
-		athletesList.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() { // display the list of athletes on the athletesList listview
-					
+			athletesToSelectList.add(raceAthlete); // add the removed athlete back to the list of athletes to select from
+			athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
+			athletesList.setItems(athletesListNames); // set the array list of athletes to the athletesList listview				
+			
+			setCellFactoryForList(athletesList);
+		}
+	}
+	
+	// display the array list on the listview
+	public void setCellFactoryForList(ListView<Athlete> list) {
+		list.setCellFactory(new Callback<ListView<Athlete>, ListCell<Athlete>>() { 
+			
 			@Override
 			public ListCell<Athlete> call(ListView<Athlete> param) {
-						
+					
 				ListCell<Athlete> cell = new ListCell<Athlete>(){
-							
+						
 					@Override
 					public void updateItem(Athlete a, boolean empty) {
 						super.updateItem(a, empty);
-						if (a != null) {
+						if (empty || a == null) {
+							setText(null);
+							setGraphic(null);
+						}
+						else {
 							setText(a.getName());
 						}
 					}
 				};						
 				return cell;						
 			}
-		});		
+		});	
 	}
-
 }
+
+

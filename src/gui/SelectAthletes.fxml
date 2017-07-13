@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="548.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SelectAthletesController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="7.0" prefHeight="50.0" prefWidth="381.0" text="Select between 4 and 8 athletes for the game">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="80.0" layoutY="7.0" prefHeight="50.0" prefWidth="381.0" text="Select between 4 and 8 athletes for the game">
          <font>
             <Font size="18.0" />
          </font>
@@ -30,7 +30,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="42.0" prefHeight="50.0" prefWidth="381.0" text="Select between 4 and 8 athletes for the game">
+      <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutX="80.0" layoutY="42.0" prefHeight="50.0" prefWidth="381.0">
          <font>
             <Font size="18.0" />
          </font>
