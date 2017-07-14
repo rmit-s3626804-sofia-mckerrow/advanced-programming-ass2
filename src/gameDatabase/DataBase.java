@@ -45,6 +45,7 @@ public class DataBase {
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
 	private ArrayList<Official> officials = new ArrayList<Official>(); 		// temporary array list to read in officials
 	private ArrayList<Game> games = new ArrayList<Game>();					// array list of games
+	private DataBase dataBase;
 	
 	public ArrayList<Athlete> getAthletes() {
 		return athletes;
@@ -64,6 +65,10 @@ public class DataBase {
 
 	public void setGames(ArrayList<Game> games) {
 		this.games = games;
+	}
+	
+	public void setDatabase(DataBase dataBase) {
+		this.dataBase = dataBase;
 	}
 	
 	// check if entries are valid
@@ -170,6 +175,10 @@ public class DataBase {
 		if (raceType.equals("cycle")) thisGame = new Cycle(raceID);
 		this.games.add(thisGame);
 		return thisGame;
+	}
+	
+	public void addGame(Game thisGame) {
+		this.games.add(thisGame);
 	}
 	
 	public Game getLastGame() {					

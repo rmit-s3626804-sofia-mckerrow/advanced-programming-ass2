@@ -49,6 +49,9 @@ public class SelectOfficialController implements Initializable {
 	// add officials to list for user to select athletes for race
 	public void addOfficialsToList(DataBase thisDB) {
 		myGame = thisDB.getLastGame();
+		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
+			System.out.println(myGame.getRaceAthletes().get(i).getName());
+		}
 		
 		ArrayList<Official> officials = thisDB.initialiseOfficialsList(); // get all the athletes in the database
 				

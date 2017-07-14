@@ -39,6 +39,10 @@ public class SelectGameController implements Initializable{
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 	}
+	
+	public DataBase getThisDB(DataBase thisDB) {
+		return thisDB;
+	}
 		
 	public void selectCycling(ActionEvent event) {
 		raceType = "cycle";
@@ -72,6 +76,7 @@ public class SelectGameController implements Initializable{
 			Pane root = loader.load(getClass().getResource("/gui/SelectAthletes.fxml").openStream());
 			SelectAthletesController saController = (SelectAthletesController)loader.getController();
 			saController.addAthletesToList(thisDB);
+			saController.setDatabase(thisDB);
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -80,7 +85,5 @@ public class SelectGameController implements Initializable{
 			e.printStackTrace();
 		}	
 	}
-
-	
 
 }

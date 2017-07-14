@@ -200,7 +200,7 @@ public abstract class Game {
 		return raceSize;
 	}
 	
-	// check if race has at least 4 athletes competing
+	// check if race has the minimum number of athletes competing
 	public void checkIfRaceHasMin(Game game) throws TooFewAthleteException{ 
 		int min = game.getMinAthletes();
 		int numberOfAthletesInRace = game.getRaceSize();
@@ -209,7 +209,7 @@ public abstract class Game {
 		}
 	}
 	
-	// check if race has 8 athletes competing
+	// check if race has the maximum number of athletes competing
 		public void checkIfRaceHasMax(Game game) throws GameFullException{ 
 			int max = game.getMaxAthletes();
 			int numberOfAthletesInRace = game.getRaceSize();

@@ -28,7 +28,7 @@ import javafx.util.Callback;
 
 public class SelectAthletesController implements Initializable {
 	
-	DataBase thisDB = new DataBase();
+	DataBase thisDB;
 	Game myGame;
 	private ArrayList<Athlete> athletesToSelectList = new ArrayList<Athlete>(); // array list of athletes for user to select from
 	private ArrayList<Athlete> thisRaceAthletes = new ArrayList<Athlete>(); // array list of athletes selected for race
@@ -40,10 +40,10 @@ public class SelectAthletesController implements Initializable {
 	
 	@FXML
 	private Label status;
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// addAthletesToList(thisDB);
 		athletesList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 	}
 	
@@ -156,6 +156,7 @@ public class SelectAthletesController implements Initializable {
 	
 	public void nextButtonClick(ActionEvent event) {
 		status.setText("");
+		int min = myGame.getMinAthletes();
 		
 		try {
 			myGame.checkIfRaceHasMin(myGame); // check if there are the minimum number of athletes in the game
@@ -163,22 +164,26 @@ public class SelectAthletesController implements Initializable {
 			status.setText("Not enough athletes to start game, need at least 4");
 		}
 		
-		
-		
-		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
-			Stage primaryStage = new Stage();
-			FXMLLoader loader = new FXMLLoader();
-			Pane root = loader.load(getClass().getResource("/gui/SelectOfficial.fxml").openStream());
-			SelectOfficialController soController = (SelectOfficialController)loader.getController();
-			soController.addOfficialsToList(thisDB);
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (myGame.getRaceSize() >= min) { // check if there are enough athletes before next window appears		
+			try {
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+				Stage primaryStage = new Stage();
+				FXMLLoader loader = new FXMLLoader();
+				Pane root = loader.load(getClass().getResource("/gui/SelectOfficial.fxml").openStream());
+				SelectOfficialController soController = (SelectOfficialController)loader.getController();
+				soController.addOfficialsToList(thisDB);
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+	}
+	
+	public void setDatabase(DataBase thisDB) {
+		this.thisDB = thisDB;
 	}
 }
 
