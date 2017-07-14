@@ -85,5 +85,9 @@ public class SelectGameController implements Initializable{
 			e.printStackTrace();
 		}	
 	}
+	
+	public void setDatabase(DataBase thisDB) {
+		this.thisDB = thisDB;
+	}
 
 }

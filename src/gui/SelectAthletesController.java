@@ -172,6 +172,7 @@ public class SelectAthletesController implements Initializable {
 				Pane root = loader.load(getClass().getResource("/gui/SelectOfficial.fxml").openStream());
 				SelectOfficialController soController = (SelectOfficialController)loader.getController();
 				soController.addOfficialsToList(thisDB);
+				soController.setDatabase(thisDB);
 				Scene scene = new Scene(root);
 				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setScene(scene);
