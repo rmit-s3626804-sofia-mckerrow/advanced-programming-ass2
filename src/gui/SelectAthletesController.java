@@ -166,7 +166,7 @@ public class SelectAthletesController implements Initializable {
 		
 		if (myGame.getRaceSize() >= min) { // check if there are enough athletes before next window appears		
 			try {
-				((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectAthletes window (stage)
 				Stage primaryStage = new Stage();
 				FXMLLoader loader = new FXMLLoader();
 				Pane root = loader.load(getClass().getResource("/gui/SelectOfficial.fxml").openStream());

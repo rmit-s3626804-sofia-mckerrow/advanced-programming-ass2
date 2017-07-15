@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import gameComponents.Game;
 import gameDatabase.DataBase;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -21,6 +22,7 @@ public class MenuController implements Initializable{
 	
 	private MenuModel menuModel = new MenuModel();
 	private DataBase thisDB = new DataBase();
+	Game myGame;
 	
 	@FXML
 	private Label isConnected, status;
@@ -37,7 +39,7 @@ public class MenuController implements Initializable{
 	
 	public void selectGame(ActionEvent event) {
 		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+			((Node)event.getSource()).getScene().getWindow().hide(); // hide menu window (stage)
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource("/gui/SelectGame.fxml").openStream());
@@ -58,13 +60,13 @@ public class MenuController implements Initializable{
 		}
 		else {
 			try {
-				((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide menu window (stage)
 				Stage primaryStage = new Stage();
 				FXMLLoader loader = new FXMLLoader();
 				Pane root = loader.load(getClass().getResource("/gui/StartGame.fxml").openStream());
 				StartGameController stgController = (StartGameController)loader.getController();
-				stgController.runRace(thisDB);
 				stgController.setDatabase(thisDB);
+				stgController.runRace(thisDB);
 				Scene scene = new Scene(root);
 				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setScene(scene);
@@ -75,8 +77,21 @@ public class MenuController implements Initializable{
 		}
 	}
 	
-	public void displayResults() {
-		
+	public void displayResults(ActionEvent event) {
+		try {
+			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			Pane root = loader.load(getClass().getResource("/gui/DisplayResults.fxml").openStream());
+			DisplayResultsController drController = (DisplayResultsController)loader.getController();
+			drController.setDatabase(thisDB);
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void displayPoints() {

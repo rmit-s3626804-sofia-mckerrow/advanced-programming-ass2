@@ -5,20 +5,25 @@ import java.util.ResourceBundle;
 
 import gameComponents.Game;
 import gameDatabase.DataBase;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 public class StartGameController implements Initializable {
 	
 	DataBase thisDB = new DataBase();
 	Game myGame;
+	
+	@FXML
+	private Label resultsTitle;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-				
-	}
+	public void initialize(URL location, ResourceBundle resources) {}
 	
 	public void runRace(DataBase thisDb) {
 		myGame = thisDB.getLastGame();
+		resultsTitle.setText("Results for Race " + myGame.getRaceID());
+		
 		myGame.competeAthletes(); // get race times
 		myGame.getRaceOfficial().sortRace(thisDB); // sort the results from lowest to highest times - if there is a tie official decides
 		

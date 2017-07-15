@@ -126,7 +126,7 @@ public class SelectOfficialController implements Initializable {
 		}
 		
 		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+			((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectOfficial window (stage)
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource("/gui/Menu.fxml").openStream());

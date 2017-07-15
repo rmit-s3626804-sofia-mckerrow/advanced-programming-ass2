@@ -38,10 +38,6 @@ public class SelectGameController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {}
 	
-	public DataBase getThisDB(DataBase thisDB) {
-		return thisDB;
-	}
-		
 	public void selectCycling(ActionEvent event) {
 		raceType = "cycle";
 		myGame = thisDB.addRace(raceType);
@@ -68,7 +64,7 @@ public class SelectGameController implements Initializable{
 
 	public void nextButtonClick(ActionEvent event) {
 		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+			((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectGame window (stage)
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource("/gui/SelectAthletes.fxml").openStream());
