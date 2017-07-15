@@ -23,14 +23,12 @@ public class MenuController implements Initializable{
 	private DataBase thisDB = new DataBase();
 	
 	@FXML
-	private Label isConnected;
+	private Label isConnected, status;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if (menuModel.isDbConnected()) {
 			isConnected.setText("Database is connected");
-			// thisDB.initialiseAthletesList(); // initialise arraylist of Athletes from database
-			// thisDB.initialiseOfficialsList(); // initialise arraylist of Officials from database
 		}
 		else {
 			isConnected.setText("Database is not connected");
@@ -54,8 +52,27 @@ public class MenuController implements Initializable{
 		}	
 	}
 	
-	public void startGame() {
-		
+	public void startGame(ActionEvent event) {
+		if (thisDB.getGames().size() == 0){ // Check if user has selected a game before starting one
+			status.setText("You must select a game to run before starting!");
+		}
+		else {
+			try {
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+				Stage primaryStage = new Stage();
+				FXMLLoader loader = new FXMLLoader();
+				Pane root = loader.load(getClass().getResource("/gui/StartGame.fxml").openStream());
+				StartGameController stgController = (StartGameController)loader.getController();
+				stgController.runRace(thisDB);
+				stgController.setDatabase(thisDB);
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void displayResults() {

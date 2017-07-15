@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="550.0" prefWidth="451.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="gui.SelectOfficialController">
+<AnchorPane prefHeight="550.0" prefWidth="451.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.SelectOfficialController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="14.0" prefHeight="50.0" prefWidth="381.0" text="Select an official for the game">
          <font>
@@ -30,7 +29,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Label fx:id="officialStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="438.0" prefHeight="46.0" prefWidth="312.0">
+      <Label fx:id="officialStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="438.0" prefHeight="46.0" prefWidth="449.0">
          <font>
             <Font size="18.0" />
          </font>

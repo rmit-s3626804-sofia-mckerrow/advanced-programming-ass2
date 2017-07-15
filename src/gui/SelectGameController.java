@@ -36,9 +36,7 @@ public class SelectGameController implements Initializable{
 	private Button next;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-	}
+	public void initialize(URL location, ResourceBundle resources) {}
 	
 	public DataBase getThisDB(DataBase thisDB) {
 		return thisDB;

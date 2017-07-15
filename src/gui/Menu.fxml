@@ -7,39 +7,44 @@
 
 <AnchorPane prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MenuController">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="57.0" prefHeight="46.0" prefWidth="312.0" text="Welcome to the Ozlympic Games!">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="94.0" layoutY="35.0" prefHeight="46.0" prefWidth="312.0" text="Welcome to the Ozlympic Games!">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="selectGame" layoutX="76.0" layoutY="124.0" mnemonicParsing="false" onAction="#selectGame" prefHeight="46.0" prefWidth="353.0" text="Select a game to run">
+      <Button fx:id="selectGame" layoutX="76.0" layoutY="135.0" mnemonicParsing="false" onAction="#selectGame" prefHeight="46.0" prefWidth="353.0" text="Select a game to run">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="startGame" layoutX="76.0" layoutY="192.0" mnemonicParsing="false" onAction="#startGame" prefHeight="46.0" prefWidth="353.0" text="Start the game">
+      <Button fx:id="startGame" layoutX="76.0" layoutY="204.0" mnemonicParsing="false" onAction="#startGame" prefHeight="46.0" prefWidth="353.0" text="Start the game">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="displayResults" layoutX="76.0" layoutY="265.0" mnemonicParsing="false" onAction="#displayResults" prefHeight="46.0" prefWidth="353.0" text="Display the final results of all games">
+      <Button fx:id="displayResults" layoutX="76.0" layoutY="278.0" mnemonicParsing="false" onAction="#displayResults" prefHeight="46.0" prefWidth="353.0" text="Display the final results of all games">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="displayPoints" layoutX="76.0" layoutY="337.0" mnemonicParsing="false" onAction="#displayPoints" prefHeight="46.0" prefWidth="353.0" text="Display the points of all games">
+      <Button fx:id="displayPoints" layoutX="76.0" layoutY="355.0" mnemonicParsing="false" onAction="#displayPoints" prefHeight="46.0" prefWidth="353.0" text="Display the points of all games">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="exit" layoutX="76.0" layoutY="408.0" mnemonicParsing="false" onAction="#exit" prefHeight="46.0" prefWidth="353.0" text="Exit">
+      <Button fx:id="exit" layoutX="76.0" layoutY="425.0" mnemonicParsing="false" onAction="#exit" prefHeight="46.0" prefWidth="353.0" text="Exit">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Label fx:id="isConnected" layoutX="47.0" layoutY="14.0" prefHeight="28.0" prefWidth="404.0" text="Status" textFill="#e81e1e">
+      <Label fx:id="isConnected" layoutX="48.0" layoutY="7.0" prefHeight="28.0" prefWidth="404.0" text="Status" textFill="#e81e1e">
          <font>
             <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="81.0" prefHeight="46.0" prefWidth="474.0">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
    </children>
