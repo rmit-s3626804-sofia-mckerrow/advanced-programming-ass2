@@ -164,9 +164,11 @@ public abstract class Game {
 		// iterate through the athletes and call their compete() method
 		// check if race has been raced
 		if (resultArray.size() == 0){
-			for (int i = 0; i < raceAthletes.size(); i++){
+			//for (int i = 0; i < raceAthletes.size(); i++){
+			for (Athlete raceAthlete: raceAthletes) {
 				// pass current game to access min and max race times of subclass
-				double result = Athlete.compete(this);	
+				double result = Athlete.compete(this);
+				raceAthlete.setRoundTime(result);
 				resultArray.add(result);
 			}
 		}

@@ -28,8 +28,8 @@ public class Official extends Participant {
 	
 	// bubble sort - iterate through array and if next value is greater then swap, moves lowest number to the start of array
 	public void sortRace(DataBase db){ 
-		double temp; 			// temporary int for swapping
-		Athlete tempA; 			// temporary athlete for swapping
+		double temp; // temporary int for swapping
+		Athlete tempA; // temporary athlete for swapping
 		Game sort = db.getLastGame();
 		for (int i = 0; i < sort.getResultArray().size(); i++){
 			for (int j = 0; j < (sort.getResultArray().size() - 1); j++){

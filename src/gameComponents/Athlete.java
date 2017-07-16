@@ -10,14 +10,14 @@ public class Athlete extends Participant{
 
 	private int roundPoints;
 	private int totalPoints;
-//	private double roundTime;
+	private double roundTime;
 	
 	// Constructor for Athlete class
 	public Athlete(String id, String name, String type, int age, String state) {
 		super(id, name, type, age, state);
 		roundPoints = 0;
 		totalPoints = 0;
-//		roundTime = 0;
+		roundTime = 0;
 	}
 	
 	public int getRoundPoints() {
@@ -36,13 +36,13 @@ public class Athlete extends Participant{
 		this.totalPoints = totalPoints;
 	}
 	
-//	public double getRoundTime() {
-//		return roundTime;
-//	}
-//
-//	public void setRoundTime(double roundTime) {
-//		this.roundTime = roundTime;
-//	}
+	public double getRoundTime() {
+		return roundTime;
+	}
+
+	public void setRoundTime(double roundTime) {
+		this.roundTime = roundTime;
+	}
 	
 	public static double compete(Game game) { // get values from Game subclasses and return the raceTime
 		double raceTime;
