@@ -1,41 +1,45 @@
 package gameComponents;
+
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 //@author Calvin
 
 public abstract class Participant {
 	
-	private String id;
-	private String name;
-	private String type;
-	private int age;
-	private String state;
+	private SimpleStringProperty id;
+	private SimpleStringProperty name;
+	private SimpleStringProperty type;
+	private SimpleIntegerProperty age;
+	private SimpleStringProperty state;
 	
 	// constructor for Participant class
 	public Participant(String id, String name, String type, int age, String state) {
 		super();
-		this.id = id;
-		this.name = name;
-		this.type = type;
-		this.age = age;
-		this.state = state;
+		this.id = new SimpleStringProperty(id);
+		this.name = new SimpleStringProperty(name);
+		this.type = new SimpleStringProperty(type);
+		this.age = new SimpleIntegerProperty(age);
+		this.state = new SimpleStringProperty(state);
 	}
 	
 	public String getID() {
-		return id;
+		return id.get();
 	}
 
 	public String getName() {
-		return name;
+		return name.get();
 	}
 	
 	public String getType() {
-		return type;
+		return type.get();
 	}
 	
 	public int getAge() {
-		return age;
+		return age.get();
 	}
 
 	public String getState() {
-		return state;
+		return state.get();
 	}	
 }

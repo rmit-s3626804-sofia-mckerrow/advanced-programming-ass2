@@ -81,12 +81,12 @@ public class SelectOfficialController implements Initializable {
 			officialsList.setItems(officialsListNames); // set the array list of race athletes to the raceAthletes listview
 				
 			setCellFactoryForList(officialsList); // display the list of race athletes on the raceAthletes listview
+			
+			for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
+				System.out.println(myGame.getRaceAthletes().get(i).getName());
+			}
 				
-		}
-		
-		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
-			System.out.println(myGame.getRaceAthletes().get(i).getName());
-		}
+		}	
 		
 	}
 	

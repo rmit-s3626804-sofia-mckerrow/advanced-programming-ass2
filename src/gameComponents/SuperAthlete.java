@@ -1,4 +1,5 @@
 package gameComponents;
+
 //@author Sofia
 
 public class SuperAthlete extends Athlete {

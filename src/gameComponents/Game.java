@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import customExceptions.GameFullException;
 import customExceptions.NoRefereeException;
 import customExceptions.TooFewAthleteException;
