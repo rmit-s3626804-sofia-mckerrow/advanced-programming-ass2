@@ -124,20 +124,21 @@ public class SelectOfficialController implements Initializable {
 		} catch (NoRefereeException e) {
 			status.setText("No official selected for game");
 		}
-		
-		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectOfficial window (stage)
-			Stage primaryStage = new Stage();
-			FXMLLoader loader = new FXMLLoader();
-			Pane root = loader.load(getClass().getResource("/gui/Menu.fxml").openStream());
-			MenuController mController = (MenuController)loader.getController();
-			mController.setDatabase(thisDB);
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (myGame.getRaceOfficial() != null) {
+			try {
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectOfficial window (stage)
+				Stage primaryStage = new Stage();
+				FXMLLoader loader = new FXMLLoader();
+				Pane root = loader.load(getClass().getResource("/gui/Menu.fxml").openStream());
+				MenuController mController = (MenuController)loader.getController();
+				mController.setDatabase(thisDB);
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
