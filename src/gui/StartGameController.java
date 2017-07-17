@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -9,12 +10,18 @@ import gameComponents.Game;
 import gameDatabase.DataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class StartGameController implements Initializable {
 	
@@ -57,12 +64,31 @@ public class StartGameController implements Initializable {
 		ArrayList<Athlete> lastGameResults = myGame.getRaceAthletes();
 		raceResultsList = FXCollections.observableArrayList(lastGameResults); // set raceResults as an observable list of the race results
 		
-		athleteNames.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
-		athleteTimes.setCellValueFactory(new PropertyValueFactory<Athlete, Double>("roundTime"));
-		athletePoints.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("roundPoints"));
+		athleteNames.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name")); // set the athletes' names in the athleteNames column
+		athleteTimes.setCellValueFactory(new PropertyValueFactory<Athlete, Double>("roundTime")); // set the athletes' times in the athleteTimes column
+		athletePoints.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("roundPoints")); // set the athletes' points in the athletePoints column
+		athleteNames.setStyle("-fx-alignment: CENTER;");
+		athleteTimes.setStyle("-fx-alignment: CENTER;");
+		athletePoints.setStyle("-fx-alignment: CENTER;");		
 		resultsTable.setItems(raceResultsList);
-		// resultsTable.getColumns().addAll(athleteNames, times, points);	
 		
+	}
+	
+	public void returnToMenuButtonClick(ActionEvent event) {
+		try {
+			((Node)event.getSource()).getScene().getWindow().hide(); // hide StartGame window (stage)
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader();
+			Pane root = loader.load(getClass().getResource("/gui/Menu.fxml").openStream());
+			MenuController mController = (MenuController)loader.getController();
+			mController.setDatabase(thisDB);
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void setDatabase(DataBase thisDB) {

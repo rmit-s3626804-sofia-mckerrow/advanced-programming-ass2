@@ -38,46 +38,66 @@ public class SelectGameController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {}
 	
+	// add a cycling game
 	public void selectCycling(ActionEvent event) {
-		raceType = "cycle";
-		myGame = thisDB.addRace(raceType);
-		addGameStatus.setText("Cycling race has been added");
-		raceID.setText("Race ID: " + myGame.getRaceID());
-		next.setVisible(true);
+		if (thisDB.getGames().size() == 0) { // check if a game has been added
+			raceType = "cycle";
+			myGame = thisDB.addRace(raceType);
+			addGameStatus.setText("Cycling game has been added");
+			raceID.setText("Race ID: " + myGame.getRaceID());
+		}
+		else {
+			addGameStatus.setText("A game has already been added");
+		}
 	}
 
+	// add a running game
 	public void selectRunning(ActionEvent event) {
-		raceType = "run";
-		myGame = thisDB.addRace(raceType);
-		addGameStatus.setText("Running race has been added");
-		raceID.setText("Race ID: " + myGame.getRaceID());
-		next.setVisible(true);
+		if (thisDB.getGames().size() == 0) { // check if a game has been added
+			raceType = "run";
+			myGame = thisDB.addRace(raceType);
+			addGameStatus.setText("Running game has been added");
+			raceID.setText("Race ID: " + myGame.getRaceID());
+		}
+		else {
+			addGameStatus.setText("A game has already been added");
+		}
 	}
 
+	// add a swimming game
 	public void selectSwimming(ActionEvent event) {
-		raceType = "swim";
-		myGame = thisDB.addRace(raceType);
-		addGameStatus.setText("Swimming race has been added");
-		raceID.setText("Race ID: " + myGame.getRaceID());
-		next.setVisible(true);
+		if (thisDB.getGames().size() == 0) { // check if a game has been added
+			raceType = "swim";
+			myGame = thisDB.addRace(raceType);
+			addGameStatus.setText("Swimming game has been added");
+			raceID.setText("Race ID: " + myGame.getRaceID());
+		}
+		else {
+			addGameStatus.setText("A game has already been added");
+		}
 	}
 
 	public void nextButtonClick(ActionEvent event) {
-		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectGame window (stage)
-			Stage primaryStage = new Stage();
-			FXMLLoader loader = new FXMLLoader();
-			Pane root = loader.load(getClass().getResource("/gui/SelectAthletes.fxml").openStream());
-			SelectAthletesController saController = (SelectAthletesController)loader.getController();
-			saController.addAthletesToList(thisDB);
-			saController.setDatabase(thisDB);
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}	
+		if (thisDB.getGames().size() > 0) { // check if a game has been added
+			try {
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectGame window (stage)
+				Stage primaryStage = new Stage();
+				FXMLLoader loader = new FXMLLoader();
+				Pane root = loader.load(getClass().getResource("/gui/SelectAthletes.fxml").openStream());
+				SelectAthletesController saController = (SelectAthletesController)loader.getController();
+				saController.addAthletesToList(thisDB);
+				saController.setDatabase(thisDB);
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			addGameStatus.setText("Please select a game");
+		}
 	}
 	
 	public void setDatabase(DataBase thisDB) {
