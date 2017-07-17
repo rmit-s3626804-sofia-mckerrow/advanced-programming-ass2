@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -31,6 +33,10 @@ public class Athlete extends Participant{
 		this.roundPoints = new SimpleIntegerProperty(roundPoints);
 	}
 	
+	public IntegerProperty roundPointsProperty() {
+		return roundPoints;
+	}
+	
 	public int getTotalPoints() {
 		return totalPoints.get();
 	}
@@ -39,12 +45,20 @@ public class Athlete extends Participant{
 		this.totalPoints = new SimpleIntegerProperty(totalPoints);
 	}
 	
+	public IntegerProperty totalPointsProperty() {
+		return totalPoints;
+	}
+	
 	public double getRoundTime() {
 		return roundTime.get();
 	}
 
 	public void setRoundTime(double roundTime) {
 		this.roundTime = new SimpleDoubleProperty(roundTime);
+	}
+	
+	public DoubleProperty roundTimeProperty() {
+		return roundTime;
 	}
 	
 	public static double compete(Game game) { // get values from Game subclasses and return the raceTime

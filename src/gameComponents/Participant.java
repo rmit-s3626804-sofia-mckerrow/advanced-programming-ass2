@@ -1,7 +1,9 @@
 package gameComponents;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 //@author Calvin
 
@@ -26,20 +28,40 @@ public abstract class Participant {
 	public String getID() {
 		return id.get();
 	}
+	
+	public StringProperty idProperty() {
+		return id;
+	}
 
 	public String getName() {
 		return name.get();
+	}
+	
+	public StringProperty nameProperty() {
+		return name;
 	}
 	
 	public String getType() {
 		return type.get();
 	}
 	
+	public StringProperty typeProperty() {
+		return type;
+	}
+	
 	public int getAge() {
 		return age.get();
+	}
+	
+	public IntegerProperty ageProperty() {
+		return age;
 	}
 
 	public String getState() {
 		return state.get();
-	}	
+	}
+	
+	public StringProperty stateProperty() {
+		return state;
+	}
 }
