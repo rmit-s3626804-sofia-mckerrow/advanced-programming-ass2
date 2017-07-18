@@ -190,21 +190,16 @@ public class DataBase {
 		}
 		else {
 			for (int i = 0; i < games.size(); i++){
-				if (games.get(i).getRaceAthletes().size() < 4){
-					System.out.println(games.get(i).getRaceID() + " was cancelled");
-				}
-				else {
-					Game getGame = games.get(i);
-					int resultSize = getGame.getResultArray().size();
-					System.out.println();
-					System.out.println("Race " + getGame.getRaceID() + " Results");
-					System.out.println("   Name			Time (seconds)");
-					for (int j = 0; j < resultSize; j++){	// print results
-						Athlete getAthlete = getGame.getRaceAthletes().get(j);
-						double myTime = getGame.getResultArray().get(j);
-						System.out.print((j+1) +". ");
-						System.out.printf("%-20s %8s %n", getAthlete.getName(), myTime);
-					}
+				Game getGame = games.get(i);
+				int resultSize = getGame.getResultArray().size();
+				System.out.println();
+				System.out.println("Race " + getGame.getRaceID() + " Results");
+				System.out.println("   Name			Time (seconds)");
+				for (int j = 0; j < resultSize; j++){	// print results
+					Athlete getAthlete = getGame.getRaceAthletes().get(j);
+					double myTime = getGame.getResultArray().get(j);
+					System.out.print((j+1) +". ");
+					System.out.printf("%-20s %8s %n", getAthlete.getName(), myTime);
 				}
 			}
 		}

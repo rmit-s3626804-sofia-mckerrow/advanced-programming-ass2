@@ -77,20 +77,26 @@ public class MenuController implements Initializable{
 		}
 	}
 	
+	// check for races and print formatted list of race results
 	public void displayResults(ActionEvent event) {
-		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
-			Stage primaryStage = new Stage();
-			FXMLLoader loader = new FXMLLoader();
-			Pane root = loader.load(getClass().getResource("/gui/DisplayResults.fxml").openStream());
-			DisplayResultsController drController = (DisplayResultsController)loader.getController();
-			drController.setDatabase(thisDB);
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (thisDB.getGames().isEmpty() == true){
+			status.setText("No races to display!");
+		}
+		else {
+			try {
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+				Stage primaryStage = new Stage();
+				FXMLLoader loader = new FXMLLoader();
+				Pane root = loader.load(getClass().getResource("/gui/DisplayResults.fxml").openStream());
+				DisplayResultsController drController = (DisplayResultsController)loader.getController();
+				drController.setDatabase(thisDB);
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

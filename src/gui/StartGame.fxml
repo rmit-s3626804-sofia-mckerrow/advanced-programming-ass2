@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="407.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartGameController">
+<AnchorPane prefHeight="382.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartGameController">
    <children>
-      <Label fx:id="resultsTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="25.0" prefHeight="46.0" prefWidth="312.0">
+      <Label fx:id="resultsTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="14.0" prefHeight="46.0" prefWidth="312.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="resultsTable" layoutX="27.0" layoutY="83.0" prefHeight="235.0" prefWidth="437.0">
+      <TableView fx:id="resultsTable" layoutX="26.0" layoutY="74.0" prefHeight="235.0" prefWidth="432.0">
         <columns>
-          <TableColumn fx:id="athleteNames" prefWidth="203.0" text="Athlete Name" />
+          <TableColumn fx:id="athleteNames" prefWidth="203.0" text="Athlete" />
             <TableColumn fx:id="athleteTimes" prefWidth="127.0" text="Time (seconds)" />
             <TableColumn fx:id="athletePoints" prefWidth="103.0" text="Points" />
         </columns>
       </TableView>
-      <Button fx:id="returnMenu" layoutX="137.0" layoutY="338.0" mnemonicParsing="false" onAction="#returnToMenuButtonClick" prefHeight="46.0" prefWidth="230.0" text="Return to menu">
+      <Button fx:id="returnMenu" layoutX="137.0" layoutY="324.0" mnemonicParsing="false" onAction="#returnToMenuButtonClick" prefHeight="46.0" prefWidth="230.0" text="Return to menu">
          <font>
             <Font size="18.0" />
          </font>

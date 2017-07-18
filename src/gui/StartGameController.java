@@ -47,7 +47,7 @@ public class StartGameController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {}
 	
-	public void runRace(DataBase thisDb) {
+	public void runRace(DataBase thisDB) {
 		myGame = thisDB.getLastGame();
 		resultsTitle.setText("Results for Race " + myGame.getRaceID());
 		
@@ -59,7 +59,7 @@ public class StartGameController implements Initializable {
 		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){ 		
 			System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName() + " " + myGame.getRaceAthletes().get(i).getRoundTime() + 
 					" " + myGame.getRaceAthletes().get(i).getRoundPoints());
-			}
+		}
 		
 		ArrayList<Athlete> lastGameResults = myGame.getRaceAthletes();
 		raceResultsList = FXCollections.observableArrayList(lastGameResults); // set raceResults as an observable list of the race results
