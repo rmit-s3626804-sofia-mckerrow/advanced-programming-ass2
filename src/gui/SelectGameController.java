@@ -40,41 +40,26 @@ public class SelectGameController implements Initializable{
 	
 	// add a cycling game
 	public void selectCycling(ActionEvent event) {
-		if (thisDB.getGames().size() == 0) { // check if a game has been added
-			raceType = "cycle";
-			myGame = thisDB.addRace(raceType);
-			addGameStatus.setText("Cycling game has been added");
-			raceID.setText("Race ID: " + myGame.getRaceID());
-		}
-		else {
-			addGameStatus.setText("A game has already been added");
-		}
+		raceType = "cycle";
+		myGame = thisDB.addRace(raceType);
+		addGameStatus.setText("Cycling game has been added");
+		raceID.setText("Race ID: " + myGame.getRaceID());
 	}
 
 	// add a running game
 	public void selectRunning(ActionEvent event) {
-		if (thisDB.getGames().size() == 0) { // check if a game has been added
-			raceType = "run";
-			myGame = thisDB.addRace(raceType);
-			addGameStatus.setText("Running game has been added");
-			raceID.setText("Race ID: " + myGame.getRaceID());
-		}
-		else {
-			addGameStatus.setText("A game has already been added");
-		}
+		raceType = "run";
+		myGame = thisDB.addRace(raceType);
+		addGameStatus.setText("Running game has been added");
+		raceID.setText("Race ID: " + myGame.getRaceID());
 	}
 
 	// add a swimming game
 	public void selectSwimming(ActionEvent event) {
-		if (thisDB.getGames().size() == 0) { // check if a game has been added
-			raceType = "swim";
-			myGame = thisDB.addRace(raceType);
-			addGameStatus.setText("Swimming game has been added");
-			raceID.setText("Race ID: " + myGame.getRaceID());
-		}
-		else {
-			addGameStatus.setText("A game has already been added");
-		}
+		raceType = "swim";
+		myGame = thisDB.addRace(raceType);
+		addGameStatus.setText("Swimming game has been added");
+		raceID.setText("Race ID: " + myGame.getRaceID());
 	}
 
 	public void nextButtonClick(ActionEvent event) {

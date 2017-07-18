@@ -71,7 +71,7 @@ public class SelectOfficialController implements Initializable {
 				
 		Official raceOfficial = officialsList.getSelectionModel().getSelectedItem(); // get the selected official
 			
-		if (raceOfficial != null) { // check if an official has been selected
+		if (raceOfficial != null && myGame.getRaceOfficial() == null) { // check if an official has been selected
 			myGame.setOfficialForRace(raceOfficial); // add the selected official to the race
 			
 			officialStatus.setText("Race Official selected: " + myGame.getRaceOfficial().getName());
@@ -80,12 +80,13 @@ public class SelectOfficialController implements Initializable {
 			officialsListNames = FXCollections.observableArrayList(officialToSelectList);
 			officialsList.setItems(officialsListNames); // set the array list of race athletes to the raceAthletes listview
 				
-			setCellFactoryForList(officialsList); // display the list of race athletes on the raceAthletes listview
-			
-			for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
-				System.out.println(myGame.getRaceAthletes().get(i).getName());
-			}
-				
+			setCellFactoryForList(officialsList); // display the list of race athletes on the raceAthletes listview		
+		}
+		else if (myGame.getRaceOfficial() != null) {
+			status.setText("An official has already been selected for the game");
+		}
+		else {
+			status.setText("Please select an official to add to the game");
 		}	
 		
 	}
@@ -124,6 +125,7 @@ public class SelectOfficialController implements Initializable {
 		} catch (NoRefereeException e) {
 			status.setText("No official selected for game");
 		}
+		
 		if (myGame.getRaceOfficial() != null) {
 			try {
 				((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectOfficial window (stage)
