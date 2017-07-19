@@ -168,7 +168,7 @@ public class DataBase {
 				double time = myGame.getRaceAthletes().get(i).getRoundTime();
 				int points = myGame.getRaceAthletes().get(i).getRoundPoints();
 				
-				if (menuModel.isDbConnected()) {
+				if (isDbConnected()) { // if the database is connected, add game results to database
 					addResultToDatabase(athleteID, time, points, gameID, officialID, date);
 				}
 			}
@@ -377,8 +377,25 @@ public class DataBase {
 		prep.execute();
 	}
 	
+	// get the game results from database
+	public ResultSet getResultsFromDatabase() throws SQLException {
+		Statement state = connection.createStatement();
+		ResultSet res = state.executeQuery("SELECT * FROM results");
+		return res;
+	}
+	
 	// add game results to file results.txt
 	public void addResultToFile() {
 		
+	}
+	
+	public boolean isDbConnected() {
+		try {
+			return !connection.isClosed();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 }

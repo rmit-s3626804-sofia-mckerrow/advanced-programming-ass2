@@ -20,21 +20,15 @@ import javafx.stage.Stage;
 
 public class MenuController implements Initializable{
 	
-	private MenuModel menuModel = new MenuModel();
 	private DataBase thisDB = new DataBase();
 	Game myGame;
 	
 	@FXML
-	private Label isConnected, status;
+	private Label status;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		if (menuModel.isDbConnected()) {
-			isConnected.setText("Database is connected");
-		}
-		else {
-			isConnected.setText("Database is not connected");
-		}		
+			
 	}
 	
 	public void selectGame(ActionEvent event) {
@@ -80,7 +74,7 @@ public class MenuController implements Initializable{
 	// check for races and print formatted list of race results
 	public void displayResults(ActionEvent event) {
 		if (thisDB.getGames().isEmpty() == true){
-			status.setText("No races to display!");
+			status.setText("No games to display!");
 		}
 		else {
 			try {
@@ -90,6 +84,7 @@ public class MenuController implements Initializable{
 				Pane root = loader.load(getClass().getResource("/gui/DisplayResults.fxml").openStream());
 				DisplayResultsController drController = (DisplayResultsController)loader.getController();
 				drController.setDatabase(thisDB);
+				drController.displayAllResults(thisDB);
 				Scene scene = new Scene(root);
 				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setScene(scene);
@@ -101,7 +96,9 @@ public class MenuController implements Initializable{
 	}
 	
 	public void displayPoints() {
-		
+		if (thisDB.getGames().isEmpty() == true) {
+			status.setText("No games to display!");
+		}
 	}
 	
 	public void exit(ActionEvent event) {

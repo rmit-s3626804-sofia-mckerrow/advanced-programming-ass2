@@ -1,19 +1,12 @@
 package gui;
 
-import java.sql.Statement;
-
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import gameDatabase.SQLiteConnection;
 
 public class MenuModel {
 
-	Connection connection;
+	private Connection connection;
 
 	public MenuModel() {
 		connection = SQLiteConnection.connector();
@@ -22,16 +15,6 @@ public class MenuModel {
 			System.exit(1);
 		}
 			
-	}
-
-	public boolean isDbConnected() {
-		try {
-			return !connection.isClosed();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-
 	}
 
 }

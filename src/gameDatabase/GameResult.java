@@ -1,7 +1,5 @@
 package gameDatabase;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class GameResult {
@@ -13,11 +11,11 @@ public class GameResult {
 	private SimpleStringProperty officialID;
 	private SimpleStringProperty date;
 	
-	public GameResult(String athleteID, String time, String points, String gameID, String officialID, String date) {
+	public GameResult(String gameID, String athleteID, String time, String points, String officialID, String date) {
+		this.gameID = new SimpleStringProperty(gameID);
 		this.athleteID = new SimpleStringProperty(athleteID);
 		this.time = new SimpleStringProperty(time);
 		this.points = new SimpleStringProperty(points);
-		this.gameID = new SimpleStringProperty(gameID);
 		this.officialID = new SimpleStringProperty(officialID);
 		this.date = new SimpleStringProperty(date);
 	}

@@ -2,12 +2,15 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import gameComponents.Athlete;
 import gameComponents.Game;
-import gameComponents.Official;
 import gameDatabase.DataBase;
+import gameDatabase.GameResult;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -24,31 +28,64 @@ public class DisplayResultsController implements Initializable {
 	
 	DataBase thisDB = new DataBase();
 	Game myGame;
-	private ObservableList<Game> resultsList;
+	private ArrayList<GameResult> gameResults = new ArrayList<GameResult>();
+	private ObservableList<GameResult> resultsList;
 
 	@FXML
-	private TableView<Athlete> resultsTable;
+	private TableView<GameResult> resultsTable;
 	
 	@FXML
-	private TableColumn<Game, String> raceIDs;
+	private TableColumn<GameResult, String> gameID;
 	
 	@FXML
-	private TableColumn<Official, String> officialNames;
+	private TableColumn<GameResult, String> athleteID;
 	
 	@FXML
-	private TableColumn<Athlete, String> athleteNames;
+	private TableColumn<GameResult, String> athleteTime;
 	
 	@FXML
-	private TableColumn<Athlete, Double> athleteTimes;
+	private TableColumn<GameResult, String> athletePoints;
 	
 	@FXML
-	private TableColumn<Athlete, Integer> athletePoints;
+	private TableColumn<GameResult, String> officialID;
+	
+	@FXML
+	private TableColumn<GameResult, String> date;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {}
+	public void initialize(URL location, ResourceBundle resources) {
+		gameID.setStyle("-fx-alignment: CENTER;");
+		athleteID.setStyle("-fx-alignment: CENTER;");
+		athleteTime.setStyle("-fx-alignment: CENTER;");
+		athletePoints.setStyle("-fx-alignment: CENTER;");
+		officialID.setStyle("-fx-alignment: CENTER;");
+		date.setStyle("-fx-alignment: CENTER;");
+	}
 	
 	public void displayAllResults(DataBase thisDB) {
+		ResultSet rs;
 		
+		try {
+			if (thisDB.isDbConnected()) {
+				rs = thisDB.getResultsFromDatabase();
+				while (rs.next()) {
+					GameResult gameResultItem = new GameResult(rs.getString("gameID"), rs.getString("athleteID"), 
+							rs.getString("result"), rs.getString("score"), rs.getString("officialID"), rs.getString("date"));
+					gameResults.add(gameResultItem);
+				}
+			}
+		} catch (SQLException e) {
+				e.printStackTrace();
+		}
+		
+		resultsList = FXCollections.observableArrayList(gameResults);
+		gameID.setCellValueFactory(new PropertyValueFactory<GameResult, String>("gameID"));
+		athleteID.setCellValueFactory(new PropertyValueFactory<GameResult, String>("athleteID"));
+		athleteTime.setCellValueFactory(new PropertyValueFactory<GameResult, String>("time"));
+		athletePoints.setCellValueFactory(new PropertyValueFactory<GameResult, String>("points"));
+		officialID.setCellValueFactory(new PropertyValueFactory<GameResult, String>("officialID"));
+		date.setCellValueFactory(new PropertyValueFactory<GameResult, String>("date"));
+		resultsTable.setItems(resultsList);
 	}
 	
 	public void returnToMenuButtonClick(ActionEvent event) {
