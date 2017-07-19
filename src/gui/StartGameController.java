@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -45,7 +46,11 @@ public class StartGameController implements Initializable {
 	private TableColumn<Athlete, Integer> athletePoints;
 	
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {}
+	public void initialize(URL location, ResourceBundle resources) {
+		athleteNames.setStyle("-fx-alignment: CENTER;");
+		athleteTimes.setStyle("-fx-alignment: CENTER;");
+		athletePoints.setStyle("-fx-alignment: CENTER;");
+	}
 	
 	public void runRace(DataBase thisDB) {
 		myGame = thisDB.getLastGame();
@@ -67,12 +72,18 @@ public class StartGameController implements Initializable {
 		athleteNames.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name")); // set the athletes' names in the athleteNames column
 		athleteTimes.setCellValueFactory(new PropertyValueFactory<Athlete, Double>("roundTime")); // set the athletes' times in the athleteTimes column
 		athletePoints.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("roundPoints")); // set the athletes' points in the athletePoints column
-		athleteNames.setStyle("-fx-alignment: CENTER;");
-		athleteTimes.setStyle("-fx-alignment: CENTER;");
-		athletePoints.setStyle("-fx-alignment: CENTER;");		
 		resultsTable.setItems(raceResultsList);
 		
+		try {
+			thisDB.recordLastGame(); // record the game results to the database
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
+	
+	
 	
 	public void returnToMenuButtonClick(ActionEvent event) {
 		try {

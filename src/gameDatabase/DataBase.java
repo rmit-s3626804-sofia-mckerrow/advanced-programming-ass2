@@ -35,11 +35,13 @@ import gameComponents.Runner;
 import gameComponents.SuperAthlete;
 import gameComponents.Swim;
 import gameComponents.Swimmer;
+import gui.MenuModel;
 
 public class DataBase {
 	
 	private static Connection con;
 	private static Connection connection = SQLiteConnection.connector();
+	private MenuModel menuModel = new MenuModel();
 	// private static boolean hasPartData = false;
 	// private static boolean hasResData = false;
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
@@ -147,12 +149,30 @@ public class DataBase {
 					int points = recordGame.getRaceAthletes().get(j).getRoundPoints();
 					writer.write(id + ", " + time + ", " + points); 
 					writer.newLine();
-					this.addResult(id, time, points, logID, logOfficialID, logDate);
+					this.addResultToDatabase(id, time, points, logID, logOfficialID, logDate);
 				}
 				writer.newLine();
 			}
 		writer.close();
 	}
+	
+	// record game to database and results.txt file
+		public void recordLastGame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+			Game myGame = getLastGame();			
+			String gameID = myGame.getRaceID();
+			String officialID = myGame.getRaceOfficial().getID();
+			String date = myGame.getDate();
+			
+			for (int i = 0; i < myGame.getRaceAthletes().size(); i++){ 		
+				String athleteID = myGame.getRaceAthletes().get(i).getID();
+				double time = myGame.getRaceAthletes().get(i).getRoundTime();
+				int points = myGame.getRaceAthletes().get(i).getRoundPoints();
+				
+				if (menuModel.isDbConnected()) {
+					addResultToDatabase(athleteID, time, points, gameID, officialID, date);
+				}
+			}
+		}
 	
 	// to delete
 	public ArrayList<Athlete> getShuffledAthletes(){ 
@@ -339,15 +359,15 @@ public class DataBase {
 		return officials;
 	}
 	
-	// deletes all results
+	// deletes all records from results table in database
 	public void emptyResults() throws SQLException {
-		Statement state = con.createStatement();
+		Statement state = connection.createStatement();
 		state.executeUpdate("DELETE FROM results;");
 	}
 	
-	public void addResult(String athleteID, double time, int points, String gameID, String officialID, String date) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		if (con == null) getConnection();
-		PreparedStatement prep = con.prepareStatement("INSERT INTO results values(?,?,?,?,?,?);");
+	// add game results to database
+	public void addResultToDatabase(String athleteID, double time, int points, String gameID, String officialID, String date) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		PreparedStatement prep = connection.prepareStatement("INSERT INTO results values(?,?,?,?,?,?);");
 		prep.setString(1, athleteID);
 		prep.setDouble(2, time);
 		prep.setInt(3, points);
@@ -355,5 +375,10 @@ public class DataBase {
 		prep.setString(5, officialID);
 		prep.setString(6, date);
 		prep.execute();
+	}
+	
+	// add game results to file results.txt
+	public void addResultToFile() {
+		
 	}
 }
