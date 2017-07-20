@@ -76,7 +76,7 @@ public class MenuController implements Initializable{
 		if (thisDB.getGames().isEmpty() == true){
 			status.setText("No games to display!");
 		}
-		else {
+		else { 
 			try {
 				((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
 				Stage primaryStage = new Stage();
@@ -95,9 +95,26 @@ public class MenuController implements Initializable{
 		}
 	}
 	
-	public void displayPoints() {
+	public void displayPoints(ActionEvent event) {
 		if (thisDB.getGames().isEmpty() == true) {
 			status.setText("No games to display!");
+		}
+		else { 
+			try {
+				((Node)event.getSource()).getScene().getWindow().hide(); // hide login window (stage)
+				Stage primaryStage = new Stage();
+				FXMLLoader loader = new FXMLLoader();
+				Pane root = loader.load(getClass().getResource("/gui/DisplayPoints.fxml").openStream());
+				DisplayPointsController dpController = (DisplayPointsController)loader.getController();
+				dpController.setDatabase(thisDB);
+				dpController.displayAllPoints(thisDB);
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
