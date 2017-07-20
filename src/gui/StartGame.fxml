@@ -7,21 +7,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="382.0" prefWidth="462.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartGameController">
+<AnchorPane prefHeight="382.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartGameController">
    <children>
-      <Label fx:id="resultsTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="14.0" prefHeight="46.0" prefWidth="312.0">
+      <Label fx:id="resultsTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="65.0" layoutY="14.0" prefHeight="46.0" prefWidth="312.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TableView fx:id="resultsTable" layoutX="25.0" layoutY="74.0" prefHeight="235.0" prefWidth="413.0">
+      <TableView fx:id="resultsTable" layoutX="25.0" layoutY="74.0" prefHeight="230.0" prefWidth="382.0">
         <columns>
-          <TableColumn fx:id="athleteNames" prefWidth="203.0" text="Athlete" />
-            <TableColumn fx:id="athleteTimes" prefWidth="127.0" text="Time (seconds)" />
-            <TableColumn fx:id="athletePoints" prefWidth="103.0" text="Points" />
+          <TableColumn fx:id="athleteNames" prefWidth="172.0" text="Athlete Name" />
+            <TableColumn fx:id="athleteTimes" prefWidth="109.0" text="Time (seconds)" />
+            <TableColumn fx:id="athletePoints" prefWidth="100.0" text="Points" />
         </columns>
       </TableView>
-      <Button fx:id="returnMenu" layoutX="127.0" layoutY="322.0" mnemonicParsing="false" onAction="#returnToMenuButtonClick" prefHeight="46.0" prefWidth="230.0" text="Return to menu">
+      <Button fx:id="returnMenu" layoutX="101.0" layoutY="322.0" mnemonicParsing="false" onAction="#returnToMenuButtonClick" prefHeight="46.0" prefWidth="230.0" text="Return to menu">
          <font>
             <Font size="18.0" />
          </font>

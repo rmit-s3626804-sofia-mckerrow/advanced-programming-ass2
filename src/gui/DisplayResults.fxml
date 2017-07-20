@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="402.0" prefWidth="675.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DisplayResultsController">
+<AnchorPane prefHeight="402.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DisplayResultsController">
    <children>
-      <TableView fx:id="resultsTable" layoutX="26.0" layoutY="33.0" prefHeight="269.0" prefWidth="624.0">
+      <TableView fx:id="resultsTable" layoutX="26.0" layoutY="33.0" prefHeight="269.0" prefWidth="597.0">
          <columns>
             <TableColumn fx:id="gameID" prefWidth="87.0" text="Race ID" />
             <TableColumn fx:id="athleteID" prefWidth="84.0" text="Athlete ID" />
             <TableColumn fx:id="athleteTime" prefWidth="112.0" text="Time (seconds)" />
             <TableColumn fx:id="athletePoints" text="Points" />
             <TableColumn fx:id="officialID" prefWidth="103.0" text="Official ID" />
-            <TableColumn fx:id="date" prefWidth="156.0" text="Date" />
+            <TableColumn fx:id="date" prefWidth="129.0" text="Date" />
          </columns>
       </TableView>
-      <Button fx:id="returnMenu" layoutX="223.0" layoutY="333.0" mnemonicParsing="false" onAction="#returnToMenuButtonClick" prefHeight="46.0" prefWidth="230.0" text="Return to menu">
+      <Button fx:id="returnMenu" layoutX="210.0" layoutY="333.0" mnemonicParsing="false" onAction="#returnToMenuButtonClick" prefHeight="46.0" prefWidth="230.0" text="Return to menu">
          <font>
             <Font size="18.0" />
          </font>
