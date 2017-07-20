@@ -58,7 +58,9 @@ public class DisplayPointsController implements Initializable {
 		athleteID.setCellValueFactory(new PropertyValueFactory<Athlete, String>("id"));
 		athleteName.setCellValueFactory(new PropertyValueFactory<Athlete, String>("name"));
 		totalPoints.setCellValueFactory(new PropertyValueFactory<Athlete, Integer>("totalPoints"));
+		totalPoints.setSortType(TableColumn.SortType.DESCENDING); // sort table in descending order of total points
 		pointsTable.setItems(pointsList);
+		pointsTable.getSortOrder().add(totalPoints);
 	}
 	
 	public void returnToMenuButtonClick(ActionEvent event) {
