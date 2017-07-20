@@ -52,7 +52,7 @@ public class DisplayPointsController implements Initializable {
 	}
 	
 	public void displayAllPoints(DataBase thisDB) {
-		athletesPoints = thisDB.getAthletes();		
+		athletesPoints = thisDB.getAthletes();	
 		pointsList = FXCollections.observableArrayList(athletesPoints);
 		
 		athleteID.setCellValueFactory(new PropertyValueFactory<Athlete, String>("id"));
