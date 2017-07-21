@@ -42,8 +42,8 @@ public class DataBase {
 	private static Connection con;
 	private static Connection connection = SQLiteConnection.connector();
 	private MenuModel menuModel = new MenuModel();
-	// private static boolean hasPartData = false;
-	// private static boolean hasResData = false;
+	private static boolean hasPartData = false;
+	private static boolean hasResData = false;
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
 	private ArrayList<Official> officials = new ArrayList<Official>(); 		// temporary array list to read in officials
 	private ArrayList<Game> games = new ArrayList<Game>();					// array list of games
@@ -93,7 +93,9 @@ public class DataBase {
 			String stateCheck = "[A-Za-z]{2,3}";	// a to z lower upper length 2 to 3
 			// if at least one of the fields are invalid skip the entry
 			try {
-				if (validEntryCheck(idCheck, props[0]) == true && validEntryCheck(nameCheck, props[1]) == true && validEntryCheck(typeCheck, props [2]) == true && validEntryCheck(ageCheck, props[3]) == true && validEntryCheck(stateCheck, props[4]) == true) {
+				if (validEntryCheck(idCheck, props[0]) == true && validEntryCheck(nameCheck, props[1]) == true && 
+						validEntryCheck(typeCheck, props [2]) == true && validEntryCheck(ageCheck, props[3]) == true 
+						&& validEntryCheck(stateCheck, props[4]) == true) {
 					fieldIsValid = true;
 				}
 			}
@@ -130,8 +132,7 @@ public class DataBase {
 		// true = append / false = overwrite
 		boolean writeNew = false;
 		BufferedWriter writer = null;
-		writer = new BufferedWriter(new FileWriter(
-				"Assets/gameResults.txt", writeNew));
+		writer = new BufferedWriter(new FileWriter("Assets/gameResults.txt", writeNew));
 			//write game, officialID, date
 			// eg	s02, o012, Sun Apr 16 18:35:07 AEST 2017
 			//write athlete, time, points for race
@@ -174,15 +175,8 @@ public class DataBase {
 			}
 		}
 	
-	// to delete
-	public ArrayList<Athlete> getShuffledAthletes(){ 
-		ArrayList<Athlete> shuffled = athletes;	
-		Collections.shuffle(shuffled);
-		return shuffled;
-	}
-	
+	// generate raceID and pass it to a new Game in the arraylist of Games
 	public Game addRace(String raceType) { 		
-		// generate raceID and pass it to a new Game in the arraylist of Games
 		String raceID = Game.getNextID(raceType, this.games.size());
 		Game thisGame = null;
 		if (raceType.equals("swim")) thisGame = new Swim(raceID);
@@ -192,50 +186,11 @@ public class DataBase {
 		return thisGame;
 	}
 	
-	public void addGame(Game thisGame) {
-		this.games.add(thisGame);
-	}
-	
+	// retrieve the last game in the list of games
 	public Game getLastGame() {					
-		// retrieve the last game in the list of games
 		int lastIndex = (games.size() - 1);
 		return games.get(lastIndex);
-		// can throw index out of bounds - checks elsewhere avoid this
 	}
-	
-	public void getResultList() {
-		// check for races and print formatted list of race results
-		if (games.isEmpty() == true){
-			System.out.println("No races to display!");
-		}
-		else {
-			for (int i = 0; i < games.size(); i++){
-				Game getGame = games.get(i);
-				int resultSize = getGame.getResultArray().size();
-				System.out.println();
-				System.out.println("Race " + getGame.getRaceID() + " Results");
-				System.out.println("   Name			Time (seconds)");
-				for (int j = 0; j < resultSize; j++){	// print results
-					Athlete getAthlete = getGame.getRaceAthletes().get(j);
-					double myTime = getGame.getResultArray().get(j);
-					System.out.print((j+1) +". ");
-					System.out.printf("%-20s %8s %n", getAthlete.getName(), myTime);
-				}
-			}
-		}
-	}
-	
-	public void sortAthletesByPointsThenPrint() {  
-		// sort athletes by total points
-		Collections.sort(athletes, (athlete1, athlete2) -> athlete1.getTotalPoints() - athlete2.getTotalPoints());
-		// print
-		System.out.printf("%-20s %10s %n", "Name", "Points");
-		for (int i = (athletes.size() - 1); i >= 0; i--) {
-			Athlete sortPoints = athletes.get(i);
-			System.out.printf("%-20s %7s %n", sortPoints.getName(), sortPoints.getTotalPoints());
-		}
-	}
-	
 	
 //	SQLite
 	
