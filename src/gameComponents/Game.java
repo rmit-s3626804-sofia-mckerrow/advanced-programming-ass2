@@ -5,12 +5,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 
 import customExceptions.GameFullException;
 import customExceptions.NoRefereeException;
 import customExceptions.TooFewAthleteException;
-import gameDatabase.DataBase;
 
 public abstract class Game {
 	
@@ -70,6 +68,10 @@ public abstract class Game {
 		return raceOfficial;
 	}
 	
+	public String getDate() {
+		return date;
+	}
+	
 	public void setMinAthletes(int minAthletes) {
 		this.minAthletes = minAthletes;
 	}
@@ -86,17 +88,12 @@ public abstract class Game {
 		this.maxRaceTime = maxRaceTime;
 	}
 	
-	public String getDate() {
-		return date;
-	}
-
 	public void setDate(String date) {
 		this.date = date;
 	}
 	
+	// static method for generating a race id
 	public static String getNextID(String raceType, int id){
-		// static method for generating a race id
-		// would need to change if another race with same first letter was implemented
 		String nextID;
 		if (id < 9){
 			nextID = (raceType.substring(0, 1)) + "0" +  (id + 1);
@@ -141,14 +138,6 @@ public abstract class Game {
 		this.setDate(df.format(d));
 	}
 
-	public Official getOfficialForRace(DataBase db){
-		// generate an official for the race
-		Random r = new Random();
-		int index =  r.nextInt(db.getOfficials().size());
-		raceOfficial = db.getOfficials().get(index);
-		return raceOfficial;
-	}
-	
 	// check if race has minimum amount of athletes
 	public int getRaceSize(){
 		int raceSize = 0;

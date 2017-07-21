@@ -61,6 +61,10 @@ public class Athlete extends Participant{
 		return roundTime;
 	}
 	
+	public boolean canRaceInGame(Game game){ // check if an athlete can enter a race - generic athlete cannot race
+		return false;
+	}
+	
 	public static double compete(Game game) { // get values from Game subclasses and return the raceTime
 		double raceTime;
 		double min = game.getMinRaceTime();
@@ -72,7 +76,5 @@ public class Athlete extends Participant{
 		return raceTime;
 	}
 	
-	public boolean canRaceInGame(Game game){ // check if an athlete can enter a race - generic athlete cannot race
-		return false;
-	}
+	
 }
