@@ -33,7 +33,7 @@ public class Driver {
 				System.out.println();
 				break;
 			case 2: // Predict winner of game
-				getUserPrediction();
+				// getUserPrediction();
 				System.out.println();
 				break;
 			case 3: // Start the game
@@ -181,7 +181,7 @@ public class Driver {
 	// Set up a game
 	public void startGame() {	
 		myGame = thisDB.getLastGame();
-		try {
+		/*try {
 			myGame.setRandomValidAthletesForRace(thisDB); // get athletes for the race
 			myGame.getOfficialForRace(thisDB); // get the official for the race
 			
@@ -195,7 +195,7 @@ public class Driver {
 			}
 		} catch (GameFullException e) {
 			e.getMessage();
-		} 		
+		}*/ 		
 	}
 	
 	// Run a race
@@ -222,57 +222,11 @@ public class Driver {
 				}
 				System.out.println();
 				myGame.getRaceOfficial().givePointsToWinners(thisDB); 	// give points to top three places
-				checkUserPrediction(); 									// check if user predicted the winner
 			} catch (TooFewAthleteException e) {
 				e.getMessage();
 			} catch (NoRefereeException e) {
 				e.getMessage();
 			}
-		}
-	}
-	
-	// Get the user's predicted winner
-	public Athlete getUserPrediction() { 
-		Athlete userPrediction = null;
-		boolean validInput = false;
-				
-		// Check if user has selected a game before making a prediction
-		if (thisDB.getGames().size() == 0) {
-			System.out.println("You must select a game to run before making a prediction!");
-		}
-		else {
-			myGame = thisDB.getLastGame();
-			do {
-				try {
-					System.out.println("Enter number of the athlete you predict will be the winner: ");
-					keyboard3 = new Scanner(System.in);
-					int predictionNumber = keyboard3.nextInt();
-					if (predictionNumber >= 1 && predictionNumber <= 8 ) { // check if user entry is a valid entry
-						userPrediction = myGame.getRaceAthletes().get(predictionNumber - 1);
-						myGame.setUserPrediction(userPrediction);
-						System.out.println("Predicted winner: " + myGame.getRaceAthletes().get(predictionNumber - 1).getName());
-						validInput = true;
-					} else { // If user entry is outside range of 1 - 8 display error message
-						System.out.println("Invalid option. Please try again.");
-						System.out.println();
-						validInput = false;
-					}
-				} catch (Exception e) { // Catch user entry if it is not an integer and redisplay menu
-					System.out.println("Invalid option. Please try again.");
-					System.out.println();
-				}
-			} while (!validInput);
-		}
-		return userPrediction;		
-	}
-	
-	// Check if the user's predicted winner matches the actual winner
-	public void checkUserPrediction() { 
-		myGame = thisDB.getLastGame();
-		Athlete userPrediction = myGame.getUserPrediction();
-		if (userPrediction == myGame.getRaceAthletes().get(0)) {
-			System.out.println();
-			System.out.println("Congratulations, you predicted the correct winner!");
 		}
 	}
 	

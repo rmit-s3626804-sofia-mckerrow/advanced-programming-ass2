@@ -12,13 +12,14 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	DataBase thisDB = new DataBase();
+	Stage primaryStage = new Stage();
 	
-	@Override
-	public void start(Stage primaryStage) {
+	public void run() {
 		if (thisDB.isDbConnected()) {
 			System.out.println("Database is connected");
 			try {
 				thisDB.emptyResults();
+				start(primaryStage);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -26,7 +27,10 @@ public class Main extends Application {
 		else {
 			System.out.println("Database is not connected");
 		}	
-		
+	}
+	
+	@Override
+	public void start(Stage primaryStage) {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/gui/Menu.fxml"));
 			Scene scene = new Scene(root);

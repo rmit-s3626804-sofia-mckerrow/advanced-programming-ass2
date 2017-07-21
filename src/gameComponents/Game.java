@@ -20,14 +20,12 @@ public abstract class Game {
 	private int maxAthletes;
 	private double minRaceTime;
 	private double maxRaceTime;
-	private Athlete userPrediction;
 	private ArrayList<Athlete> raceAthletes;
 	private ArrayList<Double> resultArray = new ArrayList<Double>();
 	private ArrayList<Integer> pointsArray = new ArrayList<Integer>();
 	private Official raceOfficial;
 	private String date;
-	private boolean isOn = false;
-
+	
 	public Game(String raceID) {
 		this.raceID = raceID;
 	}
@@ -64,24 +62,12 @@ public abstract class Game {
 		return resultArray;
 	}
 	
-	public void setPointsArray(ArrayList<Integer> pointsArray) {
-		this.pointsArray = pointsArray;
-	}
-
 	public ArrayList<Integer> getPointsArray() {
 		return pointsArray;
 	}
 
 	public Official getRaceOfficial() {
 		return raceOfficial;
-	}
-	
-	public Athlete getUserPrediction() {
-		return userPrediction;
-	}
-
-	public void setRaceType(String raceType) {
-		this.raceType = raceType;
 	}
 	
 	public void setMinAthletes(int minAthletes) {
@@ -100,24 +86,12 @@ public abstract class Game {
 		this.maxRaceTime = maxRaceTime;
 	}
 	
-	public void setUserPrediction(Athlete userPrediction) {
-		this.userPrediction = userPrediction;
-	}
-	
 	public String getDate() {
 		return date;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
-	}
-	
-	public boolean isOn() {
-		return isOn;
-	}
-
-	public void setOn(boolean isOn) {
-		this.isOn = isOn;
 	}
 	
 	public static String getNextID(String raceType, int id){
@@ -130,22 +104,6 @@ public abstract class Game {
 			nextID = (raceType.substring(0, 1)) + (id + 1);
 		}
 		return nextID;
-	}
-	
-	public void setRandomValidAthletesForRace(DataBase db) throws GameFullException { 	
-		// find up to maxAthletes who can participate in that race type
-		ArrayList<Athlete> shuffledAthletes = db.getShuffledAthletes();
-		ArrayList<Athlete> thisRaceAthletes = new ArrayList<Athlete>();
-		
-		for(int i = 0; i < shuffledAthletes.size(); i++){
-			Athlete thisAthlete = shuffledAthletes.get(i);
-			if (thisAthlete.canRaceInGame(this)) thisRaceAthletes.add(thisAthlete);
-			if (thisRaceAthletes.size() == 8) break;
-			else if (thisRaceAthletes.size() > 8) { // testing
-				throw new GameFullException("Game is full, cannot add more than 8 athletes");
-			}
-		}
-		raceAthletes = thisRaceAthletes;
 	}
 	
 	public void setAthletesForRace(ArrayList<Athlete> thisRaceAthletes) {
@@ -210,13 +168,13 @@ public abstract class Game {
 	}
 	
 	// check if race has the maximum number of athletes competing
-		public void checkIfRaceHasMax(Game game) throws GameFullException{ 
-			int max = game.getMaxAthletes();
-			int numberOfAthletesInRace = game.getRaceSize();
-			if (numberOfAthletesInRace == max) {
-				throw new GameFullException("Game is full, cannot add more than 8 athletes");
-			}
+	public void checkIfRaceHasMax(Game game) throws GameFullException{ 
+		int max = game.getMaxAthletes();
+		int numberOfAthletesInRace = game.getRaceSize();
+		if (numberOfAthletesInRace == max) {
+			throw new GameFullException("Game is full, cannot add more than 8 athletes");
 		}
+	}
 	
 	// check if race has an official
 	public void checkIfRaceHasOfficial (Game game) throws NoRefereeException {

@@ -1,7 +1,6 @@
 package gameComponents;
 //@author Sofia
 
-import customExceptions.TooFewAthleteException;
 import gameComponents.Game;
 import gameDatabase.DataBase;
 
@@ -10,20 +9,6 @@ public class Official extends Participant {
 	// Constructor for Official class
 	public Official(String id, String name, String type, int age, String state) {
 		super(id, name, type, age, state);
-	}
-	
-	// check if race has at least 4 athletes competing
-	public void checkIfRaceHasMin(Game game) throws TooFewAthleteException{ 
-		int min = game.getMinAthletes();
-		int numberOfAthletesInRace = game.getRaceSize();
-		if (numberOfAthletesInRace < min) {
-			throw new TooFewAthleteException("Race cancelled, insufficient number of athletes for race");
-		}
-		
-		/* if (numberOfAthletesInRace >= min) {
-			return true;
-		}
-		return false;*/
 	}
 	
 	// bubble sort - iterate through array and if next value is greater then swap, moves lowest number to the start of array
