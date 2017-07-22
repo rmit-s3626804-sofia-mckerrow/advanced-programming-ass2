@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import customExceptions.GameFullException;
 import customExceptions.TooFewAthleteException;
+import customExceptions.WrongTypeException;
 import gameComponents.Athlete;
 import gameComponents.Game;
 import gameDatabase.DataBase;
@@ -69,8 +70,12 @@ public class SelectAthletesController implements Initializable {
 		
 		for(int i = 0; i < athletes.size(); i++){
 			Athlete thisAthlete = athletes.get(i);
-			if (thisAthlete.canRaceInGame(myGame)) // if athlete can race in the selected game, add them to the array list
-				athletesToSelectList.add(thisAthlete);
+			try {
+				if (thisAthlete.canRaceInGame(myGame)) // if athlete can race in the selected game, add them to the array list
+					athletesToSelectList.add(thisAthlete);
+			} catch (WrongTypeException e) {
+				status.setText("Cannot add a participant to a wrong type of game");
+			}
 		}
 				
 		// set the array list of athletes to the athletesList listview

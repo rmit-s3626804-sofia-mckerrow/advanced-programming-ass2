@@ -1,5 +1,7 @@
 package gameComponents;
 
+import customExceptions.WrongTypeException;
+
 //@author Sofia
 
 public class Cyclist extends Athlete {
@@ -10,7 +12,7 @@ public class Cyclist extends Athlete {
 	}
 
 	// check if a Cyclist can enter a race
-	public boolean canRaceInGame(Game game) {	
+	public boolean canRaceInGame(Game game) throws WrongTypeException {	
 		if (game instanceof Cycle) {
 			return true;
 		}

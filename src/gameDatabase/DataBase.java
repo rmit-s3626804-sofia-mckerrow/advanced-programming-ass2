@@ -200,8 +200,7 @@ public class DataBase {
 	
 	// deletes all records from results file
 	public void emptyResultsFile() throws IOException {
-		PrintWriter pw = new PrintWriter("gameResults.txt");
-		pw.print("");
+		PrintWriter pw = new PrintWriter("Assets/gameResults.txt");
 		pw.close();
 	}
 	

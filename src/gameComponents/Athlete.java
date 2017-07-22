@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Random;
 
+import customExceptions.WrongTypeException;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -61,7 +62,7 @@ public class Athlete extends Participant{
 		return roundTime;
 	}
 	
-	public boolean canRaceInGame(Game game){ // check if an athlete can enter a race - generic athlete cannot race
+	public boolean canRaceInGame(Game game) throws WrongTypeException { // check if an athlete can enter a race - generic athlete cannot race
 		return false;
 	}
 	
