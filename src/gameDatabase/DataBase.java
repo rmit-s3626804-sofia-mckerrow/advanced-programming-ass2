@@ -47,6 +47,12 @@ public class DataBase {
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
 	private ArrayList<Official> officials = new ArrayList<Official>(); 		// temporary array list to read in officials
 	private ArrayList<Game> games = new ArrayList<Game>();					// array list of games
+	// possible regular expressions to check each field is valid
+	private String idCheck = "[a-zA-Z0-9]{4}"; 		// a to z lower/upper case and 0 to 9 and length 4
+	private String nameCheck = "^[a-zA-Z]*$";  		// a to z lower/upper and spaces
+	private String typeCheck = "^[a-zA-Z]*$";		// a to z lower/upper
+	private String ageCheck = "\\d{2}";				// digits length 2
+	private String stateCheck = "[A-Za-z]{2,3}";	// a to z lower upper length 2 to 3
 	
 	public ArrayList<Athlete> getAthletes() {
 		return athletes;
@@ -68,29 +74,12 @@ public class DataBase {
 		this.games = games;
 	}
 	
-	// check if entries are valid
-	public boolean validEntryCheck(String regularExpression, String stringToCheck) {
-		Pattern checkRegEx = Pattern.compile(regularExpression);
-		Matcher regexMatcher = checkRegEx.matcher(stringToCheck);
-		while (regexMatcher.find()){
-			if (regexMatcher.group().length() != 0){
-				return true;
-			}			
-		}
-		return false;
-	}
-	
 	public void readParticipantsFromFile() throws FileNotFoundException {
 		Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));
 		boolean fieldIsValid = false;
 		while(fileIn.hasNextLine()) {
 			String[] props = fileIn.nextLine().split(", ");
-			// possible regular expressions to check each field is valid
-			String idCheck = "[a-zA-Z0-9]{4}"; 		// a to z lower/upper case and 0 to 9 and length 4
-			String nameCheck = "^[a-zA-z ]*$";  	// a to z lower/upper and spaces
-			String typeCheck = "^[a-zA-Z]*$";		// a to z lower/upper
-			String ageCheck = "\\d{2}";				// digits length 2
-			String stateCheck = "[A-Za-z]{2,3}";	// a to z lower upper length 2 to 3
+			
 			// if at least one of the fields are invalid skip the entry
 			try {
 				if (validEntryCheck(idCheck, props[0]) == true && validEntryCheck(nameCheck, props[1]) == true && 
@@ -111,6 +100,18 @@ public class DataBase {
 			}
 		}
 		fileIn.close();
+	}
+	
+	// check if entries are valid
+	public boolean validEntryCheck(String regularExpression, String stringToCheck) {
+		Pattern checkRegEx = Pattern.compile(regularExpression);
+		Matcher regexMatcher = checkRegEx.matcher(stringToCheck);
+		while (regexMatcher.find()){
+			if (regexMatcher.group().length() != 0){
+				return true;
+			}			
+		}
+		return false;
 	}
 	
 	public void sortParticipantsIntoType(String id, String name, String type, int age, String state) {
@@ -158,22 +159,23 @@ public class DataBase {
 	}
 	
 	// record game to database and results.txt file
-		public void recordLastGame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-			Game myGame = getLastGame();			
-			String gameID = myGame.getRaceID();
-			String officialID = myGame.getRaceOfficial().getID();
-			String date = myGame.getDate();
+	public void recordLastGame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+		Game myGame = getLastGame();			
+		String gameID = myGame.getRaceID();
+		String officialID = myGame.getRaceOfficial().getID();
+		String date = myGame.getDate();
 			
-			for (int i = 0; i < myGame.getRaceAthletes().size(); i++){ 		
-				String athleteID = myGame.getRaceAthletes().get(i).getID();
-				double time = myGame.getRaceAthletes().get(i).getRoundTime();
-				int points = myGame.getRaceAthletes().get(i).getRoundPoints();
+		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){ 		
+			String athleteID = myGame.getRaceAthletes().get(i).getID();
+			double time = myGame.getRaceAthletes().get(i).getRoundTime();
+			int points = myGame.getRaceAthletes().get(i).getRoundPoints();
 				
-				if (isDbConnected()) { // if the database is connected, add game results to database
-					addResultToDatabase(athleteID, time, points, gameID, officialID, date);
-				}
+			if (isDbConnected()) { // if the database is connected, add game results to database
+				addResultToDatabase(athleteID, time, points, gameID, officialID, date);
 			}
+		
 		}
+	}
 	
 	// generate raceID and pass it to a new Game in the arraylist of Games
 	public Game addRace(String raceType) { 		
@@ -192,75 +194,28 @@ public class DataBase {
 		return games.get(lastIndex);
 	}
 	
-//	SQLite
-	
-	public ResultSet displayParticipants() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-		if(con == null) {
-			getConnection();
+	public void initialiseParticipantsListsFromDatabase() {	
+		String query = "SELECT * FROM participants";
+			
+		try {
+			PreparedStatement prep = connection.prepareStatement(query);
+			ResultSet resultSet = prep.executeQuery();
+			
+			while (resultSet.next()) {
+				String id = resultSet.getString("id");
+				String name = resultSet.getString("name");
+				String type = resultSet.getString("type");
+				String age = String.valueOf(resultSet.getInt("age"));
+				String state = resultSet.getString("state");
+				
+				if (validEntryCheck(idCheck, id) == true && validEntryCheck(nameCheck, name) == true && validEntryCheck(typeCheck, type) == true
+					&& validEntryCheck(ageCheck, age) == true && validEntryCheck(stateCheck, state)) {
+					sortParticipantsIntoType(id, name, type, Integer.valueOf(age), state);
+				}
+			}		
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 		}
-		Statement state = con.createStatement();
-		ResultSet res = state.executeQuery("SELECT * FROM participants");
-		return res;
-	}
-	
-	public ResultSet displayResults() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-		if(con == null) {
-			getConnection();
-		}
-		Statement state = con.createStatement();
-		ResultSet res = state.executeQuery("SELECT * FROM results");
-		return res;
-	}
-	
-	public void getConnection() throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
-		Class.forName("org.sqlite.JDBC"); //.newInstance()
-		con = DriverManager.getConnection("jdbc:sqlite:ozlympics.db");
-		initialise();
-		emptyResults();
-	}
-
-	public void initialise() throws SQLException {
-		// build table
-		System.out.println("Building the participants table.");
-		Statement state = con.createStatement();
-		ResultSet res = state.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='participants'");
-		if(!res.next()){
-			// create participants table
-			state.execute("CREATE TABLE IF NOT EXISTS participants (id varchar(4),"
-					+ "name varchar(40)," + "type varchar(20),"
-					+ "age integer," + "state varchar(3));");
-			// insert data
-			PreparedStatement prep = con.prepareStatement("INSERT INTO participants values(?,?,?,?,?);");
-			// iterate through athletes and add to participants table
-			for (Athlete add : athletes) {
-				prep.setString(1, add.getID());
-				prep.setString(2, add.getName());
-				prep.setString(3, add.getType());
-				prep.setInt(4, add.getAge());
-				prep.setString(5, add.getState());
-				prep.execute();
-			}
-			// iterate through officials and add to participants table
-			for (Official add : officials) {
-				prep.setString(1, add.getID());
-				prep.setString(2, add.getName());
-				prep.setString(3, add.getType());
-				prep.setInt(4, add.getAge());
-				prep.setString(5, add.getState());
-				prep.execute();
-			}
-		}
-		// build table
-		System.out.println("Building the results table.");
-		Statement state2 = con.createStatement();
-		ResultSet res2 = state.executeQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='results'");
-		if(!res.next()){
-//			// create results table
-			state.execute("CREATE TABLE IF NOT EXISTS results (athleteID varchar(4),"
-					+ "result integer," + "score integer,"
-					+ "gameID varchar(8)," + "officialID varchar(4),"
-					+ "date varchar(20));");
-		}	
 	}
 	
 	// initialise arraylist of Athletes from database
@@ -273,18 +228,20 @@ public class DataBase {
 			
 			Athlete thisAthlete = null;
 			while (resultSet.next()) {
-				// System.out.println(resultSet.getString("id") + "\t" + resultSet.getString("name"));
-				// thisAthlete = new Athlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				if (resultSet.getString("type").equals("Swimmer")) thisAthlete = new Swimmer(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				if (resultSet.getString("type").equals("Runner")) thisAthlete = new Runner(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				if (resultSet.getString("type").equals("Cyclist")) thisAthlete = new Cyclist(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-				if (resultSet.getString("type").equals("SuperAthlete")) thisAthlete = new SuperAthlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				if (resultSet.getString("type").equals("Swimmer")) 
+					thisAthlete = new Swimmer(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+							resultSet.getInt("age"), resultSet.getString("state"));
+				if (resultSet.getString("type").equals("Runner")) 
+					thisAthlete = new Runner(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+							resultSet.getInt("age"), resultSet.getString("state"));
+				if (resultSet.getString("type").equals("Cyclist")) 
+					thisAthlete = new Cyclist(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+							resultSet.getInt("age"), resultSet.getString("state"));
+				if (resultSet.getString("type").equals("SuperAthlete")) 
+					thisAthlete = new SuperAthlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+							resultSet.getInt("age"), resultSet.getString("state"));
 				athletes.add(thisAthlete);
-				//sortParticipantsIntoType(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
 			}
-			/*for (int i = 0; i < athletes.size(); i++) {
-				System.out.println(athletes.get(i).getID() + " " + athletes.get(i).getName());
-			}*/
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -302,12 +259,10 @@ public class DataBase {
 			
 			Official thisOfficial = null;
 			while (resultSet.next()) {
-				thisOfficial = new Official(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+				thisOfficial = new Official(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+						resultSet.getInt("age"), resultSet.getString("state"));
 				officials.add(thisOfficial);
 			}
-			/*for (int i = 0; i < officials.size(); i++) {
-				System.out.println(officials.get(i).getID() + " " + officials.get(i).getName());
-			}*/
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -352,5 +307,9 @@ public class DataBase {
 			return false;
 		}
 
+	}
+	
+	public boolean canParticipantsFileBeFound() {
+		return false;
 	}
 }

@@ -11,26 +11,22 @@ import javafx.scene.Scene;
 
 public class Ozlympic extends Application {
 	DataBase thisDB = new DataBase();
-	Stage primaryStage = new Stage();
-	
-	public void run() {
-		if (thisDB.isDbConnected()) {
-			System.out.println("Database is connected");
-			try {
-				thisDB.emptyResults();
-				start(primaryStage);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		else {
-			System.out.println("Database is not connected");
-		}	
-	}
 	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			if (thisDB.isDbConnected()) {
+				System.out.println("Database is connected");
+				try {
+					thisDB.emptyResults();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			else {
+				System.out.println("Database is not connected");
+			}
+			
 			Parent root = FXMLLoader.load(getClass().getResource("/gui/Menu.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -44,4 +40,5 @@ public class Ozlympic extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
 }

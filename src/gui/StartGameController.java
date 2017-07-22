@@ -77,7 +77,6 @@ public class StartGameController implements Initializable {
 		try {
 			thisDB.recordLastGame(); // record the game results to the database
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

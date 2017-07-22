@@ -51,6 +51,10 @@ public class SelectAthletesController implements Initializable {
 	public void addAthletesToList(DataBase thisDB) {
 		myGame = thisDB.getLastGame();
 		
+		// thisDB.initialiseParticipantsListsFromDatabase();
+		//thisDB.initialiseAthletesList();
+		//ArrayList<Athlete> athletes = thisDB.getAthletes();
+		
 		ArrayList<Athlete> athletes = thisDB.initialiseAthletesList(); // get all the athletes in the database
 				
 		for(int i = 0; i < athletes.size(); i++){
