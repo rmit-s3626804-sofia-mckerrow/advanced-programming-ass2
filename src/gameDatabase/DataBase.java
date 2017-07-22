@@ -41,7 +41,6 @@ public class DataBase {
 	
 	private static Connection con;
 	private static Connection connection = SQLiteConnection.connector();
-	private MenuModel menuModel = new MenuModel();
 	private static boolean hasPartData = false;
 	private static boolean hasResData = false;
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
@@ -74,7 +73,7 @@ public class DataBase {
 		this.games = games;
 	}
 	
-	public void readParticipantsFromFile() throws FileNotFoundException {
+	public void readParticipants() throws FileNotFoundException {
 		Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));
 		boolean fieldIsValid = false;
 		while(fileIn.hasNextLine()) {
@@ -100,6 +99,16 @@ public class DataBase {
 			}
 		}
 		fileIn.close();
+	}
+	
+	public void readParticipantsFromFile() throws FileNotFoundException {
+		// read athlete db file
+		Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));	
+		while(fileIn.hasNextLine()) {
+			String[] props = fileIn.nextLine().split(", "); // read .txt file, add athlete to ArrayList
+			sortParticipantsIntoType(props[0], props[1], props[2], Integer.valueOf(props[3]), props[4]);
+		} fileIn.close();
+		
 	}
 	
 	// check if entries are valid
@@ -222,7 +231,6 @@ public class DataBase {
 			System.out.println(e.getMessage());
 		}
 		return athletes;
-		
 	}
 	
 	// initialise arraylist of Officials from database
@@ -277,7 +285,7 @@ public class DataBase {
 	
 	// check if database file exists
 	public boolean doesDatabaseExist() {
-		File dbTest = new File("ozlympics.db");
+		File dbTest = new File("/gui/ozlympics.db");
 		if (dbTest.exists())
 			return true;
 		else
@@ -289,7 +297,6 @@ public class DataBase {
 			Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));
 			return true;
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 			return false;
 		}
 		// return false;

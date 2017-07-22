@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -55,6 +56,9 @@ public class SelectOfficialController implements Initializable {
 		
 		if (thisDB.doesDatabaseExist()) {
 			officials = thisDB.initialiseOfficialsListFromDatabase(); // get all the athletes in the database
+		}
+		else if (thisDB.canParticipantsFileBeFound()) {
+			officials = thisDB.getOfficials();
 		}
 		
 		for(int i = 0; i < officials.size(); i++){
