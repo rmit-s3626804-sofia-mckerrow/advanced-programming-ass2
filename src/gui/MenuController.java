@@ -27,9 +27,7 @@ public class MenuController implements Initializable{
 	private Label status;
 
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-			
-	}
+	public void initialize(URL arg0, ResourceBundle arg1) {}
 	
 	public void selectGame(ActionEvent event) {
 		try {
@@ -72,7 +70,7 @@ public class MenuController implements Initializable{
 	}
 	
 	// check for races and print formatted list of race results
-	public void displayResults(ActionEvent event) {
+	public void displayResults(ActionEvent event) throws ClassNotFoundException {
 		if (thisDB.getGames().isEmpty() == true){
 			status.setText("No games to display!");
 		}

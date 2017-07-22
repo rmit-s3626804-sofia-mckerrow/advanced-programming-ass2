@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -62,7 +63,7 @@ public class SelectGameController implements Initializable{
 		raceID.setText("Race ID: " + myGame.getRaceID());
 	}
 
-	public void nextButtonClick(ActionEvent event) {
+	public void nextButtonClick(ActionEvent event) throws ClassNotFoundException, SQLException {
 		if (thisDB.getGames().size() > 0) { // check if a game has been added
 			try {
 				((Node)event.getSource()).getScene().getWindow().hide(); // hide SelectGame window (stage)

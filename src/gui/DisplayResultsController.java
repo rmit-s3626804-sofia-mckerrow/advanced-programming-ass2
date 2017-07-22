@@ -62,11 +62,11 @@ public class DisplayResultsController implements Initializable {
 		date.setStyle("-fx-alignment: CENTER;");
 	}
 	
-	public void displayAllResults(DataBase thisDB) {
+	public void displayAllResults(DataBase thisDB) throws ClassNotFoundException {
 		ResultSet rs;
 		
 		try {
-			if (thisDB.isDbConnected()) {
+			if (thisDB.doesDatabaseExist()) {
 				rs = thisDB.getResultsFromDatabase();
 				while (rs.next()) {
 					GameResult gameResultItem = new GameResult(rs.getString("gameID"), rs.getString("athleteID"), 

@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -48,11 +49,14 @@ public class SelectOfficialController implements Initializable {
 	}
 	
 	// add officials to list for user to select athletes for race
-	public void addOfficialsToList(DataBase thisDB) {
+	public void addOfficialsToList(DataBase thisDB) throws ClassNotFoundException, SQLException {
 		myGame = thisDB.getLastGame();
+		ArrayList<Official> officials = new ArrayList<Official>();
 		
-		ArrayList<Official> officials = thisDB.initialiseOfficialsList(); // get all the athletes in the database
-				
+		if (thisDB.doesDatabaseExist()) {
+			officials = thisDB.initialiseOfficialsListFromDatabase(); // get all the athletes in the database
+		}
+		
 		for(int i = 0; i < officials.size(); i++){
 			Official thisOfficial = officials.get(i);
 			officialToSelectList.add(thisOfficial); // add official to array list

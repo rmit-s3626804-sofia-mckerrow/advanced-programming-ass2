@@ -1,7 +1,9 @@
 package gui;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -48,21 +50,29 @@ public class SelectAthletesController implements Initializable {
 	}
 	
 	// add athletes to list for user to select athletes for race
-	public void addAthletesToList(DataBase thisDB) {
+	public void addAthletesToList(DataBase thisDB) throws ClassNotFoundException, SQLException {
 		myGame = thisDB.getLastGame();
+		ArrayList<Athlete> athletes = new ArrayList<Athlete>();
 		
-		// thisDB.initialiseParticipantsListsFromDatabase();
-		//thisDB.initialiseAthletesList();
-		//ArrayList<Athlete> athletes = thisDB.getAthletes();
+		if (thisDB.doesDatabaseExist()) {
+			athletes = thisDB.initialiseAthletesListFromDatabase(); // get all the athletes in the database
+		}
+		else if (thisDB.canParticipantsFileBeFound()) {
+			try {
+				thisDB.readParticipantsFromFile();
+				athletes = thisDB.getAthletes();
+			} catch (FileNotFoundException e) {
+				System.out.println("File could not be found");
+				e.printStackTrace();
+			}
+		}
 		
-		ArrayList<Athlete> athletes = thisDB.initialiseAthletesList(); // get all the athletes in the database
-				
 		for(int i = 0; i < athletes.size(); i++){
 			Athlete thisAthlete = athletes.get(i);
 			if (thisAthlete.canRaceInGame(myGame)) // if athlete can race in the selected game, add them to the array list
 				athletesToSelectList.add(thisAthlete);
 		}
-		
+				
 		// set the array list of athletes to the athletesList listview
 		athletesListNames = FXCollections.observableArrayList(athletesToSelectList);
 		athletesList.setItems(athletesListNames);
@@ -158,7 +168,7 @@ public class SelectAthletesController implements Initializable {
 		});	
 	}
 	
-	public void nextButtonClick(ActionEvent event) {
+	public void nextButtonClick(ActionEvent event) throws ClassNotFoundException, SQLException {
 		status.setText("");
 		int min = myGame.getMinAthletes();
 		

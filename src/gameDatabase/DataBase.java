@@ -170,7 +170,7 @@ public class DataBase {
 			double time = myGame.getRaceAthletes().get(i).getRoundTime();
 			int points = myGame.getRaceAthletes().get(i).getRoundPoints();
 				
-			if (isDbConnected()) { // if the database is connected, add game results to database
+			if (doesDatabaseExist()) { // if the database is connected, add game results to database
 				addResultToDatabase(athleteID, time, points, gameID, officialID, date);
 			}
 		
@@ -194,32 +194,8 @@ public class DataBase {
 		return games.get(lastIndex);
 	}
 	
-	public void initialiseParticipantsListsFromDatabase() {	
-		String query = "SELECT * FROM participants";
-			
-		try {
-			PreparedStatement prep = connection.prepareStatement(query);
-			ResultSet resultSet = prep.executeQuery();
-			
-			while (resultSet.next()) {
-				String id = resultSet.getString("id");
-				String name = resultSet.getString("name");
-				String type = resultSet.getString("type");
-				String age = String.valueOf(resultSet.getInt("age"));
-				String state = resultSet.getString("state");
-				
-				if (validEntryCheck(idCheck, id) == true && validEntryCheck(nameCheck, name) == true && validEntryCheck(typeCheck, type) == true
-					&& validEntryCheck(ageCheck, age) == true && validEntryCheck(stateCheck, state)) {
-					sortParticipantsIntoType(id, name, type, Integer.valueOf(age), state);
-				}
-			}		
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-	
 	// initialise arraylist of Athletes from database
-	public ArrayList<Athlete> initialiseAthletesList() {
+	public ArrayList<Athlete> initialiseAthletesListFromDatabase() {
 		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'a%'";
 		
 		try {
@@ -250,7 +226,7 @@ public class DataBase {
 	}
 	
 	// initialise arraylist of Officials from database
-	public ArrayList<Official> initialiseOfficialsList() {
+	public ArrayList<Official> initialiseOfficialsListFromDatabase() {
 		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'o%'";
 		
 		try {
@@ -299,17 +275,23 @@ public class DataBase {
 		
 	}
 	
-	public boolean isDbConnected() {
-		try {
-			return !connection.isClosed();
-		} catch (SQLException e) {
-			e.printStackTrace();
+	// check if database file exists
+	public boolean doesDatabaseExist() {
+		File dbTest = new File("ozlympics.db");
+		if (dbTest.exists())
+			return true;
+		else
 			return false;
-		}
-
 	}
 	
 	public boolean canParticipantsFileBeFound() {
-		return false;
+		try {
+			Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));
+			return true;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		}
+		// return false;
 	}
 }
