@@ -74,6 +74,15 @@ public class DisplayResultsController implements Initializable {
 					gameResults.add(gameResultItem);
 				}
 			}
+			else if (thisDB.canParticipantsFileBeFound()) {
+				ArrayList<GameResult> resultsArray = thisDB.getResults();
+				for (int i = 0; i < resultsArray.size(); i++) {
+					GameResult gameResultItem = new GameResult(resultsArray.get(i).getGameID(), resultsArray.get(i).getAthleteID(),
+							resultsArray.get(i).getTime(), resultsArray.get(i).getPoints(), resultsArray.get(i).getOfficialID(),
+							resultsArray.get(i).getDate());
+					gameResults.add(gameResultItem);
+				}				
+			}
 		} catch (SQLException e) {
 				e.printStackTrace();
 		}

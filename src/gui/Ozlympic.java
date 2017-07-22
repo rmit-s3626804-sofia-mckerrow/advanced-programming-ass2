@@ -1,5 +1,6 @@
 package gui;
 	
+import java.io.IOException;
 import java.sql.SQLException;
 
 import gameDatabase.DataBase;
@@ -18,7 +19,7 @@ public class Ozlympic extends Application {
 			if (thisDB.doesDatabaseExist()) {
 				System.out.println("Database is connected");
 				try {
-					thisDB.emptyResults();
+					thisDB.emptyResultsTable();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -26,6 +27,11 @@ public class Ozlympic extends Application {
 			else if (thisDB.canParticipantsFileBeFound()) {
 				System.out.println("Database is not connected");
 				System.out.println("Participants.txt file has been found");
+				try {
+					thisDB.emptyResultsFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 			else {
 				System.out.println("Database is not connected");

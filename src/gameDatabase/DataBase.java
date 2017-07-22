@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -39,20 +39,12 @@ import gui.MenuModel;
 
 public class DataBase {
 	
-	private static Connection con;
 	private static Connection connection = SQLiteConnection.connector();
-	private static boolean hasPartData = false;
-	private static boolean hasResData = false;
 	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
 	private ArrayList<Official> officials = new ArrayList<Official>(); 		// temporary array list to read in officials
-	private ArrayList<Game> games = new ArrayList<Game>();					// array list of games
-	// possible regular expressions to check each field is valid
-	private String idCheck = "[a-zA-Z0-9]{4}"; 		// a to z lower/upper case and 0 to 9 and length 4
-	private String nameCheck = "^[a-zA-Z]*$";  		// a to z lower/upper and spaces
-	private String typeCheck = "^[a-zA-Z]*$";		// a to z lower/upper
-	private String ageCheck = "\\d{2}";				// digits length 2
-	private String stateCheck = "[A-Za-z]{2,3}";	// a to z lower upper length 2 to 3
-	
+	private ArrayList<Game> games = new ArrayList<Game>();					// arraylist of games
+	private ArrayList<GameResult> results = new ArrayList<GameResult>();	// arraylist of game results
+		
 	public ArrayList<Athlete> getAthletes() {
 		return athletes;
 	}
@@ -64,41 +56,9 @@ public class DataBase {
 	public ArrayList<Game> getGames() {
 		return games;
 	}
-
-	public void setAthletes(ArrayList<Athlete> athletes) {
-		this.athletes = athletes;
-	}
-
-	public void setGames(ArrayList<Game> games) {
-		this.games = games;
-	}
 	
-	public void readParticipants() throws FileNotFoundException {
-		Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));
-		boolean fieldIsValid = false;
-		while(fileIn.hasNextLine()) {
-			String[] props = fileIn.nextLine().split(", ");
-			
-			// if at least one of the fields are invalid skip the entry
-			try {
-				if (validEntryCheck(idCheck, props[0]) == true && validEntryCheck(nameCheck, props[1]) == true && 
-						validEntryCheck(typeCheck, props [2]) == true && validEntryCheck(ageCheck, props[3]) == true 
-						&& validEntryCheck(stateCheck, props[4]) == true) {
-					fieldIsValid = true;
-				}
-			}
-			catch (ArrayIndexOutOfBoundsException e) {
-				System.out.println(e);
-			}
-			catch (NumberFormatException e) {
-				System.out.println(e);
-			}
-			// check fields and length to ensure no incomplete participant is added
-			if (props.length == 5 && fieldIsValid == true) {
-				sortParticipantsIntoType(props[0], props[1], props[2], Integer.valueOf(props[3]), props[4]);
-			}
-		}
-		fileIn.close();
+	public ArrayList<GameResult> getResults() {
+		return results;
 	}
 	
 	public void readParticipantsFromFile() throws FileNotFoundException {
@@ -109,18 +69,6 @@ public class DataBase {
 			sortParticipantsIntoType(props[0], props[1], props[2], Integer.valueOf(props[3]), props[4]);
 		} fileIn.close();
 		
-	}
-	
-	// check if entries are valid
-	public boolean validEntryCheck(String regularExpression, String stringToCheck) {
-		Pattern checkRegEx = Pattern.compile(regularExpression);
-		Matcher regexMatcher = checkRegEx.matcher(stringToCheck);
-		while (regexMatcher.find()){
-			if (regexMatcher.group().length() != 0){
-				return true;
-			}			
-		}
-		return false;
 	}
 	
 	public void sortParticipantsIntoType(String id, String name, String type, int age, String state) {
@@ -138,52 +86,43 @@ public class DataBase {
 		}
 	}
 	
-	public void recordGame() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException{
-		// true = append / false = overwrite
-		boolean writeNew = false;
-		BufferedWriter writer = null;
-		writer = new BufferedWriter(new FileWriter("Assets/gameResults.txt", writeNew));
-			//write game, officialID, date
-			// eg	s02, o012, Sun Apr 16 18:35:07 AEST 2017
-			//write athlete, time, points for race
-			// eg	a038, 10.6, 5
-			for (int i = 0; i < games.size(); i++) {
-				Game recordGame = games.get(i);
-				String logID = recordGame.getRaceID();
-				String logOfficialID = recordGame.getRaceOfficial().getID();
-				String logDate = recordGame.getDate();
-				writer.write(logID + ", " + logOfficialID + ", " + logDate);
-				writer.newLine();
-				for (int j = 0; j < recordGame.getRaceAthletes().size(); j++){
-					String id = recordGame.getRaceAthletes().get(j).getID();
-					double time = recordGame.getResultArray().get(j);
-					int points = recordGame.getRaceAthletes().get(j).getRoundPoints();
-					writer.write(id + ", " + time + ", " + points); 
-					writer.newLine();
-					this.addResultToDatabase(id, time, points, logID, logOfficialID, logDate);
-				}
-				writer.newLine();
-			}
-		writer.close();
-	}
-	
 	// record game to database and results.txt file
-	public void recordLastGame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+	public void recordLastGame() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException, IOException {
 		Game myGame = getLastGame();			
 		String gameID = myGame.getRaceID();
 		String officialID = myGame.getRaceOfficial().getID();
 		String date = myGame.getDate();
-			
-		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){ 		
-			String athleteID = myGame.getRaceAthletes().get(i).getID();
-			double time = myGame.getRaceAthletes().get(i).getRoundTime();
-			int points = myGame.getRaceAthletes().get(i).getRoundPoints();
-				
-			if (doesDatabaseExist()) { // if the database is connected, add game results to database
-				addResultToDatabase(athleteID, time, points, gameID, officialID, date);
-			}
 		
+		boolean writeNew = false;
+		BufferedWriter writer = null;
+		writer = new BufferedWriter(new FileWriter("Assets/gameResults.txt", writeNew));
+		
+		for (int i = 0; i < games.size(); i++) {
+			Game recordGame = games.get(i);
+			String recordID = recordGame.getRaceID();
+			String recordOfficialID = recordGame.getRaceOfficial().getID();
+			String recordDate = recordGame.getDate();
+			writer.write(recordID + ", " + recordOfficialID + ", " + recordDate);
+			writer.newLine();
+			for (int j = 0; j < recordGame.getRaceAthletes().size(); j++){
+				String athleteID = recordGame.getRaceAthletes().get(j).getID();
+				double time = recordGame.getResultArray().get(j);
+				int points = recordGame.getRaceAthletes().get(j).getRoundPoints();
+				writer.write(athleteID + ", " + time + ", " + points); 
+				writer.newLine();
+				if (doesDatabaseExist()) { // if the database is connected, add game results to database
+					addResultToDatabase(athleteID, time, points, gameID, officialID, date);
+				}
+				else { // if database is not connected, add game results to arraylist results
+					String resultTime = String.valueOf(time);
+					String resultPoints = String.valueOf(points);
+					GameResult gameResult = new GameResult(gameID, athleteID, resultTime, resultPoints, recordOfficialID, recordDate);
+					results.add(gameResult);
+				}
+			}
+			writer.newLine();
 		}
+		writer.close();
 	}
 	
 	// generate raceID and pass it to a new Game in the arraylist of Games
@@ -254,9 +193,16 @@ public class DataBase {
 	}
 	
 	// deletes all records from results table in database
-	public void emptyResults() throws SQLException {
+	public void emptyResultsTable() throws SQLException {
 		Statement state = connection.createStatement();
 		state.executeUpdate("DELETE FROM results;");
+	}
+	
+	// deletes all records from results file
+	public void emptyResultsFile() throws IOException {
+		PrintWriter pw = new PrintWriter("gameResults.txt");
+		pw.print("");
+		pw.close();
 	}
 	
 	// add game results to database
@@ -274,13 +220,8 @@ public class DataBase {
 	// get the game results from database
 	public ResultSet getResultsFromDatabase() throws SQLException {
 		Statement state = connection.createStatement();
-		ResultSet res = state.executeQuery("SELECT * FROM results");
-		return res;
-	}
-	
-	// add game results to file results.txt
-	public void addResultToFile() {
-		
+		ResultSet resultSet = state.executeQuery("SELECT * FROM results");
+		return resultSet;
 	}
 	
 	// check if database file exists
@@ -293,12 +234,10 @@ public class DataBase {
 	}
 	
 	public boolean canParticipantsFileBeFound() {
-		try {
-			Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));
+		File fileTest = new File("Assets/Participants.txt");
+		if (fileTest.exists())
 			return true;
-		} catch (FileNotFoundException e) {
+		else
 			return false;
-		}
-		// return false;
 	}
 }
