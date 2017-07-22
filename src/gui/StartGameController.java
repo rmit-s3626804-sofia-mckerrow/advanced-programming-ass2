@@ -60,12 +60,6 @@ public class StartGameController implements Initializable {
 		myGame.getRaceOfficial().sortRace(thisDB); // sort the results from lowest to highest times - if there is a tie official decides
 		myGame.getRaceOfficial().givePointsToWinners(thisDB); 	// give points to top three places
 		
-		// print results of race
-		for (int i = 0; i < myGame.getRaceAthletes().size(); i++){ 		
-			System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName() + " " + myGame.getRaceAthletes().get(i).getRoundTime() + 
-					" " + myGame.getRaceAthletes().get(i).getRoundPoints());
-		}
-		
 		ArrayList<Athlete> lastGameResults = myGame.getRaceAthletes();
 		raceResultsList = FXCollections.observableArrayList(lastGameResults); // set raceResults as an observable list of the race results
 		
@@ -81,8 +75,6 @@ public class StartGameController implements Initializable {
 		}
 		
 	}
-	
-	
 	
 	public void returnToMenuButtonClick(ActionEvent event) {
 		try {

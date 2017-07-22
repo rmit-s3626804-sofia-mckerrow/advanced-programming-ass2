@@ -56,7 +56,8 @@ public class SelectAthletesController implements Initializable {
 		ArrayList<Athlete> athletes = new ArrayList<Athlete>();
 		
 		if (thisDB.doesDatabaseExist()) {
-			athletes = thisDB.initialiseAthletesListFromDatabase(); // get all the athletes in the database
+			thisDB.initialiseParticipantsListFromDatabase(); // get all the athletes in the database
+			athletes = thisDB.getAthletes();
 		}
 		else if (thisDB.canParticipantsFileBeFound()) {
 			try {
@@ -98,10 +99,6 @@ public class SelectAthletesController implements Initializable {
 				thisRaceAthletes.add(raceAthlete); // add the selected athlete to the array list of athletes for the race
 				myGame.setAthletesForRace(thisRaceAthletes);
 			
-				for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
-					System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
-				}
-			
 				raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
 				raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
 				
@@ -133,10 +130,6 @@ public class SelectAthletesController implements Initializable {
 			raceAthletesNames = FXCollections.observableArrayList(thisRaceAthletes);
 			raceAthletes.setItems(raceAthletesNames); // set the array list of race athletes to the raceAthletes listview
 		
-			for (int i = 0; i < myGame.getRaceAthletes().size(); i++){
-				System.out.println((i+1) + ". " + myGame.getRaceAthletes().get(i).getName());
-			}
-			
 			setCellFactoryForList(raceAthletes);
 		
 			athletesToSelectList.add(raceAthlete); // add the removed athlete back to the list of athletes to select from

@@ -4,7 +4,6 @@ package gameDatabase;
 import java.io.BufferedWriter;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,34 +15,26 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import gameComponents.Athlete;
 import gameComponents.Cycle;
 import gameComponents.Cyclist;
 import gameComponents.Game;
 import gameComponents.Official;
-import gameComponents.Participant;
 import gameComponents.Run;
 import gameComponents.Runner;
 import gameComponents.SuperAthlete;
 import gameComponents.Swim;
 import gameComponents.Swimmer;
-import gui.MenuModel;
 
 public class DataBase {
 	
 	private static Connection connection = SQLiteConnection.connector();
-	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();			// temporary array list to read in athletes
-	private ArrayList<Official> officials = new ArrayList<Official>(); 		// temporary array list to read in officials
-	private ArrayList<Game> games = new ArrayList<Game>();					// arraylist of games
-	private ArrayList<GameResult> results = new ArrayList<GameResult>();	// arraylist of game results
+	private ArrayList<Athlete> athletes = new ArrayList<Athlete>();
+	private ArrayList<Official> officials = new ArrayList<Official>();
+	private ArrayList<Game> games = new ArrayList<Game>();
+	private ArrayList<GameResult> results = new ArrayList<GameResult>();
 		
 	public ArrayList<Athlete> getAthletes() {
 		return athletes;
@@ -60,6 +51,23 @@ public class DataBase {
 	public ArrayList<GameResult> getResults() {
 		return results;
 	}
+	
+	public void initialiseParticipantsListFromDatabase() {
+		String query = "SELECT * FROM participants";
+		
+		try {
+			PreparedStatement prep = connection.prepareStatement(query);
+			ResultSet resultSet = prep.executeQuery();
+			
+			while (resultSet.next()) {
+				sortParticipantsIntoType(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
+					resultSet.getInt("age"), resultSet.getString("state"));
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	
 	public void readParticipantsFromFile() throws FileNotFoundException {
 		// read athlete db file
@@ -84,6 +92,23 @@ public class DataBase {
 			if (type.equals("SuperAthlete")) thisAthlete = new SuperAthlete(id, name, type, age, state);
 			athletes.add(thisAthlete);
 		}
+	}
+	
+	// generate raceID and pass it to a new Game in the arraylist of Games
+	public Game addRace(String raceType) { 		
+		String raceID = Game.getNextID(raceType, this.games.size());
+		Game thisGame = null;
+		if (raceType.equals("swim")) thisGame = new Swim(raceID);
+		if (raceType.equals("run")) thisGame = new Run(raceID);
+		if (raceType.equals("cycle")) thisGame = new Cycle(raceID);
+		this.games.add(thisGame);
+		return thisGame;
+	}
+	
+	// retrieve the last game in the list of games
+	public Game getLastGame() {					
+		int lastIndex = (games.size() - 1);
+		return games.get(lastIndex);
 	}
 	
 	// record game to database and results.txt file
@@ -125,73 +150,24 @@ public class DataBase {
 		writer.close();
 	}
 	
-	// generate raceID and pass it to a new Game in the arraylist of Games
-	public Game addRace(String raceType) { 		
-		String raceID = Game.getNextID(raceType, this.games.size());
-		Game thisGame = null;
-		if (raceType.equals("swim")) thisGame = new Swim(raceID);
-		if (raceType.equals("run")) thisGame = new Run(raceID);
-		if (raceType.equals("cycle")) thisGame = new Cycle(raceID);
-		this.games.add(thisGame);
-		return thisGame;
+	// add game results to database
+	public void addResultToDatabase(String athleteID, double time, int points, String gameID, String officialID, String date) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+		PreparedStatement prep = connection.prepareStatement("INSERT INTO results values(?,?,?,?,?,?);");
+		prep.setString(1, athleteID);
+		prep.setDouble(2, time);
+		prep.setInt(3, points);
+		prep.setString(4, gameID);
+		prep.setString(5, officialID);
+		prep.setString(6, date);
+		prep.execute();
 	}
-	
-	// retrieve the last game in the list of games
-	public Game getLastGame() {					
-		int lastIndex = (games.size() - 1);
-		return games.get(lastIndex);
-	}
-	
-	// initialise arraylist of Athletes from database
-	public ArrayList<Athlete> initialiseAthletesListFromDatabase() {
-		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'a%'";
 		
-		try {
-			PreparedStatement prep = connection.prepareStatement(query);
-			ResultSet resultSet = prep.executeQuery();
-			
-			Athlete thisAthlete = null;
-			while (resultSet.next()) {
-				if (resultSet.getString("type").equals("Swimmer")) 
-					thisAthlete = new Swimmer(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
-							resultSet.getInt("age"), resultSet.getString("state"));
-				if (resultSet.getString("type").equals("Runner")) 
-					thisAthlete = new Runner(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
-							resultSet.getInt("age"), resultSet.getString("state"));
-				if (resultSet.getString("type").equals("Cyclist")) 
-					thisAthlete = new Cyclist(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
-							resultSet.getInt("age"), resultSet.getString("state"));
-				if (resultSet.getString("type").equals("SuperAthlete")) 
-					thisAthlete = new SuperAthlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
-							resultSet.getInt("age"), resultSet.getString("state"));
-				athletes.add(thisAthlete);
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		return athletes;
+	public ResultSet getResultsFromDatabase() throws SQLException {
+		Statement state = connection.createStatement();
+		ResultSet resultSet = state.executeQuery("SELECT * FROM results");
+		return resultSet;
 	}
-	
-	// initialise arraylist of Officials from database
-	public ArrayList<Official> initialiseOfficialsListFromDatabase() {
-		String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'o%'";
 		
-		try {
-			PreparedStatement prep = connection.prepareStatement(query);
-			ResultSet resultSet = prep.executeQuery();
-			
-			Official thisOfficial = null;
-			while (resultSet.next()) {
-				thisOfficial = new Official(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), 
-						resultSet.getInt("age"), resultSet.getString("state"));
-				officials.add(thisOfficial);
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		return officials;
-	}
-	
 	// deletes all records from results table in database
 	public void emptyResultsTable() throws SQLException {
 		Statement state = connection.createStatement();
@@ -204,34 +180,17 @@ public class DataBase {
 		pw.close();
 	}
 	
-	// add game results to database
-	public void addResultToDatabase(String athleteID, double time, int points, String gameID, String officialID, String date) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-		PreparedStatement prep = connection.prepareStatement("INSERT INTO results values(?,?,?,?,?,?);");
-		prep.setString(1, athleteID);
-		prep.setDouble(2, time);
-		prep.setInt(3, points);
-		prep.setString(4, gameID);
-		prep.setString(5, officialID);
-		prep.setString(6, date);
-		prep.execute();
-	}
-	
-	// get the game results from database
-	public ResultSet getResultsFromDatabase() throws SQLException {
-		Statement state = connection.createStatement();
-		ResultSet resultSet = state.executeQuery("SELECT * FROM results");
-		return resultSet;
-	}
 	
 	// check if database file exists
 	public boolean doesDatabaseExist() {
-		File dbTest = new File("/gui/ozlympics.db");
+		File dbTest = new File("ozlympics.db");
 		if (dbTest.exists())
 			return true;
 		else
 			return false;
 	}
 	
+	// check if participants file exists
 	public boolean canParticipantsFileBeFound() {
 		File fileTest = new File("Assets/Participants.txt");
 		if (fileTest.exists())

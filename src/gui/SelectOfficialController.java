@@ -7,10 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import customExceptions.GameFullException;
 import customExceptions.NoRefereeException;
-import customExceptions.TooFewAthleteException;
-import gameComponents.Athlete;
 import gameComponents.Game;
 import gameComponents.Official;
 import gameDatabase.DataBase;
@@ -34,8 +31,7 @@ public class SelectOfficialController implements Initializable {
 	
 	DataBase thisDB = new DataBase();
 	Game myGame;
-	private ArrayList<Official> officialToSelectList = new ArrayList<Official>(); // array list of officials for user to select from
-	private Official thisRaceOfficial; // official for race
+	private ArrayList<Official> officials = new ArrayList<Official>(); // array list of officials for user to select from
 	private ObservableList<Official> officialsListNames; // observable list of officials for user to select from
 	
 	@FXML
@@ -52,22 +48,23 @@ public class SelectOfficialController implements Initializable {
 	// add officials to list for user to select athletes for race
 	public void addOfficialsToList(DataBase thisDB) throws ClassNotFoundException, SQLException {
 		myGame = thisDB.getLastGame();
-		ArrayList<Official> officials = new ArrayList<Official>();
 		
 		if (thisDB.doesDatabaseExist()) {
-			officials = thisDB.initialiseOfficialsListFromDatabase(); // get all the athletes in the database
-		}
-		else if (thisDB.canParticipantsFileBeFound()) {
+			thisDB.initialiseParticipantsListFromDatabase(); // get all the athletes in the database
 			officials = thisDB.getOfficials();
 		}
-		
-		for(int i = 0; i < officials.size(); i++){
-			Official thisOfficial = officials.get(i);
-			officialToSelectList.add(thisOfficial); // add official to array list
+		else if (thisDB.canParticipantsFileBeFound()) {
+			try {
+				thisDB.readParticipantsFromFile();
+				officials = thisDB.getOfficials();
+			} catch (FileNotFoundException e) {
+				System.out.println("File could not be found");
+				e.printStackTrace();
+			}
 		}
 		
 		// set the array list of officials to the officialsList listview
-		officialsListNames = FXCollections.observableArrayList(officialToSelectList);
+		officialsListNames = FXCollections.observableArrayList(officials);
 		officialsList.setItems(officialsListNames);
 		
 		setCellFactoryForList(officialsList); // display the list of officials on the athletesList listview		
@@ -84,8 +81,8 @@ public class SelectOfficialController implements Initializable {
 			
 			officialStatus.setText("Race Official selected: " + myGame.getRaceOfficial().getName());
 			
-			officialToSelectList.remove(raceOfficial); // remove the selected official from the list of officials to select from
-			officialsListNames = FXCollections.observableArrayList(officialToSelectList);
+			officials.remove(raceOfficial); // remove the selected official from the list of officials to select from
+			officialsListNames = FXCollections.observableArrayList(officials);
 			officialsList.setItems(officialsListNames); // set the array list of race athletes to the raceAthletes listview
 				
 			setCellFactoryForList(officialsList); // display the list of race athletes on the raceAthletes listview		

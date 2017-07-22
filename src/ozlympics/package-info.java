@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author Sofia
- *
- */
-package ozlympics;
