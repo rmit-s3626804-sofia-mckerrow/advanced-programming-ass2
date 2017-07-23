@@ -152,7 +152,7 @@ public abstract class Game {
 		int min = game.getMinAthletes();
 		int numberOfAthletesInRace = game.getRaceSize();
 		if (numberOfAthletesInRace < min) {
-			throw new TooFewAthleteException("Race cancelled, insufficient number of athletes for race");
+			throw new TooFewAthleteException("Not enough athletes to start game, need at least 4");
 		}
 	}
 	
@@ -169,7 +169,7 @@ public abstract class Game {
 	public void checkIfRaceHasOfficial (Game game) throws NoRefereeException {
 		Official checkOfficial = game.getRaceOfficial();
 		if (checkOfficial == null) {
-			throw new NoRefereeException("Race cancelled, no official selected for race");
+			throw new NoRefereeException("No official selected for game");
 		}
 	}
 }
