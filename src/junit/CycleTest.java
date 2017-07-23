@@ -63,24 +63,41 @@ public class CycleTest {
 	}
 	
 	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there are the minimum number of athletes
-	// Expected outcome is that the test will fail
-	@Test (expected=TooFewAthleteException.class)
-	public void testCheckIfRaceHasMin2() throws TooFewAthleteException {
+	// Expected outcome is that the test will pass
+	@Test
+	public void testCheckIfRaceHasMin2() {
+		TooFewAthleteException exception = null;
 		cycle.getRaceAthletes().add(c4);
-		cycle.checkIfRaceHasMin(cycle);
+		
+		try {
+			cycle.checkIfRaceHasMin(cycle);
+		} catch (TooFewAthleteException e) {
+			exception = e;
+			e.printStackTrace();
+		}
+		
+		assertNull(exception);
+		
 	}
 
 	// Check if checkIfRaceHasMax() will throw the GameFullException if there are the maximum number of athletes
-	// Expected outcome is that the test will fail
-	@Test (expected=GameFullException.class)
-	public void testCheckIfRaceHasMax1() throws GameFullException {
+	// Expected outcome is that the test will pass
+	@Test
+	public void testCheckIfRaceHasMax1() {
+		GameFullException exception = null;
 		cycle.getRaceAthletes().add(c5);
 		cycle.getRaceAthletes().add(c6);
 		cycle.getRaceAthletes().add(c7);
 		cycle.getRaceAthletes().add(c8);
-				
-		cycle.checkIfRaceHasMax(cycle);
 		
+		try {
+			cycle.checkIfRaceHasMax(cycle);
+		} catch (GameFullException e) {
+			exception = e;
+			e.printStackTrace();
+		}
+		
+		assertNull(exception);
 	}
 	
 	// Check if checkIfRaceHasMax() will throw the GameFullException if there are greater than the maximum number of athletes
@@ -106,12 +123,20 @@ public class CycleTest {
 	}
 	
 	// Check if checkIfRaceHasOfficial() will throw the NoRefereeException if there is an official for the race
-	// Expected outcome is that the test will fail
-	@Test (expected=NoRefereeException.class)
-	public void testCheckIfRaceHasOfficial2() throws NoRefereeException {
+	// Expected outcome is that the test will pass
+	@Test
+	public void testCheckIfRaceHasOfficial2() {
+		NoRefereeException exception = null;
 		cycle.setOfficialForRace(official);
 	
-		cycle.checkIfRaceHasOfficial(cycle);
+		try {
+			cycle.checkIfRaceHasOfficial(cycle);
+		} catch (NoRefereeException e) {
+			exception = e;
+			e.printStackTrace();
+		}
+		
+		assertNull(exception);
 		
 	}
 
