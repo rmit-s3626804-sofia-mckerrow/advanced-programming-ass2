@@ -14,8 +14,6 @@ import customExceptions.GameFullException;
 import customExceptions.NoRefereeException;
 import customExceptions.TooFewAthleteException;
 import gameComponents.Athlete;
-import gameComponents.Cycle;
-import gameComponents.Cyclist;
 import gameComponents.Official;
 import gameComponents.Run;
 import gameComponents.Runner;
