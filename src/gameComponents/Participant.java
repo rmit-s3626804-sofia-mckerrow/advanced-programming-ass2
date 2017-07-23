@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-//@author Calvin
+//@author Calvin (from Assignment 1) and Sofia
 
 public abstract class Participant {
 	
@@ -15,7 +15,6 @@ public abstract class Participant {
 	private SimpleIntegerProperty age;
 	private SimpleStringProperty state;
 	
-	// constructor for Participant class
 	public Participant(String id, String name, String type, int age, String state) {
 		super();
 		this.id = new SimpleStringProperty(id);

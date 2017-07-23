@@ -1,5 +1,7 @@
 package gameDatabase;
 
+//@author Sofia
+
 import javafx.beans.property.SimpleStringProperty;
 
 public class GameResult {

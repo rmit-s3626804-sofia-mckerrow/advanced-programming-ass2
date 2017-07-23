@@ -1,5 +1,7 @@
 package gameDatabase;
 
+//@author Sofia
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 

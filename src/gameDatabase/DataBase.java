@@ -1,5 +1,6 @@
 package gameDatabase;
-// @author Calvin
+
+// @author Calvin (methods from Assignment 1) and Sofia
 
 import java.io.BufferedWriter;
 

@@ -1,5 +1,5 @@
 package gameComponents;
-//@author Calvin
+//@author Calvin (methods from Assignment 1) and Sofia
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

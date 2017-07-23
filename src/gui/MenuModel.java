@@ -1,5 +1,7 @@
 package gui;
 
+//@author Sofia
+
 import java.sql.Connection;
 
 import gameDatabase.SQLiteConnection;

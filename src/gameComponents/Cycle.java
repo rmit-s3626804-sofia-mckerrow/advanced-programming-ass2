@@ -3,7 +3,6 @@ package gameComponents;
 
 public class Cycle extends Game {
 
-	// Constructor for Cycle class
 	public Cycle(String raceID) {
 		super(raceID);
 		this.setMinAthletes(4);	// minimum number of athletes for a cycling race is 4

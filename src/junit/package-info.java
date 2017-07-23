@@ -5,4 +5,4 @@
  * @author Sofia
  *
  */
-package gui;
+package junit;

@@ -6,7 +6,6 @@ import customExceptions.WrongTypeException;
 
 public class Cyclist extends Athlete {
 	
-	// Constructor for Cyclist class
 	public Cyclist(String id, String name, String type, int age, String state) {
 		super(id, name, type, age, state);
 	}

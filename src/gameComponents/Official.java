@@ -1,4 +1,5 @@
 package gameComponents;
+
 //@author Sofia
 
 import gameComponents.Game;
@@ -6,7 +7,6 @@ import gameDatabase.DataBase;
 
 public class Official extends Participant {
 	
-	// Constructor for Official class
 	public Official(String id, String name, String type, int age, String state) {
 		super(id, name, type, age, state);
 	}

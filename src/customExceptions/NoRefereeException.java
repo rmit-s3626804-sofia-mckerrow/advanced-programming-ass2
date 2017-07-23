@@ -1,4 +1,5 @@
 package customExceptions;
+
 //@author Sofia
 
 public class NoRefereeException extends Exception {

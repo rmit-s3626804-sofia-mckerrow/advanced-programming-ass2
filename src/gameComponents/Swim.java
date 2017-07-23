@@ -1,9 +1,9 @@
 package gameComponents;
+
 //@author Sofia
 
 public class Swim extends Game {
 	
-	// Constructor for Swim class
 	public Swim (String raceID) {
 		super(raceID);
 		this.setMinAthletes(4);	// minimum number of athletes for a swimming race is 4

@@ -10,7 +10,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-//@author Calvin
+//@author Calvin (from Assignment 1) and Sofia
 
 public class Athlete extends Participant{
 
@@ -18,7 +18,6 @@ public class Athlete extends Participant{
 	private SimpleIntegerProperty totalPoints;
 	private SimpleDoubleProperty roundTime;
 	
-	// Constructor for Athlete class
 	public Athlete(String id, String name, String type, int age, String state) {
 		super(id, name, type, age, state);
 		roundPoints = new SimpleIntegerProperty(0);
@@ -62,11 +61,13 @@ public class Athlete extends Participant{
 		return roundTime;
 	}
 	
-	public boolean canRaceInGame(Game game) throws WrongTypeException { // check if an athlete can enter a race - generic athlete cannot race
+	// check if an athlete can enter a race - generic athlete cannot race
+	public boolean canRaceInGame(Game game) throws WrongTypeException { 
 		return false;
 	}
 	
-	public static double compete(Game game) { // get values from Game subclasses and return the raceTime
+	// get values from Game subclasses and return the raceTime
+	public static double compete(Game game) { 
 		double raceTime;
 		double min = game.getMinRaceTime();
 		double max = game.getMaxRaceTime();
