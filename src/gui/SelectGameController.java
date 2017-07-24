@@ -16,15 +16,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class SelectGameController implements Initializable{
 	
-	DataBase thisDB = new DataBase();
-	Game myGame;
+	private DataBase thisDB = new DataBase();
+	private Game myGame;
 	private String raceType;
 	
 	@FXML
@@ -33,9 +32,6 @@ public class SelectGameController implements Initializable{
 	@FXML
 	private Label raceID;
 	
-	@FXML
-	private Button next;
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {}
 	

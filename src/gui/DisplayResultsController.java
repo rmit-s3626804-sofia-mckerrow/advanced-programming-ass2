@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import gameComponents.Game;
 import gameDatabase.DataBase;
 import gameDatabase.GameResult;
 import javafx.collections.FXCollections;
@@ -28,8 +27,7 @@ import javafx.stage.Stage;
 
 public class DisplayResultsController implements Initializable {
 	
-	DataBase thisDB = new DataBase();
-	Game myGame;
+	private DataBase thisDB = new DataBase();
 	private ArrayList<GameResult> gameResults = new ArrayList<GameResult>();
 	private ObservableList<GameResult> resultsList;
 

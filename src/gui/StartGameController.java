@@ -28,8 +28,8 @@ import javafx.stage.Stage;
 
 public class StartGameController implements Initializable {
 	
-	DataBase thisDB = new DataBase();
-	Game myGame;
+	private DataBase thisDB = new DataBase();
+	private Game myGame;
 	private ObservableList<Athlete> raceResultsList; // observable list of race results
 	
 	@FXML

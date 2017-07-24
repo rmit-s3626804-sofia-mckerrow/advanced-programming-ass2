@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import gameComponents.Game;
 import gameDatabase.DataBase;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -22,7 +21,6 @@ import javafx.stage.Stage;
 public class MenuController implements Initializable{
 	
 	private DataBase thisDB = new DataBase();
-	Game myGame;
 	
 	@FXML
 	private Label status;

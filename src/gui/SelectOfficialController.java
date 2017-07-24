@@ -31,8 +31,8 @@ import javafx.util.Callback;
 
 public class SelectOfficialController implements Initializable {
 	
-	DataBase thisDB = new DataBase();
-	Game myGame;
+	private DataBase thisDB = new DataBase();
+	private Game myGame;
 	private ArrayList<Official> officials = new ArrayList<Official>(); // array list of officials for user to select from
 	private ObservableList<Official> officialsListNames; // observable list of officials for user to select from
 	
@@ -62,11 +62,6 @@ public class SelectOfficialController implements Initializable {
 				System.out.println("File could not be found");
 				e.printStackTrace();
 			}
-		}
-		
-		for (int i = 0; i < officials.size(); i++) {
-			System.out.println(thisDB.getOfficials().get(i).getID() + thisDB.getOfficials().get(i).getName() + 
-					thisDB.getOfficials().get(i).getType());
 		}
 		
 		// set the array list of officials to the officialsList listview

@@ -33,8 +33,8 @@ import javafx.util.Callback;
 
 public class SelectAthletesController implements Initializable {
 	
-	DataBase thisDB;
-	Game myGame;
+	private DataBase thisDB;
+	private Game myGame;
 	private ArrayList<Athlete> athletesToSelectList = new ArrayList<Athlete>(); // array list of athletes for user to select from
 	private ArrayList<Athlete> thisRaceAthletes = new ArrayList<Athlete>(); // array list of athletes selected for race
 	private ObservableList<Athlete> athletesListNames; // observable list of athletes for user to select from
