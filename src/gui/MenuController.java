@@ -38,7 +38,6 @@ public class MenuController implements Initializable{
 			SelectGameController sgController = (SelectGameController)loader.getController();
 			sgController.setDatabase(thisDB);
 			Scene scene = new Scene(root);
-			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Select a Game");
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -62,7 +61,6 @@ public class MenuController implements Initializable{
 				stgController.setDatabase(thisDB);
 				stgController.runRace(thisDB);
 				Scene scene = new Scene(root);
-				// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setTitle("Start the Game");
 				primaryStage.setScene(scene);
 				primaryStage.show();
@@ -88,7 +86,6 @@ public class MenuController implements Initializable{
 				drController.setDatabase(thisDB);
 				drController.displayAllResults(thisDB);
 				Scene scene = new Scene(root);
-				// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setTitle("Display All Results");
 				primaryStage.setScene(scene);
 				primaryStage.show();
@@ -114,7 +111,6 @@ public class MenuController implements Initializable{
 				dpController.setDatabase(thisDB);
 				dpController.displayAllPoints(thisDB);
 				Scene scene = new Scene(root);
-				// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 				primaryStage.setTitle("Display Total Points");
 				primaryStage.setScene(scene);
 				primaryStage.show();

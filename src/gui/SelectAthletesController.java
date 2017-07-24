@@ -2,7 +2,6 @@ package gui;
 
 //@author Sofia
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -55,22 +54,8 @@ public class SelectAthletesController implements Initializable {
 	// add athletes to list for user to select athletes for race
 	public void addAthletesToList(DataBase thisDB) throws ClassNotFoundException, SQLException {
 		myGame = thisDB.getLastGame();
-		ArrayList<Athlete> athletes = new ArrayList<Athlete>();
-		
-		if (thisDB.canDatabaseFileBeFound()) {
-			thisDB.initialiseParticipantsListFromDatabase(); // get all the athletes in the database
-			athletes = thisDB.getAthletes();
-		}
-		else if (thisDB.canParticipantsFileBeFound()) {
-			try {
-				thisDB.readParticipantsFromFile();
-				athletes = thisDB.getAthletes();
-			} catch (FileNotFoundException e) {
-				System.out.println("File could not be found");
-				e.printStackTrace();
-			}
-		}
-		
+		ArrayList<Athlete> athletes = thisDB.getAthletes();
+				
 		for(int i = 0; i < athletes.size(); i++){
 			Athlete thisAthlete = athletes.get(i);
 			try {
@@ -188,7 +173,7 @@ public class SelectAthletesController implements Initializable {
 				soController.addOfficialsToList(thisDB);
 				soController.setDatabase(thisDB);
 				Scene scene = new Scene(root);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setTitle("Select Official for Game");
 				primaryStage.setScene(scene);
 				primaryStage.show();
 			} catch (IOException e) {

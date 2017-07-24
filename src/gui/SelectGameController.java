@@ -70,7 +70,7 @@ public class SelectGameController implements Initializable{
 				saController.addAthletesToList(thisDB);
 				saController.setDatabase(thisDB);
 				Scene scene = new Scene(root);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setTitle("Select Athletes for Game");
 				primaryStage.setScene(scene);
 				primaryStage.show();
 			} catch (IOException e) {

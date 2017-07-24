@@ -23,6 +23,7 @@ public class Ozlympic extends Application {
 				try {
 					thisDB.emptyResultsTable();
 					thisDB.emptyResultsFile();
+					thisDB.initialiseParticipantsListFromDatabase();
 				} catch (SQLException | IOException e) {
 					e.printStackTrace();
 				}
@@ -32,6 +33,7 @@ public class Ozlympic extends Application {
 				System.out.println("Participants.txt file has been found");
 				try {
 					thisDB.emptyResultsFile();
+					thisDB.readParticipantsFromFile();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -43,7 +45,10 @@ public class Ozlympic extends Application {
 				System.exit(0);
 			}
 			
-			Parent root = FXMLLoader.load(getClass().getResource("/gui/Menu.fxml"));
+			FXMLLoader loader = new FXMLLoader();
+			Parent root = loader.load(getClass().getResource("/gui/Menu.fxml").openStream());
+			MenuController mController = (MenuController)loader.getController();
+			mController.setDatabase(thisDB);
 			Scene scene = new Scene(root);
 			primaryStage.setTitle("Main Menu");
 			primaryStage.setScene(scene);
@@ -51,6 +56,10 @@ public class Ozlympic extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setDatabase(DataBase thisDB) {
+		this.thisDB = thisDB;
 	}
 	
 	public static void main(String[] args) {

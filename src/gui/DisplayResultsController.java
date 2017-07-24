@@ -107,7 +107,6 @@ public class DisplayResultsController implements Initializable {
 			MenuController mController = (MenuController)loader.getController();
 			mController.setDatabase(thisDB);
 			Scene scene = new Scene(root);
-			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setTitle("Main Menu");
 			primaryStage.setScene(scene);
 			primaryStage.show();
