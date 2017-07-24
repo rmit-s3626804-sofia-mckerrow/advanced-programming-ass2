@@ -28,6 +28,7 @@ public class MenuController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {}
 	
+	// if user clicks on "Select a game to run" button, the Select Game window will open
 	public void selectGame(ActionEvent event) {
 		try {
 			((Node)event.getSource()).getScene().getWindow().hide(); // hide menu window (stage)
@@ -37,7 +38,8 @@ public class MenuController implements Initializable{
 			SelectGameController sgController = (SelectGameController)loader.getController();
 			sgController.setDatabase(thisDB);
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setTitle("Select a Game");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {
@@ -45,6 +47,7 @@ public class MenuController implements Initializable{
 		}	
 	}
 	
+	// if user clicks on the "start the game" button, the Start Game window will open
 	public void startGame(ActionEvent event) {
 		if (thisDB.getGames().size() == 0){ // Check if user has selected a game before starting one
 			status.setText("You must select a game to run before starting!");
@@ -59,7 +62,8 @@ public class MenuController implements Initializable{
 				stgController.setDatabase(thisDB);
 				stgController.runRace(thisDB);
 				Scene scene = new Scene(root);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setTitle("Start the Game");
 				primaryStage.setScene(scene);
 				primaryStage.show();
 			} catch (IOException e) {
@@ -68,7 +72,8 @@ public class MenuController implements Initializable{
 		}
 	}
 	
-	// check for races and print formatted list of race results
+	// if user clicks on the "Display the final results of all games" button, the Display Results window will open with a table of results 
+	// from all the games
 	public void displayResults(ActionEvent event) throws ClassNotFoundException {
 		if (thisDB.getGames().isEmpty() == true){
 			status.setText("No games to display!");
@@ -83,7 +88,8 @@ public class MenuController implements Initializable{
 				drController.setDatabase(thisDB);
 				drController.displayAllResults(thisDB);
 				Scene scene = new Scene(root);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setTitle("Display All Results");
 				primaryStage.setScene(scene);
 				primaryStage.show();
 			} catch (IOException e) {
@@ -92,6 +98,8 @@ public class MenuController implements Initializable{
 		}
 	}
 	
+	// if the user clicks on the "Display the points of all games" button, the Display Points window will open with a table of 
+	// the total points for all the athletes
 	public void displayPoints(ActionEvent event) {
 		if (thisDB.getGames().isEmpty() == true) {
 			status.setText("No games to display!");
@@ -106,7 +114,8 @@ public class MenuController implements Initializable{
 				dpController.setDatabase(thisDB);
 				dpController.displayAllPoints(thisDB);
 				Scene scene = new Scene(root);
-				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				primaryStage.setTitle("Display Total Points");
 				primaryStage.setScene(scene);
 				primaryStage.show();
 			} catch (IOException e) {
@@ -115,6 +124,7 @@ public class MenuController implements Initializable{
 		}
 	}
 	
+	// if the user clicks on the "Exit" button, the program will be exited
 	public void exit(ActionEvent event) {
 		Platform.exit(); // exits from JavaFX
 		System.exit(0); // closes app

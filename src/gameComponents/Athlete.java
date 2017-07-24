@@ -66,7 +66,7 @@ public class Athlete extends Participant{
 		return false;
 	}
 	
-	// get values from Game subclasses and return the raceTime
+	// get values from Game subclasses and return the race time
 	public static double compete(Game game) { 
 		double raceTime;
 		double min = game.getMinRaceTime();

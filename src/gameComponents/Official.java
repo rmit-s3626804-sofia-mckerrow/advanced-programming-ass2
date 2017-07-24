@@ -44,7 +44,6 @@ public class Official extends Participant {
 		int secondTotal = lastGame.getRaceAthletes().get(1).getTotalPoints();
 		int third = 1;
 		int thirdTotal = lastGame.getRaceAthletes().get(2).getTotalPoints();
-		// give points
 		for (int i = 0; i < raceSize; i++){
 			if (i==0) {
 				lastGame.getRaceAthletes().get(i).setRoundPoints(first);

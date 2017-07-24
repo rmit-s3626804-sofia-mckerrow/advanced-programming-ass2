@@ -70,10 +70,9 @@ public class DataBase {
 	}
 	
 	public void readParticipantsFromFile() throws FileNotFoundException {
-		// read athlete db file
 		Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));	
 		while(fileIn.hasNextLine()) {
-			String[] props = fileIn.nextLine().split(", "); // read .txt file, add athlete to ArrayList
+			String[] props = fileIn.nextLine().split(", ");
 			sortParticipantsIntoType(props[0], props[1], props[2], Integer.valueOf(props[3]), props[4]);
 		} fileIn.close();
 		
@@ -118,35 +117,28 @@ public class DataBase {
 		String officialID = myGame.getRaceOfficial().getID();
 		String date = myGame.getDate();
 		
-		boolean writeNew = false;
+		boolean writeNew = true;
 		BufferedWriter writer = null;
 		writer = new BufferedWriter(new FileWriter("Assets/gameResults.txt", writeNew));
 		
-		for (int i = 0; i < games.size(); i++) {
-			Game recordGame = games.get(i);
-			String recordID = recordGame.getRaceID();
-			String recordOfficialID = recordGame.getRaceOfficial().getID();
-			String recordDate = recordGame.getDate();
-			writer.write(recordID + ", " + recordOfficialID + ", " + recordDate);
+		// for (int i = 0; i < games.size(); i++) {
+		for (int i = 0; i < myGame.getRaceAthletes().size(); i++) {
+			String athleteID = myGame.getRaceAthletes().get(i).getID();
+			double time = myGame.getResultArray().get(i);
+			int points = myGame.getRaceAthletes().get(i).getRoundPoints();
+			writer.write(athleteID + ", " + time + ", " + points);
 			writer.newLine();
-			for (int j = 0; j < recordGame.getRaceAthletes().size(); j++){
-				String athleteID = recordGame.getRaceAthletes().get(j).getID();
-				double time = recordGame.getResultArray().get(j);
-				int points = recordGame.getRaceAthletes().get(j).getRoundPoints();
-				writer.write(athleteID + ", " + time + ", " + points); 
-				writer.newLine();
-				if (canDatabaseFileBeFound()) { // if the database is connected, add game results to database
-					addResultToDatabase(athleteID, time, points, gameID, officialID, date);
-				}
-				else { // if database is not connected, add game results to arraylist results
-					String resultTime = String.valueOf(time);
-					String resultPoints = String.valueOf(points);
-					GameResult gameResult = new GameResult(gameID, athleteID, resultTime, resultPoints, recordOfficialID, recordDate);
-					results.add(gameResult);
-				}
+			if (canDatabaseFileBeFound()) { // if the database is connected, add game results to database
+				addResultToDatabase(athleteID, time, points, gameID, officialID, date);
 			}
-			writer.newLine();
+			else { // if database is not connected, add game results to arraylist results
+				String resultTime = String.valueOf(time);
+				String resultPoints = String.valueOf(points);
+				GameResult gameResult = new GameResult(gameID, athleteID, resultTime, resultPoints, officialID, date);
+				results.add(gameResult);
+			}
 		}
+		writer.newLine();
 		writer.close();
 	}
 	

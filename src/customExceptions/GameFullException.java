@@ -1,6 +1,6 @@
 package customExceptions;
 
-// @author Sofia
+//@author Sofia
 
 public class GameFullException extends Exception {
 	

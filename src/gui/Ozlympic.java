@@ -45,6 +45,7 @@ public class Ozlympic extends Application {
 			
 			Parent root = FXMLLoader.load(getClass().getResource("/gui/Menu.fxml"));
 			Scene scene = new Scene(root);
+			primaryStage.setTitle("Main Menu");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

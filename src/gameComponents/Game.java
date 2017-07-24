@@ -1,4 +1,5 @@
 package gameComponents;
+
 //@author Calvin (methods from Assignment 1) and Sofia
 
 import java.text.DateFormat;
@@ -113,11 +114,9 @@ public abstract class Game {
 		return raceOfficial;
 	}
 	
+	// iterate through the athletes and call their compete() method
 	public void competeAthletes(){ 					
-		// iterate through the athletes and call their compete() method
-		// check if race has been raced
-		if (resultArray.size() == 0){
-			//for (int i = 0; i < raceAthletes.size(); i++){
+		if (resultArray.size() == 0){ // check if race has been raced
 			for (Athlete raceAthlete: raceAthletes) {
 				// pass current game to access min and max race times of subclass
 				double result = Athlete.compete(this);
@@ -138,7 +137,6 @@ public abstract class Game {
 		this.setDate(df.format(d));
 	}
 
-	// check if race has minimum amount of athletes
 	public int getRaceSize(){
 		int raceSize = 0;
 		if (raceAthletes != null) {

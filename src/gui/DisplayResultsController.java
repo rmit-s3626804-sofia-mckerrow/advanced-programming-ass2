@@ -62,6 +62,7 @@ public class DisplayResultsController implements Initializable {
 		date.setStyle("-fx-alignment: CENTER;");
 	}
 	
+	// display the results of all the games in the results table
 	public void displayAllResults(DataBase thisDB) throws ClassNotFoundException {
 		ResultSet rs;
 		
@@ -106,7 +107,8 @@ public class DisplayResultsController implements Initializable {
 			MenuController mController = (MenuController)loader.getController();
 			mController.setDatabase(thisDB);
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setTitle("Main Menu");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {

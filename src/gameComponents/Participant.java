@@ -1,11 +1,11 @@
 package gameComponents;
 
+//@author Calvin (from Assignment 1) and Sofia
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-
-//@author Calvin (from Assignment 1) and Sofia
 
 public abstract class Participant {
 	

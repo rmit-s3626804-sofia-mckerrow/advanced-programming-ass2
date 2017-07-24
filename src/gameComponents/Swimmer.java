@@ -1,8 +1,8 @@
 package gameComponents;
 
-import customExceptions.WrongTypeException;
-
 //@author Sofia
+
+import customExceptions.WrongTypeException;
 
 public class Swimmer extends Athlete {
 	

@@ -48,6 +48,7 @@ public class DisplayPointsController implements Initializable {
 		totalPoints.setStyle("-fx-alignment: CENTER;");
 	}
 	
+	// display the total points of all the athletes in the points table
 	public void displayAllPoints(DataBase thisDB) {
 		athletesPoints = thisDB.getAthletes();	
 		pointsList = FXCollections.observableArrayList(athletesPoints);
@@ -62,14 +63,15 @@ public class DisplayPointsController implements Initializable {
 	
 	public void returnToMenuButtonClick(ActionEvent event) {
 		try {
-			((Node)event.getSource()).getScene().getWindow().hide(); // hide DisplayResults window (stage)
+			((Node)event.getSource()).getScene().getWindow().hide(); // hide DisplayPoints window (stage)
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader();
 			Pane root = loader.load(getClass().getResource("/gui/Menu.fxml").openStream());
 			MenuController mController = (MenuController)loader.getController();
 			mController.setDatabase(thisDB);
 			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setTitle("Main Menu");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {

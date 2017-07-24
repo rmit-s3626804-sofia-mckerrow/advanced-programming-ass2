@@ -2,7 +2,7 @@
  * 
  */
 /**
- * @author Calvin and Sofia
+ * @author Calvin (methods from Assignment 1) and Sofia
  *
  */
 package gameComponents;
