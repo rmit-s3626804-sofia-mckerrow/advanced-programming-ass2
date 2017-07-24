@@ -57,7 +57,7 @@ public class SelectAthletesController implements Initializable {
 		myGame = thisDB.getLastGame();
 		ArrayList<Athlete> athletes = new ArrayList<Athlete>();
 		
-		if (thisDB.doesDatabaseExist()) {
+		if (thisDB.canDatabaseFileBeFound()) {
 			thisDB.initialiseParticipantsListFromDatabase(); // get all the athletes in the database
 			athletes = thisDB.getAthletes();
 		}

@@ -18,7 +18,7 @@ public class Ozlympic extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			if (thisDB.doesDatabaseExist()) {
+			if (thisDB.canDatabaseFileBeFound()) {
 				System.out.println("Database is connected");
 				try {
 					thisDB.emptyResultsTable();

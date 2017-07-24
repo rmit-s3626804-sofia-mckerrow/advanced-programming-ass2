@@ -69,6 +69,27 @@ public class DataBase {
 		}
 	}
 	
+	// initialise arraylist of Athletes from database
+	 public ArrayList<Athlete> initialiseAthletesListFromDatabase() {
+	 	String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'a%'";
+	 		
+	 	try {
+	 		PreparedStatement prep = connection.prepareStatement(query);
+	 		ResultSet resultSet = prep.executeQuery();
+	 			
+	 		Athlete thisAthlete = null;
+	 		while (resultSet.next()) {
+	 			if (resultSet.getString("type").equals("Swimmer")) thisAthlete = new Swimmer(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+	 			if (resultSet.getString("type").equals("Runner")) thisAthlete = new Runner(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+	 			if (resultSet.getString("type").equals("Cyclist")) thisAthlete = new Cyclist(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+	 			if (resultSet.getString("type").equals("SuperAthlete")) thisAthlete = new SuperAthlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
+	 			athletes.add(thisAthlete);
+	 			}
+	 		} catch (SQLException e) {
+	 			System.out.println(e.getMessage());
+	 		}
+	 		return athletes;
+	 	}	
 	
 	public void readParticipantsFromFile() throws FileNotFoundException {
 		// read athlete db file
@@ -136,7 +157,7 @@ public class DataBase {
 				int points = recordGame.getRaceAthletes().get(j).getRoundPoints();
 				writer.write(athleteID + ", " + time + ", " + points); 
 				writer.newLine();
-				if (doesDatabaseExist()) { // if the database is connected, add game results to database
+				if (canDatabaseFileBeFound()) { // if the database is connected, add game results to database
 					addResultToDatabase(athleteID, time, points, gameID, officialID, date);
 				}
 				else { // if database is not connected, add game results to arraylist results
@@ -183,7 +204,7 @@ public class DataBase {
 	
 	
 	// check if database file exists
-	public boolean doesDatabaseExist() {
+	public boolean canDatabaseFileBeFound() {
 		File dbTest = new File("ozlympics.db");
 		if (dbTest.exists())
 			return true;

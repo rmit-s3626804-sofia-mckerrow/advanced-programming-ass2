@@ -51,8 +51,7 @@ public class SelectOfficialController implements Initializable {
 	public void addOfficialsToList(DataBase thisDB) throws ClassNotFoundException, SQLException {
 		myGame = thisDB.getLastGame();
 		
-		if (thisDB.doesDatabaseExist()) {
-			thisDB.initialiseParticipantsListFromDatabase(); // get all the athletes in the database
+		if (thisDB.canDatabaseFileBeFound()) {
 			officials = thisDB.getOfficials();
 		}
 		else if (thisDB.canParticipantsFileBeFound()) {
@@ -63,6 +62,11 @@ public class SelectOfficialController implements Initializable {
 				System.out.println("File could not be found");
 				e.printStackTrace();
 			}
+		}
+		
+		for (int i = 0; i < officials.size(); i++) {
+			System.out.println(thisDB.getOfficials().get(i).getID() + thisDB.getOfficials().get(i).getName() + 
+					thisDB.getOfficials().get(i).getType());
 		}
 		
 		// set the array list of officials to the officialsList listview

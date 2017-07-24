@@ -68,7 +68,7 @@ public class DisplayResultsController implements Initializable {
 		ResultSet rs;
 		
 		try {
-			if (thisDB.doesDatabaseExist()) {
+			if (thisDB.canDatabaseFileBeFound()) {
 				rs = thisDB.getResultsFromDatabase();
 				while (rs.next()) {
 					GameResult gameResultItem = new GameResult(rs.getString("gameID"), rs.getString("athleteID"), 
