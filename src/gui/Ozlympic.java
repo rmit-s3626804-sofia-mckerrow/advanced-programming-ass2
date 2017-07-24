@@ -22,7 +22,8 @@ public class Ozlympic extends Application {
 				System.out.println("Database is connected");
 				try {
 					thisDB.emptyResultsTable();
-				} catch (SQLException e) {
+					thisDB.emptyResultsFile();
+				} catch (SQLException | IOException e) {
 					e.printStackTrace();
 				}
 			}
