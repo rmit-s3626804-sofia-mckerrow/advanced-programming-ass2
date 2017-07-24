@@ -29,21 +29,18 @@ public class SuperAthleteTest {
 	}
 
 	// Check if a superathlete can be added to a Cycle game
-	// Expected outcome is that the test will pass
 	@Test
 	public void testCanRaceInGame1() throws WrongTypeException {
 		assertTrue(superAthlete.canRaceInGame(cycle));
 	}
 
-	// Check if a cyclist can be added to a Run game
-	// Expected outcome is that the test will pass
+	// Check if a superathlete can be added to a Run game
 	@Test
 	public void testCanRaceInGame2() throws WrongTypeException {
 		assertTrue(superAthlete.canRaceInGame(run));
 	}
 
-	// Check if a cyclist can be added to a Swim game
-	// Expected outcome is that the test will pass
+	// Check if a superathlete can be added to a Swim game
 	@Test
 	public void testCanRaceInGame3() throws WrongTypeException {
 		assertTrue(superAthlete.canRaceInGame(swim));

@@ -46,7 +46,6 @@ public class OfficialTest {
 	}
 
 	// Check if givePointsToWinners() gives 5 points to the athlete in first place
-	// Expected outcome is that the test will pass
 	@Test
 	public void testGivePointsToWinners1() {
 		db.getLastGame().competeAthletes();
@@ -57,7 +56,6 @@ public class OfficialTest {
 	}
 	
 	// Check if givePointsToWinners() gives 3 points to the athlete in second place
-	// Expected outcome is that the test will pass
 	@Test
 	public void testGivePointsToWinners2() {
 		db.getLastGame().competeAthletes();
@@ -68,7 +66,6 @@ public class OfficialTest {
 	}
 	
 	// Check if givePointsToWinners() gives 1 point to the athlete in third place
-	// Expected outcome is that the test will pass
 	@Test
 	public void testGivePointsToWinners3() {
 		db.getLastGame().competeAthletes();
@@ -79,7 +76,6 @@ public class OfficialTest {
 	}
 	
 	// Check if givePointsToWinners() gives 0 points to the athlete in fourth place
-	// Expected outcome is that the test will pass
 	@Test
 	public void testGivePointsToWinners4() {
 		db.getLastGame().competeAthletes();

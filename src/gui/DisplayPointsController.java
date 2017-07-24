@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import gameComponents.Athlete;
-import gameComponents.Game;
 import gameDatabase.DataBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +26,6 @@ import javafx.stage.Stage;
 public class DisplayPointsController implements Initializable {
 	
 	DataBase thisDB = new DataBase();
-	Game myGame;
 	private ArrayList<Athlete> athletesPoints = new ArrayList<Athlete>();
 	private ObservableList<Athlete> pointsList;
 	

@@ -58,14 +58,12 @@ public class RunTest {
 	}
 
 	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there are less than the minimum number of athletes
-	// Expected outcome is that the test will pass
 	@Test(expected = TooFewAthleteException.class)
 	public void testCheckIfRaceHasMin1() throws TooFewAthleteException {
 		run.checkIfRaceHasMin(run);
 	}
 
 	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there are the minimum number of athletes
-	// Expected outcome is that the test will pass
 	@Test
 	public void testCheckIfRaceHasMin2() {
 		TooFewAthleteException exception = null;
@@ -82,8 +80,7 @@ public class RunTest {
 
 	}
 
-	// Check if checkIfRaceHasMax() will throw the GameFullException if there runare the maximum number of athletes
-	// Expected outcome is that the test will pass
+	// Check if checkIfRaceHasMax() will throw the GameFullException if there are the maximum number of athletes
 	@Test
 	public void testCheckIfRaceHasMax1() {
 		GameFullException exception = null;
@@ -103,7 +100,6 @@ public class RunTest {
 	}
 
 	// Check if checkIfRaceHasMax() will throw the GameFullException if there are greater than the maximum number of athletes
-	// Expected outcome is that the test will pass
 	@Test(expected = GameFullException.class)
 	public void testCheckIfRaceHasMax2() throws GameFullException {
 		run.getRaceAthletes().add(r5);
@@ -117,7 +113,6 @@ public class RunTest {
 	}
 
 	// Check if checkIfRaceHasOfficial() will throw the NoRefereeException if there is no official for the race
-	// Expected outcome is that the test will pass
 	@Test(expected = NoRefereeException.class)
 	public void testCheckIfRaceHasOfficial1() throws NoRefereeException {
 		run.checkIfRaceHasOfficial(run);
@@ -125,7 +120,6 @@ public class RunTest {
 	}
 
 	// Check if checkIfRaceHasOfficial() will throw the NoRefereeException if there is an official for the race
-	// Expected outcome is that the test will pass
 	@Test
 	public void testCheckIfRaceHasOfficial2() {
 		NoRefereeException exception = null;

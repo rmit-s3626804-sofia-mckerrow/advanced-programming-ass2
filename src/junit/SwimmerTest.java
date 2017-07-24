@@ -32,21 +32,18 @@ public class SwimmerTest {
 	}
 
 	// Check if a swimmer can be added to a Cycle game
-	// Expected outcome is that the test will pass
 	@Test
 	public void testCanRaceInGame1() throws WrongTypeException {
 		assertFalse(swimmer.canRaceInGame(cycle));
 	}
 
 	// Check if a swimmer can be added to a Run game
-	// Expected outcome is that the test will pass
 	@Test
 	public void testCanRaceInGame2() throws WrongTypeException {
 		assertFalse(swimmer.canRaceInGame(run));
 	}
 
 	// Check if a swimmer can be added to a Swim game
-	// Expected outcome is that the test will pass
 	@Test
 	public void testCanRaceInGame3() throws WrongTypeException {
 		assertTrue(swimmer.canRaceInGame(swim));

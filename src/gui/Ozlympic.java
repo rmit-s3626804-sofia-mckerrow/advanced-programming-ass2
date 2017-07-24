@@ -19,7 +19,7 @@ public class Ozlympic extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			if (thisDB.canDatabaseFileBeFound()) {
-				System.out.println("Database is connected");
+				System.out.println("Database file has been found");
 				try {
 					thisDB.emptyResultsTable();
 					thisDB.emptyResultsFile();
@@ -28,7 +28,7 @@ public class Ozlympic extends Application {
 				}
 			}
 			else if (thisDB.canParticipantsFileBeFound()) {
-				System.out.println("Database is not connected");
+				System.out.println("Database file has not been found");
 				System.out.println("Participants.txt file has been found");
 				try {
 					thisDB.emptyResultsFile();

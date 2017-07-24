@@ -69,28 +69,6 @@ public class DataBase {
 		}
 	}
 	
-	// initialise arraylist of Athletes from database
-	 public ArrayList<Athlete> initialiseAthletesListFromDatabase() {
-	 	String query = "SELECT id, name, type, age, state FROM participants WHERE id LIKE 'a%'";
-	 		
-	 	try {
-	 		PreparedStatement prep = connection.prepareStatement(query);
-	 		ResultSet resultSet = prep.executeQuery();
-	 			
-	 		Athlete thisAthlete = null;
-	 		while (resultSet.next()) {
-	 			if (resultSet.getString("type").equals("Swimmer")) thisAthlete = new Swimmer(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-	 			if (resultSet.getString("type").equals("Runner")) thisAthlete = new Runner(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-	 			if (resultSet.getString("type").equals("Cyclist")) thisAthlete = new Cyclist(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-	 			if (resultSet.getString("type").equals("SuperAthlete")) thisAthlete = new SuperAthlete(resultSet.getString("id"), resultSet.getString("name"), resultSet.getString("type"), resultSet.getInt("age"), resultSet.getString("state"));
-	 			athletes.add(thisAthlete);
-	 			}
-	 		} catch (SQLException e) {
-	 			System.out.println(e.getMessage());
-	 		}
-	 		return athletes;
-	 	}	
-	
 	public void readParticipantsFromFile() throws FileNotFoundException {
 		// read athlete db file
 		Scanner fileIn = new Scanner(new File("Assets/Participants.txt"));	

@@ -28,7 +28,6 @@ public class DataBaseTest {
 	}
 
 	// Check if addRace() adds a game to the arraylist of games
-	// Expected outcome is that the test will pass
 	@Test
 	public void testAddRace() {
 		db.addRace("cycle");
@@ -36,7 +35,6 @@ public class DataBaseTest {
 	}
 	
 	// Check if getLastGame() gets the last game in the arraylist of games
-	// Expected outcome is that the test will pass
 	@Test
 	public void testGetLastGame() {
 		db.addRace("cycle");
@@ -46,7 +44,6 @@ public class DataBaseTest {
 	}
 	
 	// Check if sortParticipantsIntoType() adds a new Cyclist to the arraylist of athletes if the type is "Cyclist"
-	// Expected outcome is that the test will pass
 	@Test
 	public void testSortParticipantsIntoType1() {
 		db.sortParticipantsIntoType("c001", "Test Cyclist", "Cyclist", 20, "WA");
@@ -54,7 +51,6 @@ public class DataBaseTest {
 	}
 	
 	// Check if sortParticipantsIntoType() adds a new Runner to the arraylist of athletes if the type is "Runner"
-	// Expected outcome is that the test will pass
 	@Test
 	public void testSortParticipantsIntoType2() {
 		db.sortParticipantsIntoType("r001", "Test Runner", "Runner", 20, "WA");
@@ -62,7 +58,6 @@ public class DataBaseTest {
 	}
 
 	// Check if sortParticipantsIntoType() adds a new Swimmer to the arraylist of athletes if the type is "Swimmer"
-	// Expected outcome is that the test will pass
 	@Test
 	public void testSortParticipantsIntoType3() {
 		db.sortParticipantsIntoType("s001", "Test Swimmer", "Swimmer", 20, "WA");
@@ -70,7 +65,6 @@ public class DataBaseTest {
 	}
 	
 	// Check if sortParticipantsIntoType() adds a new SuperAthlete to the arraylist of athletes if the type is "SuperAthlete"
-	// Expected outcome is that the test will pass
 	@Test
 	public void testSortParticipantsIntoType4() {
 		db.sortParticipantsIntoType("s001", "Test Superathlete", "SuperAthlete", 20, "WA");
@@ -78,7 +72,6 @@ public class DataBaseTest {
 	}
 	
 	// Check if sortParticipantsIntoType() adds a new Official to the arraylist of officials if the type is "Official"
-	// Expected outcome is that the test will pass
 	@Test
 	public void testSortParticipantsIntoType5() {
 		db.sortParticipantsIntoType("o001", "Test Official", "Official", 20, "WA");
