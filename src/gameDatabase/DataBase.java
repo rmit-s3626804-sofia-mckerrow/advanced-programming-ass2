@@ -175,7 +175,7 @@ public class DataBase {
 	
 	// check if database file exists
 	public boolean canDatabaseFileBeFound() {
-		File dbTest = new File("/gui/ozlympics.db");
+		File dbTest = new File("ozlympics.db");
 		if (dbTest.exists())
 			return true;
 		else
