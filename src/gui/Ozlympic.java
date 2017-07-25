@@ -41,7 +41,7 @@ public class Ozlympic extends Application {
 			else {
 				System.out.println("Database is not connected");
 				System.out.println("Participants.txt file could not be found");
-				System.out.println("Game could not be started");
+				System.out.println("Ozlympics program could not be started");
 				System.exit(0);
 			}
 			
