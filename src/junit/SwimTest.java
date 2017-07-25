@@ -55,13 +55,13 @@ public class SwimTest {
 	public void tearDown() throws Exception {
 	}
 
-	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there are less than the minimum number of athletes
+	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there is less than the minimum number of athletes
 	@Test(expected = TooFewAthleteException.class)
 	public void testCheckIfRaceHasMin1() throws TooFewAthleteException {
 		swim.checkIfRaceHasMin(swim);
 	}
 
-	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there are the minimum number of athletes
+	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there is the minimum number of athletes
 	@Test
 	public void testCheckIfRaceHasMin2() {
 		TooFewAthleteException exception = null;
@@ -75,10 +75,9 @@ public class SwimTest {
 		}
 
 		assertNull(exception);
-
 	}
 
-	// Check if checkIfRaceHasMax() will throw the GameFullException if there are the maximum number of athletes
+	// Check if checkIfRaceHasMax() will throw the GameFullException if there is the maximum number of athletes
 	@Test
 	public void testCheckIfRaceHasMax1() {
 		GameFullException exception = null;
@@ -97,7 +96,7 @@ public class SwimTest {
 		assertNull(exception);
 	}
 
-	// Check if checkIfRaceHasMax() will throw the GameFullException if there are greater than the maximum number of athletes
+	// Check if checkIfRaceHasMax() will throw the GameFullException if there is greater than the maximum number of athletes
 	@Test(expected = GameFullException.class)
 	public void testCheckIfRaceHasMax2() throws GameFullException {
 		swim.getRaceAthletes().add(s5);
@@ -107,14 +106,12 @@ public class SwimTest {
 		swim.getRaceAthletes().add(s9);
 
 		swim.checkIfRaceHasMax(swim);
-
 	}
 
 	// Check if checkIfRaceHasOfficial() will throw the NoRefereeException if there is no official for the race
 	@Test(expected = NoRefereeException.class)
 	public void testCheckIfRaceHasOfficial1() throws NoRefereeException {
 		swim.checkIfRaceHasOfficial(swim);
-
 	}
 
 	// Check if checkIfRaceHasOfficial() will throw the NoRefereeException if there is an official for the race
@@ -131,6 +128,5 @@ public class SwimTest {
 		}
 
 		assertNull(exception);
-
 	}
 }

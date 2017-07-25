@@ -55,13 +55,13 @@ public class CycleTest {
 	public void tearDown() throws Exception {
 	}
 
-	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there are less than the minimum number of athletes
+	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there is less than the minimum number of athletes
 	@Test (expected=TooFewAthleteException.class)
 	public void testCheckIfRaceHasMin1() throws TooFewAthleteException {
-			cycle.checkIfRaceHasMin(cycle);
+		cycle.checkIfRaceHasMin(cycle);
 	}
 	
-	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there are the minimum number of athletes
+	// Check if checkIfRaceHasMin() will throw the TooFewAthleteException if there is the minimum number of athletes
 	@Test
 	public void testCheckIfRaceHasMin2() {
 		TooFewAthleteException exception = null;
@@ -75,10 +75,9 @@ public class CycleTest {
 		}
 		
 		assertNull(exception);
-		
 	}
 
-	// Check if checkIfRaceHasMax() will throw the GameFullException if there are the maximum number of athletes
+	// Check if checkIfRaceHasMax() will throw the GameFullException if there is the maximum number of athletes
 	@Test
 	public void testCheckIfRaceHasMax1() {
 		GameFullException exception = null;
@@ -97,7 +96,7 @@ public class CycleTest {
 		assertNull(exception);
 	}
 	
-	// Check if checkIfRaceHasMax() will throw the GameFullException if there are greater than the maximum number of athletes
+	// Check if checkIfRaceHasMax() will throw the GameFullException if there is greater than the maximum number of athletes
 	@Test (expected=GameFullException.class)
 	public void testCheckIfRaceHasMax2() throws GameFullException {
 		cycle.getRaceAthletes().add(c5);
@@ -106,8 +105,7 @@ public class CycleTest {
 		cycle.getRaceAthletes().add(c8);
 		cycle.getRaceAthletes().add(c9);
 					
-		cycle.checkIfRaceHasMax(cycle);
-			
+		cycle.checkIfRaceHasMax(cycle);		
 	}
 	
 	// Check if checkIfRaceHasOfficial() will throw the NoRefereeException if there is no official for the race
@@ -131,7 +129,6 @@ public class CycleTest {
 		}
 		
 		assertNull(exception);
-		
 	}
 
 }
